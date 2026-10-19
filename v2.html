@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="hu" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamatos Kamat & Vásárlóerő Kalkulátor — Készítette: Nagy Márton</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    colors: {
+                        accent: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            border-radius: 9999px;
+            transition: background-color 0.2s ease;
+        }
+        .dark input[type="range"]::-webkit-slider-runnable-track {
+            background: #27272a;
+        }
+        html:not(.dark) input[type="range"]::-webkit-slider-runnable-track {
+            background: #e4e4e7;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -6px;
+            background-color: #059669;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            border: 2.5px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(5, 150, 105, 0.35);
+            transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+        }
+        .dark input[type="range"]::-webkit-slider-thumb {
+            background-color: #10b981;
+            border-color: #18181b;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+        .card-surface {
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #121316;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #2e3038;
+            border-radius: 4px;
+        }
+        html:not(.dark) ::-webkit-scrollbar-track {
+            background: #f4f4f5;
+        }
+        html:not(.dark) ::-webkit-scrollbar-thumb {
+            background: #d4d4d8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-[#f4f4f0] text-zinc-900 dark:bg-[#0c0d10] dark:text-zinc-100 min-h-screen font-sans antialiased transition-colors duration-200 selection:bg-emerald-600 selection:text-white">
+
+    <!-- Ambient Subtle Top Glow -->
+    <div class="fixed inset-x-0 top-0 h-64 bg-gradient-to-b from-emerald-600/[0.04] dark:from-emerald-500/[0.05] to-transparent pointer-events-none -z-10"></div>
+
+    <header class="sticky top-0 z-30 backdrop-blur-xl bg-[#f4f4f0]/85 dark:bg-[#0c0d10]/85 border-b border-zinc-200/80 dark:border-zinc-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+            <!-- Brand Title & Author Badge -->
+            <div class="flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 dark:from-emerald-500 dark:to-emerald-700 flex items-center justify-center text-white shadow-md shadow-emerald-900/10 shrink-0">
+                    <i data-lucide="landmark" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h1 id="app-title" class="text-sm sm:text-base font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
+                            Kamatos Kamat & Vásárlóerő Kalkulátor
+                        </h1>
+                        <span id="author-badge" class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-800 dark:text-emerald-300 border border-emerald-600/20 dark:border-emerald-400/20">
+                            Készítette: Nagy Márton
+                        </span>
+                    </div>
+                    <p id="app-subtitle" class="text-xs text-zinc-500 dark:text-zinc-400 hidden sm:block mt-0.5">
+                        Precíziós vagyontervező és történelmi inflációval korrigált vásárlóerő-szimulátor
+                    </p>
+                </div>
+            </div>
+
+            <!-- Controls: Currency, Language (No Flags), Theme -->
+            <div class="flex items-center gap-2">
+                <!-- Currency Selector -->
+                <div class="inline-flex rounded-xl p-1 bg-zinc-200/75 dark:bg-zinc-900 border border-zinc-300/60 dark:border-zinc-800">
+                    <button type="button" data-currency="HUF" class="currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm">
+                        HUF (Ft)
+                    </button>
+                    <button type="button" data-currency="EUR" class="currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
+                        EUR (€)
+                    </button>
+                    <button type="button" data-currency="USD" class="currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
+                        USD ($)
+                    </button>
+                </div>
+
+                <!-- Language Switcher (Strictly text only, no flags) -->
+                <div class="inline-flex rounded-xl p-1 bg-zinc-200/75 dark:bg-zinc-900 border border-zinc-300/60 dark:border-zinc-800">
+                    <button type="button" id="lang-hu" class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm">
+                        HU
+                    </button>
+                    <button type="button" id="lang-en" class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
+                        EN
+                    </button>
+                </div>
+
+                <!-- Dark/Light Theme Toggle -->
+                <button type="button" id="theme-toggle" class="p-2 rounded-xl bg-zinc-200/75 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-300/70 dark:hover:bg-zinc-800 border border-zinc-300/60 dark:border-zinc-800 transition-colors" aria-label="Toggle Theme">
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
+                    <i data-lucide="moon" class="w-4 h-4 block dark:hidden text-zinc-700"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+
+            <!-- LEFT COLUMN: Input Parameters & Inflation Context (5 cols on lg) -->
+            <div class="lg:col-span-5 space-y-6">
+
+                <!-- Card 1: Core Financial Parameters -->
+                <section class="card-surface bg-white dark:bg-[#14161b] rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-sm p-5 sm:p-6 space-y-6">
+                    <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/80 pb-4">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                                <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
+                            </div>
+                            <h2 data-i18n="paramsTitle" class="font-bold text-base text-zinc-900 dark:text-zinc-100">
+                                Megtakarítási Paraméterek
+                            </h2>
+                        </div>
+                        <button type="button" id="reset-btn" class="text-xs px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 flex items-center gap-1.5 transition-colors font-medium">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                            <span data-i18n="resetBtn">Alaphelyzet</span>
+                        </button>
+                    </div>
+
+                    <!-- Initial Deposit -->
+                    <div class="space-y-2.5">
+                        <div class="flex justify-between items-center gap-2">
+                            <label for="initial-deposit" data-i18n="initialDepositLabel" class="text-sm font-semibold text-zinc-700 dark:text-zinc-200">
+                                Kezdő tőke (egyszeri)
+                            </label>
+                            <div class="relative flex items-center">
+                                <input type="text" inputmode="numeric" id="initial-deposit" value="1 000 000"
+                                    class="w-40 sm:w-44 text-right font-mono text-sm font-bold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-2 pl-3 pr-9 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <span class="currency-symbol absolute right-3 text-xs font-bold text-zinc-400 pointer-events-none">Ft</span>
+                            </div>
+                        </div>
+                        <input type="range" id="initial-deposit-slider" min="0" max="50000000" step="100000" value="1000000" class="w-full">
+                        <div class="flex justify-between text-[11px] text-zinc-400 font-mono">
+                            <span>0</span>
+                            <span id="initial-slider-max">50M Ft</span>
+                        </div>
+                    </div>
+
+                    <!-- Regular Contributions & Frequency -->
+                    <div class="space-y-2.5 pt-4 border-t border-zinc-100 dark:border-zinc-800/80">
+                        <div class="flex flex-wrap justify-between items-center gap-2">
+                            <label for="regular-contribution" data-i18n="regularContributionLabel" class="text-sm font-semibold text-zinc-700 dark:text-zinc-200">
+                                Rendszeres befizetés
+                            </label>
+                            <div class="inline-flex rounded-xl p-0.5 bg-zinc-100 dark:bg-[#0c0d10] border border-zinc-200/80 dark:border-zinc-800">
+                                <button type="button" data-contrib-freq="monthly" class="contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm" data-i18n="freqMonthly">
+                                    Havi
+                                </button>
+                                <button type="button" data-contrib-freq="annually" class="contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg text-zinc-600 dark:text-zinc-400" data-i18n="freqAnnually">
+                                    Éves
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-1 gap-2">
+                            <span data-i18n="contribAmountSub" class="text-xs text-zinc-500 dark:text-zinc-400">Befizetett összeg alkalmanként</span>
+                            <div class="relative flex items-center">
+                                <input type="text" inputmode="numeric" id="regular-contribution" value="50 000"
+                                    class="w-40 sm:w-44 text-right font-mono text-sm font-bold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-2 pl-3 pr-9 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <span class="currency-symbol absolute right-3 text-xs font-bold text-zinc-400 pointer-events-none">Ft</span>
+                            </div>
+                        </div>
+                        <input type="range" id="regular-contribution-slider" min="0" max="1000000" step="5000" value="50000" class="w-full">
+                        <div class="flex justify-between text-[11px] text-zinc-400 font-mono">
+                            <span>0</span>
+                            <span id="contrib-slider-max">1M Ft</span>
+                        </div>
+                    </div>
+
+                    <!-- Contribution Growth Rate (Step-up) -->
+                    <div class="space-y-2.5 pt-4 border-t border-zinc-100 dark:border-zinc-800/80">
+                        <div class="flex justify-between items-center gap-2">
+                            <div>
+                                <label for="contribution-growth" data-i18n="contribGrowthLabel" class="text-sm font-semibold text-zinc-700 dark:text-zinc-200 block">
+                                    Befizetések éves növelése
+                                </label>
+                                <span data-i18n="contribGrowthHint" class="text-[11px] text-zinc-500 dark:text-zinc-400">
+                                    Éves % emelés (pl. fizetésemelés vagy inflációkövetés)
+                                </span>
+                            </div>
+                            <div class="relative flex items-center shrink-0">
+                                <input type="number" id="contribution-growth" min="0" max="50" step="0.5" value="5.0"
+                                    class="w-24 text-right font-mono text-sm font-bold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-2 pl-2 pr-7 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <span class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
+                            </div>
+                        </div>
+                        <input type="range" id="contribution-growth-slider" min="0" max="25" step="0.5" value="5.0" class="w-full">
+                    </div>
+
+                    <!-- Annual Interest Rate -->
+                    <div class="space-y-2.5 pt-4 border-t border-zinc-100 dark:border-zinc-800/80">
+                        <div class="flex justify-between items-center gap-2">
+                            <div>
+                                <label for="interest-rate" data-i18n="interestRateLabel" class="text-sm font-semibold text-zinc-700 dark:text-zinc-200 block">
+                                    Éves nominális hozam (kamatláb)
+                                </label>
+                            </div>
+                            <div class="relative flex items-center shrink-0">
+                                <input type="number" id="interest-rate" min="0" max="50" step="0.1" value="8.0"
+                                    class="w-24 text-right font-mono text-sm font-bold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-2 pl-2 pr-7 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <span class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
+                            </div>
+                        </div>
+                        <input type="range" id="interest-rate-slider" min="0" max="25" step="0.1" value="8.0" class="w-full">
+                    </div>
+
+                    <!-- Time Horizon & Compounding Frequency -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/80">
+                        <div class="space-y-2.5">
+                            <div class="flex justify-between items-center">
+                                <label for="years" data-i18n="yearsLabel" class="text-sm font-semibold text-zinc-700 dark:text-zinc-200">
+                                    Időtáv
+                                </label>
+                                <div class="relative flex items-center">
+                                    <input type="number" id="years" min="1" max="50" step="1" value="15"
+                                        class="w-20 text-right font-mono text-sm font-bold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-1.5 pl-2 pr-8 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <span data-i18n="yearsUnit" class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">év</span>
+                                </div>
+                            </div>
+                            <input type="range" id="years-slider" min="1" max="50" step="1" value="15" class="w-full">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="compound-frequency" data-i18n="compoundFreqLabel" class="text-sm font-semibold text-zinc-700 dark:text-zinc-200 block">
+                                Tőkésítés gyakorisága
+                            </label>
+                            <select id="compound-frequency"
+                                class="w-full text-sm font-semibold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-2 px-3 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option value="12" data-i18n="compMonthly" selected>Havi (12x / év)</option>
+                                <option value="4" data-i18n="compQuarterly">Negyedéves (4x / év)</option>
+                                <option value="1" data-i18n="compAnnually">Éves (1x / év)</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card 2: Inflation & Purchasing Power Module (Switchable) -->
+                <section class="card-surface bg-white dark:bg-[#14161b] rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-sm p-5 sm:p-6 transition-all">
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-700 dark:text-zinc-300 shrink-0">
+                                <i data-lucide="percent" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h2 data-i18n="inflationCardTitle" class="font-bold text-base text-zinc-900 dark:text-zinc-100 leading-tight">
+                                    Infláció & Vásárlóerő Modul
+                                </h2>
+                                <p data-i18n="inflationToggleSub" class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                    Kapcsolja be, ha a jövőbeli pénz mai vásárlóerejét is látni szeretné
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Toggle Switch -->
+                        <label for="inflation-toggle" class="inline-flex items-center cursor-pointer select-none shrink-0">
+                            <input type="checkbox" id="inflation-toggle" class="sr-only peer">
+                            <div class="w-12 h-6 bg-zinc-200 dark:bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all relative peer-checked:bg-emerald-600 shadow-inner"></div>
+                        </label>
+                    </div>
+
+                    <!-- Collapsible Inflation Controls (Hidden by default until toggled ON) -->
+                    <div id="inflation-controls-body" class="hidden pt-5 mt-5 border-t border-zinc-100 dark:border-zinc-800/80 space-y-5">
+                        <!-- Clickable World Bank Source Link Button -->
+                        <div class="flex flex-wrap items-center justify-between gap-2 bg-zinc-50 dark:bg-[#0c0d10] p-3 rounded-xl border border-zinc-200/70 dark:border-zinc-800">
+                            <span data-i18n="inflationActiveLabel" class="text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+                                Hivatalos adatforrás:
+                            </span>
+                            <a id="worldbank-source-link"
+                               href="https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=1W"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               title="World Bank Open Data — FP.CPI.TOTL.ZG"
+                               class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-zinc-200 dark:border-zinc-700 hover:border-emerald-500/40 shadow-sm transition-all group">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                <span id="api-status-text">Világbank Élő Adat</span>
+                                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                            </a>
+                        </div>
+
+                        <!-- Expected Annual Inflation Input -->
+                        <div class="space-y-2.5">
+                            <div class="flex justify-between items-center gap-2">
+                                <div>
+                                    <label for="inflation-rate" data-i18n="inflationRateLabel" class="text-sm font-semibold text-zinc-700 dark:text-zinc-200 block">
+                                        Várható éves infláció
+                                    </label>
+                                    <span data-i18n="inflationRateHint" class="text-[11px] text-zinc-500 dark:text-zinc-400">
+                                        Alapértelmezetten a globális átlagra állítva
+                                    </span>
+                                </div>
+                                <div class="relative flex items-center shrink-0">
+                                    <input type="number" id="inflation-rate" min="0" max="40" step="0.1" value="3.9"
+                                        class="w-24 text-right font-mono text-sm font-bold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 text-zinc-900 dark:text-zinc-100 rounded-xl py-2 pl-2 pr-7 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <span class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="inflation-rate-slider" min="0" max="20" step="0.1" value="3.9" class="w-full">
+                        </div>
+
+                        <!-- Historical Multi-Window Reference Helper (10Y, 20Y, Max) -->
+                        <div class="bg-zinc-50 dark:bg-[#0c0d10] rounded-xl p-4 border border-zinc-200/80 dark:border-zinc-800/90 space-y-3.5">
+                            <div class="flex flex-col gap-2.5">
+                                <div class="flex items-center justify-between gap-2">
+                                    <label for="country-select" data-i18n="histContextLabel" class="text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                                        Történelmi inflációs segédlet
+                                    </label>
+                                    <span id="hist-year-range-badge" class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-200/70 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
+                                        2016–2026
+                                    </span>
+                                </div>
+
+                                <!-- Country Dropdown (Default: Global Average WLD) -->
+                                <select id="country-select" class="w-full text-xs font-semibold bg-white dark:bg-[#14161b] border border-zinc-300 dark:border-zinc-700 rounded-xl py-2.5 px-3 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <option value="WLD" selected>Globális Átlag (WLD)</option>
+                                    <option value="HUN">Magyarország (HUN)</option>
+                                    <option value="EMU">Eurózóna (EMU)</option>
+                                    <option value="USA">Egyesült Államok (USA)</option>
+                                    <option value="DEU">Németország (DEU)</option>
+                                    <option value="AUT">Ausztria (AUT)</option>
+                                    <option value="POL">Lengyelország (POL)</option>
+                                    <option value="GBR">Egyesült Királyság (GBR)</option>
+                                </select>
+
+                                <!-- Time Window Selector: 10 Years, 20 Years, Since Start (Max) -->
+                                <div class="grid grid-cols-3 gap-1 p-1 rounded-xl bg-zinc-200/70 dark:bg-zinc-900 border border-zinc-300/50 dark:border-zinc-800">
+                                    <button type="button" data-inf-window="10" class="inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm transition-all" data-i18n="window10Y">
+                                        Elmúlt 10 év
+                                    </button>
+                                    <button type="button" data-inf-window="20" class="inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all" data-i18n="window20Y">
+                                        Elmúlt 20 év
+                                    </button>
+                                    <button type="button" data-inf-window="max" class="inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all" data-i18n="windowMax">
+                                        Adatkezdettől (Max)
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Selected Country vs Global Stats Row -->
+                            <div class="grid grid-cols-2 gap-3 pt-1">
+                                <div class="bg-white dark:bg-[#14161b] p-3.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800">
+                                    <span id="selected-country-label" class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block truncate">
+                                        Globális Átlag (10 év)
+                                    </span>
+                                    <div class="flex items-baseline justify-between mt-1.5">
+                                        <span id="country-hist-avg" class="text-lg font-bold font-mono text-zinc-900 dark:text-zinc-100">
+                                            3.9%
+                                        </span>
+                                        <button type="button" id="apply-country-inf" class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-0.5">
+                                            <span data-i18n="applyBtn">Alkalmaz</span>
+                                            <i data-lucide="check" class="w-3 h-3"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white dark:bg-[#14161b] p-3.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800">
+                                    <span id="global-avg-box-label" class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block truncate">
+                                        Globális átlag (10 év)
+                                    </span>
+                                    <div class="flex items-baseline justify-between mt-1.5">
+                                        <span id="global-hist-avg" class="text-lg font-bold font-mono text-zinc-800 dark:text-zinc-200">
+                                            3.9%
+                                        </span>
+                                        <button type="button" id="apply-global-inf" class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-0.5">
+                                            <span data-i18n="applyBtn">Alkalmaz</span>
+                                            <i data-lucide="check" class="w-3 h-3"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between gap-2 pt-1">
+                                <p id="hist-data-footnote" class="text-[11px] text-zinc-500 dark:text-zinc-400 leading-snug">
+                                    Adatforrás: Világbank (World Bank CPI). Kattintson a fenti gombra az eredeti adatsor megnyitásához.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT COLUMN: Clear Summary & Growth Chart (7 cols on lg) -->
+            <div class="lg:col-span-7 space-y-6">
+
+                <!-- Executive Summary Card -->
+                <div class="card-surface bg-white dark:bg-[#14161b] rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-sm p-5 sm:p-7 space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 dark:border-zinc-800/80 pb-4">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                            </div>
+                            <h2 data-i18n="resultsHeaderTitle" class="font-bold text-base text-zinc-900 dark:text-zinc-100">
+                                Kalkuláció Eredménye — Átlátható Összesítő
+                            </h2>
+                        </div>
+                        <span id="summary-horizon-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/20">
+                            15 év után
+                        </span>
+                    </div>
+
+                    <!-- Primary Hero Result: Final Balance & 3 Clean Metric Pillars -->
+                    <div class="rounded-2xl p-5 sm:p-6 bg-gradient-to-br from-zinc-50 via-white to-emerald-50/30 dark:from-[#0c0d10] dark:via-[#111318] dark:to-emerald-950/15 border border-zinc-200/90 dark:border-zinc-800 shadow-inner">
+                        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                            <div>
+                                <span data-i18n="card2Title" class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block">
+                                    Várható Végösszeg (Számlaegyenleg)
+                                </span>
+                                <div id="kpi-nominal-value" class="text-3xl sm:text-5xl font-extrabold font-mono mt-2 text-zinc-900 dark:text-white tracking-tight">
+                                    29 945 120 Ft
+                                </div>
+                                <p data-i18n="card2Sub" class="text-xs text-zinc-500 dark:text-zinc-400 mt-2">
+                                    Ennyi pénz lesz számszerűleg a megtakarítási számláján a futamidő végén.
+                                </p>
+                            </div>
+                            <div class="sm:text-right bg-white/90 dark:bg-[#14161b] px-4 py-2.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 shrink-0 self-start sm:self-end">
+                                <span data-i18n="card2MultiplierLabel" class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 block">Tőketöbbszöröző</span>
+                                <span id="kpi-multiplier" class="font-mono text-xl font-extrabold text-emerald-700 dark:text-emerald-400">2.15x</span>
+                            </div>
+                        </div>
+
+                        <!-- 3-Column Clear Breakdown of the Primary Result -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-6 pt-5 border-t border-zinc-200/80 dark:border-zinc-800/90">
+                            <div class="bg-white dark:bg-[#14161b] p-4 rounded-xl border border-zinc-200/70 dark:border-zinc-800/90 shadow-sm">
+                                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+                                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                    <span data-i18n="card1Title">Összes saját befizetés</span>
+                                </div>
+                                <div id="kpi-principal-value" class="font-mono text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-1.5">
+                                    13 947 338 Ft
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-[#14161b] p-4 rounded-xl border border-zinc-200/70 dark:border-zinc-800/90 shadow-sm">
+                                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    <span data-i18n="card2InterestLabel">Megszerzett kamat (hozam)</span>
+                                </div>
+                                <div id="kpi-interest-value" class="font-mono text-lg font-bold text-emerald-700 dark:text-emerald-400 mt-1.5">
+                                    +15 997 782 Ft
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-[#14161b] p-4 rounded-xl border border-zinc-200/70 dark:border-zinc-800/90 shadow-sm">
+                                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400">
+                                    <span class="w-2 h-2 rounded-full bg-zinc-400"></span>
+                                    <span data-i18n="card1FinalDepositLabel">Utolsó évi rendszeres részlet</span>
+                                </div>
+                                <div id="kpi-final-contrib" class="font-mono text-lg font-bold text-zinc-800 dark:text-zinc-200 mt-1.5">
+                                    98 997 Ft / hó
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Neutral Inflation / Purchasing Power Panel (Hidden unless Inflation Toggle is ON) -->
+                    <div id="real-results-container" class="hidden rounded-2xl p-5 bg-zinc-100/70 dark:bg-[#0c0d10] border border-zinc-200/90 dark:border-zinc-800 space-y-4 transition-all">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200/80 dark:border-zinc-800 pb-3.5">
+                            <div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span data-i18n="card3Title" class="text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400">
+                                        Inflációval Korrigált Vásárlóerő (Mai Árakon)
+                                    </span>
+                                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-cyan-500/10 dark:bg-cyan-400/10 text-cyan-800 dark:text-cyan-300 border border-cyan-500/20" data-i18n="realBadge">
+                                        Reálérték
+                                    </span>
+                                </div>
+                                <p data-i18n="card3Sub" class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                    Mai pénzben kifejezve ennyi árut és szolgáltatást ér majd a fenti végösszeg.
+                                </p>
+                            </div>
+                            <div id="kpi-real-value" class="text-2xl sm:text-3xl font-bold font-mono text-cyan-800 dark:text-cyan-300 shrink-0">
+                                17 873 950 Ft
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                            <div class="bg-white dark:bg-[#14161b] p-3.5 rounded-xl border border-zinc-200/70 dark:border-zinc-800/80">
+                                <span data-i18n="card1RealCostLabel" class="text-zinc-500 dark:text-zinc-400 block">Befizetései mai értéke:</span>
+                                <span id="kpi-real-principal-value" class="font-mono text-sm font-bold text-zinc-800 dark:text-zinc-200 mt-1 block">10 818 200 Ft</span>
+                            </div>
+                            <div class="bg-white dark:bg-[#14161b] p-3.5 rounded-xl border border-zinc-200/70 dark:border-zinc-800/80">
+                                <span data-i18n="card3RealGainLabel" class="text-zinc-500 dark:text-zinc-400 block">Infláció feletti reálnyereség:</span>
+                                <span id="kpi-real-gain-value" class="font-mono text-sm font-bold text-cyan-700 dark:text-cyan-400 mt-1 block">+7 055 750 Ft</span>
+                            </div>
+                            <div class="bg-white dark:bg-[#14161b] p-3.5 rounded-xl border border-zinc-200/70 dark:border-zinc-800/80">
+                                <span data-i18n="card3FisherLabel" class="text-zinc-500 dark:text-zinc-400 block">Éves reálhozam (infláció felett):</span>
+                                <span id="kpi-real-rate" class="font-mono text-sm font-bold text-cyan-700 dark:text-cyan-400 mt-1 block">+4.73% / év</span>
+                            </div>
+                        </div>
+
+                        <div class="text-xs leading-relaxed text-zinc-600 dark:text-zinc-400 bg-white dark:bg-[#14161b] px-4 py-3 rounded-xl border border-zinc-200/70 dark:border-zinc-800/80">
+                            <span class="font-bold text-zinc-800 dark:text-zinc-200" data-i18n="plainDigestTitle">Mit jelent ez a gyakorlatban? </span>
+                            <span id="plain-digest-text">
+                                Az infláció miatt a jövőbeli számlaegyenlege mai árakon ennyinek felel meg.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Visual Stacked Composition Bar -->
+                    <div class="pt-1 space-y-2.5">
+                        <div class="flex justify-between items-center text-xs">
+                            <span data-i18n="compositionBarTitle" class="font-semibold text-zinc-700 dark:text-zinc-300">
+                                Végösszeg felépítése
+                            </span>
+                            <span id="composition-summary-text" class="font-mono text-zinc-500 dark:text-zinc-400 text-[11px] font-semibold">
+                                46.6% Saját tőke • 53.4% Kamatos kamat
+                            </span>
+                        </div>
+
+                        <div class="h-3.5 w-full rounded-full bg-zinc-100 dark:bg-[#0c0d10] overflow-hidden flex p-0.5 gap-0.5 border border-zinc-200/60 dark:border-zinc-800">
+                            <div id="bar-initial" class="h-full bg-zinc-500 dark:bg-zinc-400 rounded-l-full transition-all duration-300" style="width: 10%"></div>
+                            <div id="bar-contributions" class="h-full bg-amber-500 transition-all duration-300" style="width: 36%"></div>
+                            <div id="bar-interest" class="h-full bg-emerald-600 dark:bg-emerald-500 rounded-r-full transition-all duration-300" style="width: 54%"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
+                            <div class="flex items-center justify-between sm:justify-start gap-2 bg-zinc-50 dark:bg-[#0c0d10] px-3 py-2 rounded-xl border border-zinc-200/70 dark:border-zinc-800/90">
+                                <span class="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-zinc-500 dark:bg-zinc-400 inline-block"></span>
+                                    <span data-i18n="legendInitial">Kezdő tőke:</span>
+                                </span>
+                                <span id="legend-initial-val" class="font-mono font-bold text-zinc-800 dark:text-zinc-200">3.3%</span>
+                            </div>
+                            <div class="flex items-center justify-between sm:justify-start gap-2 bg-zinc-50 dark:bg-[#0c0d10] px-3 py-2 rounded-xl border border-zinc-200/70 dark:border-zinc-800/90">
+                                <span class="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-amber-500 inline-block"></span>
+                                    <span data-i18n="legendContrib">Befizetések:</span>
+                                </span>
+                                <span id="legend-contrib-val" class="font-mono font-bold text-zinc-800 dark:text-zinc-200">43.3%</span>
+                            </div>
+                            <div class="flex items-center justify-between sm:justify-start gap-2 bg-zinc-50 dark:bg-[#0c0d10] px-3 py-2 rounded-xl border border-zinc-200/70 dark:border-zinc-800/90">
+                                <span class="flex items-center gap-1.5 text-zinc-600 dark:text-zinc-400">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-emerald-600 dark:bg-emerald-500 inline-block"></span>
+                                    <span data-i18n="legendInterest">Hozam (Kamat):</span>
+                                </span>
+                                <span id="legend-interest-val" class="font-mono font-bold text-emerald-700 dark:text-emerald-400">53.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Trajectory Chart Card -->
+                <section class="card-surface bg-white dark:bg-[#14161b] rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-sm p-5 sm:p-7">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+                        <div>
+                            <h3 data-i18n="chartTitle" class="font-bold text-base text-zinc-900 dark:text-zinc-100">
+                                Vagyonépítés Alakulása
+                            </h3>
+                            <p data-i18n="chartSubtitle" class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                                Végösszeg (számlaegyenleg) vs. Befizetett saját tőke
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative h-72 sm:h-80 w-full">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- FULL-WIDTH DETAILED BREAKDOWN TABLE -->
+        <section class="mt-8 card-surface bg-white dark:bg-[#14161b] rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-sm overflow-hidden">
+            <div class="p-5 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h3 class="font-bold text-base text-zinc-900 dark:text-zinc-100 flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                            <i data-lucide="table" class="w-4 h-4"></i>
+                        </div>
+                        <span data-i18n="tableTitle">Részletes Növekedési Táblázat</span>
+                    </h3>
+                    <p data-i18n="tableSubtitle" class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                        Kövesse nyomon az emelkedő befizetéseket és a tőkésített kamatokat időszakonként
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="inline-flex rounded-xl p-1 bg-zinc-100 dark:bg-[#0c0d10] border border-zinc-200/80 dark:border-zinc-800">
+                        <button type="button" id="table-view-yearly" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm transition-all" data-i18n="viewYearly">
+                            Éves bontás
+                        </button>
+                        <button type="button" id="table-view-monthly" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all" data-i18n="viewMonthly">
+                            Havi bontás
+                        </button>
+                    </div>
+
+                    <button type="button" id="export-csv-btn" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-300/80 dark:border-zinc-700 hover:bg-zinc-200/70 dark:hover:bg-zinc-700 transition-colors">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span data-i18n="exportCsv">CSV Letöltése</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto max-h-[480px] overflow-y-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="sticky top-0 z-10 bg-zinc-100/95 dark:bg-[#0c0d10]/95 backdrop-blur-sm text-[11px] font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 border-b border-zinc-200 dark:border-zinc-800">
+                        <tr>
+                            <th class="py-3.5 px-4" data-i18n="thPeriod">Időszak</th>
+                            <th class="py-3.5 px-4 text-right" data-i18n="thPeriodicContrib">Aktuális Befizetés</th>
+                            <th class="py-3.5 px-4 text-right" data-i18n="thTotalPrincipal">Kumulált Tőke</th>
+                            <th class="py-3.5 px-4 text-right" data-i18n="thPeriodInterest">Időszaki Kamat</th>
+                            <th class="py-3.5 px-4 text-right" data-i18n="thTotalInterest">Összes Kamat</th>
+                            <th class="py-3.5 px-4 text-right text-zinc-900 dark:text-zinc-100" data-i18n="thNominalBalance">Végösszeg (Egyenleg)</th>
+                            <th id="th-real-balance" class="py-3.5 px-4 text-right text-cyan-700 dark:text-cyan-400 hidden" data-i18n="thRealBalance">Reálérték (Mai Áron)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-table-body" class="divide-y divide-zinc-200/70 dark:divide-zinc-800/80 text-xs sm:text-sm font-mono">
+                        <!-- Dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- GEMINI AI FINANCIAL ADVISOR & GOAL PLANNER -->
+        <section class="mt-8 card-surface bg-white dark:bg-[#14161b] rounded-2xl border border-zinc-200/90 dark:border-zinc-800/90 shadow-sm p-5 sm:p-7">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-100 dark:border-zinc-800 pb-5 mb-5">
+                <div class="flex items-start sm:items-center gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-800 dark:from-emerald-500 dark:to-emerald-700 flex items-center justify-center text-white shrink-0 shadow-sm">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 data-i18n="aiAdvisorTitle" class="font-bold text-base text-zinc-900 dark:text-zinc-100">
+                                Gemini Pénzügyi Elemző & Stratéga
+                            </h3>
+                            <span id="ai-badge-pill" data-i18n="aiBadgeText" class="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                                Élő Portfólió Elemzés
+                            </span>
+                        </div>
+                        <p data-i18n="aiAdvisorSubtitle" class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                            A modul automatikusan átküldi a fent beállított számokat a Gemini modellnek, amely kiszámolja az erősségeket, kockázatokat és javaslatokat.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quick AI Action Prompts -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" data-prompt-type="review" class="ai-prompt-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-zinc-100 hover:bg-zinc-200/80 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700 transition-all flex items-center gap-1.5">
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
+                        <span data-i18n="aiPromptReview">Portfólió Értékelése</span>
+                    </button>
+                    <button type="button" data-prompt-type="goal" class="ai-prompt-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-zinc-100 hover:bg-zinc-200/80 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700 transition-all flex items-center gap-1.5">
+                        <i data-lucide="compass" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
+                        <span data-i18n="aiPromptGoal">Nyugdíj / FIRE Terv</span>
+                    </button>
+                    <button type="button" data-prompt-type="inflation" class="ai-prompt-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-zinc-100 hover:bg-zinc-200/80 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-700 transition-all flex items-center gap-1.5">
+                        <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400"></i>
+                        <span data-i18n="aiPromptInflation">Inflációs Védelem</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Output Box -->
+            <div id="ai-chat-response" class="bg-zinc-50 dark:bg-[#0c0d10] rounded-xl p-4 sm:p-5 border border-zinc-200/80 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 text-sm leading-relaxed min-h-[120px] max-h-[360px] overflow-y-auto space-y-3">
+                <p class="text-zinc-500 dark:text-zinc-400" data-i18n="aiInitialPrompt">
+                    Kattintson a fenti gombok valamelyikére, vagy írja be saját kérdését alul! A tanácsadó látja az Ön által beállított kezdő tőkét, havi befizetést, kamatot és inflációt, így konkrétan az Ön számaira válaszol.
+                </p>
+            </div>
+
+            <!-- Custom Question Input Bar -->
+            <div class="mt-4 flex gap-2.5">
+                <div class="relative flex-1">
+                    <input type="text" id="ai-user-input" placeholder="Írja be pénzügyi kérdését (pl. Hogyan érhetek el 50 millió Ft-ot?)..."
+                        class="w-full bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-2.5 pl-4 pr-10 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <i data-lucide="message-square" class="w-4 h-4 text-zinc-400 absolute right-3.5 top-3 pointer-events-none"></i>
+                </div>
+                <button type="button" id="ai-send-btn" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-semibold text-sm shadow-sm transition-all flex items-center gap-2 shrink-0">
+                    <span data-i18n="aiSendBtn">Elemzés</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-xs text-zinc-500 dark:text-zinc-400 border-t border-zinc-200/70 dark:border-zinc-800/70 mt-8">
+        <p id="footer-note">
+            Készítette: Nagy Márton • A számítások tájékoztató jellegűek. Történelmi inflációs adatok: Világbank (World Bank Open Data FP.CPI.TOTL.ZG).
+        </p>
+    </footer>
+
+    <script>
+        /***********************************************************************
+         * 1. FULL LOCALIZATION DICTIONARY (HU & EN)
+         ***********************************************************************/
+        const I18N = {
+            hu: {
+                pageTitle: "Kamatos Kamat & Vásárlóerő Kalkulátor — Készítette: Nagy Márton",
+                appTitle: "Kamatos Kamat & Vásárlóerő Kalkulátor",
+                authorBadge: "Készítette: Nagy Márton",
+                appSubtitle: "Precíziós vagyontervező és történelmi inflációval korrigált vásárlóerő-szimulátor",
+                paramsTitle: "Megtakarítási Paraméterek",
+                resetBtn: "Alaphelyzet",
+                initialDepositLabel: "Kezdő tőke (egyszeri)",
+                regularContributionLabel: "Rendszeres befizetés",
+                freqMonthly: "Havi",
+                freqAnnually: "Éves",
+                contribAmountSub: "Befizetett összeg alkalmanként",
+                contribGrowthLabel: "Befizetések éves növelése",
+                contribGrowthHint: "Éves % emelés (pl. fizetésemelés vagy inflációkövetés)",
+                interestRateLabel: "Éves nominális hozam (kamatláb)",
+                yearsLabel: "Időtáv",
+                yearsUnit: "év",
+                compoundFreqLabel: "Tőkésítés gyakorisága",
+                compMonthly: "Havi (12x / év)",
+                compQuarterly: "Negyedéves (4x / év)",
+                compAnnually: "Éves (1x / év)",
+                inflationCardTitle: "Infláció & Vásárlóerő Modul",
+                inflationToggleSub: "Kapcsolja be, ha a jövőbeli pénz mai vásárlóerejét is látni szeretné",
+                inflationActiveLabel: "Hivatalos adatforrás:",
+                inflationRateLabel: "Várható éves infláció",
+                inflationRateHint: "Alapértelmezetten a globális átlagra állítva",
+                histContextLabel: "Történelmi inflációs segédlet",
+                window10Y: "Elmúlt 10 év",
+                window20Y: "Elmúlt 20 év",
+                windowMax: "Adatkezdettől (Max)",
+                applyBtn: "Alkalmaz",
+                histDataFootnote: "Adatforrás: Világbank (World Bank CPI). Kattintson a fenti gombra az eredeti adatsor megnyitásához.",
+                resultsHeaderTitle: "Kalkuláció Eredménye — Átlátható Összesítő",
+                card2Title: "Várható Végösszeg (Számlaegyenleg)",
+                card2Sub: "Ennyi pénz lesz számszerűleg a megtakarítási számláján a futamidő végén.",
+                card1Title: "Összes saját befizetés",
+                card2InterestLabel: "Megszerzett kamat (hozam)",
+                card2MultiplierLabel: "Tőketöbbszöröző",
+                card3Title: "Inflációval Korrigált Vásárlóerő (Mai Árakon)",
+                realBadge: "Reálérték",
+                card3Sub: "Mai pénzben kifejezve ennyi árut és szolgáltatást ér majd a fenti végösszeg.",
+                card1RealCostLabel: "Befizetései mai értéke:",
+                card3RealGainLabel: "Infláció feletti reálnyereség:",
+                card3FisherLabel: "Éves reálhozam (infláció felett):",
+                plainDigestTitle: "Mit jelent ez a gyakorlatban? ",
+                card1FinalDepositLabel: "Utolsó évi rendszeres részlet",
+                compositionBarTitle: "Végösszeg felépítése",
+                legendInitial: "Kezdő tőke:",
+                legendContrib: "Befizetések:",
+                legendInterest: "Hozam (Kamat):",
+                chartTitle: "Vagyonépítés Alakulása",
+                chartSubtitle: "Végösszeg (számlaegyenleg) vs. Befizetett saját tőke",
+                chartSubtitleWithInf: "Nominális egyenleg vs. Valós vásárlóerő (reálérték) vs. Befizetett saját tőke",
+                chartSeriesNominal: "Végösszeg (Számlaegyenleg)",
+                chartSeriesReal: "Valós Vásárlóerő (Mai árakon)",
+                chartSeriesPrincipal: "Befizetett Saját Tőke",
+                tableTitle: "Részletes Növekedési Táblázat",
+                tableSubtitle: "Kövesse nyomon az emelkedő befizetéseket és a tőkésített kamatokat időszakonként",
+                viewYearly: "Éves bontás",
+                viewMonthly: "Havi bontás",
+                exportCsv: "CSV Letöltése",
+                thPeriod: "Időszak",
+                thPeriodicContrib: "Aktuális Befizetés",
+                thTotalPrincipal: "Kumulált Tőke",
+                thPeriodInterest: "Időszaki Kamat",
+                thTotalInterest: "Összes Kamat",
+                thNominalBalance: "Végösszeg (Egyenleg)",
+                thRealBalance: "Reálérték (Mai Áron)",
+                yearPrefix: "Év",
+                monthPrefix: "Hónap",
+                perMonthSuffix: "/ hó",
+                perYearSuffix: "/ év",
+                afterYearsSuffix: "év után",
+                ownCapitalLabel: "Saját tőke",
+                compoundInterestLabel: "Kamatos kamat",
+                apiLive: "Világbank Élő Adat",
+                apiFallback: "Világbank CPI Adatbázis",
+                aiAdvisorTitle: "Gemini Pénzügyi Elemző & Stratéga",
+                aiBadgeText: "Élő Portfólió Elemzés",
+                aiAdvisorSubtitle: "A modul automatikusan átküldi a fent beállított számokat a Gemini modellnek, amely kiszámolja az erősségeket, kockázatokat és javaslatokat.",
+                aiPromptReview: "Portfólió Értékelése",
+                aiPromptGoal: "Nyugdíj / FIRE Terv",
+                aiPromptInflation: "Inflációs Védelem",
+                aiInitialPrompt: "Kattintson a fenti gombok valamelyikére, vagy írja be saját kérdését alul! A tanácsadó látja az Ön által beállított kezdő tőkét, havi befizetést, kamatot és inflációt, így konkrétan az Ön számaira válaszol.",
+                aiInputPlaceholder: "Írja be pénzügyi kérdését (pl. Hogyan érhetek el 50 millió Ft-ot?)...",
+                aiSendBtn: "Elemzés",
+                aiLoading: "A Gemini elemzi az Ön által megadott paramétereket...",
+                aiNoResponse: "Nem érkezett válasz a Gemini modelltől.",
+                aiErrorPrefix: "Hiba történt az elemzés lekérésekor:",
+                footerNote: "Készítette: Nagy Márton • A számítások tájékoztató jellegűek. Történelmi inflációs adatok: Világbank (World Bank Open Data FP.CPI.TOTL.ZG).",
+                globalLabelShort: "Globális átlag",
+                countries: {
+                    WLD: "Globális Átlag (WLD)",
+                    HUN: "Magyarország (HUN)",
+                    EMU: "Eurózóna (EMU)",
+                    USA: "Egyesült Államok (USA)",
+                    DEU: "Németország (DEU)",
+                    AUT: "Ausztria (AUT)",
+                    POL: "Lengyelország (POL)",
+                    GBR: "Egyesült Királyság (GBR)"
+                },
+                countryNamesShort: {
+                    WLD: "Globális Átlag",
+                    HUN: "Magyarország",
+                    EMU: "Eurózóna",
+                    USA: "Egyesült Államok",
+                    DEU: "Németország",
+                    AUT: "Ausztria",
+                    POL: "Lengyelország",
+                    GBR: "Egyesült Királyság"
+                }
+            },
+            en: {
+                pageTitle: "Compound Interest & Purchasing Power Calculator — Created by Márton Nagy",
+                appTitle: "Compound Interest & Purchasing Power Calculator",
+                authorBadge: "Created by Márton Nagy",
+                appSubtitle: "Precision wealth planner & historical inflation-adjusted purchasing power simulator",
+                paramsTitle: "Investment Parameters",
+                resetBtn: "Reset",
+                initialDepositLabel: "Initial Deposit (One-off)",
+                regularContributionLabel: "Regular Contribution",
+                freqMonthly: "Monthly",
+                freqAnnually: "Annually",
+                contribAmountSub: "Contribution amount per period",
+                contribGrowthLabel: "Annual Contribution Step-Up",
+                contribGrowthHint: "Annual % increase in savings (e.g., salary raises or inflation indexing)",
+                interestRateLabel: "Annual Nominal Return (Interest Rate)",
+                yearsLabel: "Time Horizon",
+                yearsUnit: "yrs",
+                compoundFreqLabel: "Compounding Frequency",
+                compMonthly: "Monthly (12x / yr)",
+                compQuarterly: "Quarterly (4x / yr)",
+                compAnnually: "Annually (1x / yr)",
+                inflationCardTitle: "Inflation & Purchasing Power Module",
+                inflationToggleSub: "Turn on to calculate what your future balance is worth in today's money",
+                inflationActiveLabel: "Official Data Source:",
+                inflationRateLabel: "Expected Annual Inflation",
+                inflationRateHint: "Defaults to the Global Average when enabled",
+                histContextLabel: "Historical Inflation Reference",
+                window10Y: "Past 10 Years",
+                window20Y: "Past 20 Years",
+                windowMax: "Since Start (Max)",
+                applyBtn: "Apply",
+                histDataFootnote: "Source: World Bank CPI. Click the button above to open the official World Bank dataset.",
+                resultsHeaderTitle: "Projection Summary — Clear Breakdown",
+                card2Title: "Expected Final Balance",
+                card2Sub: "The exact numerical balance on your account statement at the end of the term.",
+                card1Title: "Total principal deposited",
+                card2InterestLabel: "Total interest earned",
+                card2MultiplierLabel: "Capital multiplier",
+                card3Title: "Inflation-Adjusted Purchasing Power (Today's Money)",
+                realBadge: "Real Value",
+                card3Sub: "How much goods and services your final balance buys at today's price level.",
+                card1RealCostLabel: "Your deposits in today's money:",
+                card3RealGainLabel: "Net real profit above inflation:",
+                card3FisherLabel: "Real annual return (above inflation):",
+                plainDigestTitle: "What does this mean in practice? ",
+                card1FinalDepositLabel: "Final year regular deposit",
+                compositionBarTitle: "Final Balance Composition",
+                legendInitial: "Initial deposit:",
+                legendContrib: "Contributions:",
+                legendInterest: "Compound Interest:",
+                chartTitle: "Wealth Growth Trajectory",
+                chartSubtitle: "Final Account Balance vs. Total Principal Deposited",
+                chartSubtitleWithInf: "Nominal Balance vs. Real Purchasing Power (Today's Value) vs. Total Principal",
+                chartSeriesNominal: "Final Balance (Nominal)",
+                chartSeriesReal: "Real Purchasing Power (Today's Prices)",
+                chartSeriesPrincipal: "Total Principal Deposited",
+                tableTitle: "Detailed Growth Schedule",
+                tableSubtitle: "Track stepped-up contributions and compounded interest period by period",
+                viewYearly: "Yearly View",
+                viewMonthly: "Monthly View",
+                exportCsv: "Export CSV",
+                thPeriod: "Period",
+                thPeriodicContrib: "Periodic Deposit",
+                thTotalPrincipal: "Total Principal",
+                thPeriodInterest: "Period Interest",
+                thTotalInterest: "Total Interest",
+                thNominalBalance: "Final Balance",
+                thRealBalance: "Real Value (Today's Money)",
+                yearPrefix: "Year",
+                monthPrefix: "Month",
+                perMonthSuffix: "/ mo",
+                perYearSuffix: "/ yr",
+                afterYearsSuffix: "years",
+                ownCapitalLabel: "Principal",
+                compoundInterestLabel: "Compound interest",
+                apiLive: "World Bank Live Data",
+                apiFallback: "World Bank CPI Dataset",
+                aiAdvisorTitle: "Gemini Financial Analyst & Strategist",
+                aiBadgeText: "Live Portfolio Analysis",
+                aiAdvisorSubtitle: "Automatically sends your current calculator parameters to Gemini AI to evaluate risks, real returns, and optimization strategies.",
+                aiPromptReview: "Portfolio Review",
+                aiPromptGoal: "Retirement / FIRE Plan",
+                aiPromptInflation: "Inflation Hedge",
+                aiInitialPrompt: "Click one of the action buttons above or ask a custom question below! The advisor reads your exact initial deposit, monthly savings, return rate, and inflation settings.",
+                aiInputPlaceholder: "Type your financial question (e.g., How can I reach 50M?)...",
+                aiSendBtn: "Analyze",
+                aiLoading: "Gemini is analyzing your financial parameters...",
+                aiNoResponse: "No response received from Gemini AI.",
+                aiErrorPrefix: "Error while fetching AI analysis:",
+                footerNote: "Created by Márton Nagy • Projections are for informational purposes. Historical inflation data: World Bank Open Data (FP.CPI.TOTL.ZG).",
+                globalLabelShort: "Global avg",
+                countries: {
+                    WLD: "Global Average (WLD)",
+                    HUN: "Hungary (HUN)",
+                    EMU: "Eurozone (EMU)",
+                    USA: "United States (USA)",
+                    DEU: "Germany (DEU)",
+                    AUT: "Austria (AUT)",
+                    POL: "Poland (POL)",
+                    GBR: "United Kingdom (GBR)"
+                },
+                countryNamesShort: {
+                    WLD: "Global Average",
+                    HUN: "Hungary",
+                    EMU: "Eurozone",
+                    USA: "United States",
+                    DEU: "Germany",
+                    AUT: "Austria",
+                    POL: "Poland",
+                    GBR: "United Kingdom"
+                }
+            }
+        };
+
+        /***********************************************************************
+         * 2. HISTORICAL INFLATION FALLBACK AVERAGES & WORLD BANK URL CODES
+         ***********************************************************************/
+        const FALLBACK_WINDOW_AVERAGES = {
+            WLD: { '10': 3.9, '20': 3.8, 'max': 4.5 },
+            HUN: { '10': 5.8, '20': 4.9, 'max': 6.2 },
+            EMU: { '10': 2.6, '20': 2.1, 'max': 3.1 },
+            USA: { '10': 2.9, '20': 2.5, 'max': 3.6 },
+            DEU: { '10': 2.6, '20': 2.0, 'max': 2.4 },
+            AUT: { '10': 3.2, '20': 2.5, 'max': 3.0 },
+            POL: { '10': 4.6, '20': 3.5, 'max': 7.1 },
+            GBR: { '10': 3.2, '20': 2.8, 'max': 4.7 }
+        };
+
+        const WORLDBANK_WEB_LOCATIONS = {
+            WLD: '1W',
+            HUN: 'HU',
+            EMU: 'XC',
+            USA: 'US',
+            DEU: 'DE',
+            AUT: 'AT',
+            POL: 'PL',
+            GBR: 'GB'
+        };
+
+        /***********************************************************************
+         * 3. CURRENCY CONFIGURATIONS
+         ***********************************************************************/
+        const CURRENCY_CONFIG = {
+            HUF: {
+                symbol: 'Ft',
+                initialDefault: 1000000,
+                initialMax: 50000000,
+                initialStep: 100000,
+                contribDefault: 50000,
+                contribMax: 1000000,
+                contribStep: 5000,
+                maxLabelInit: '50M Ft',
+                maxLabelContrib: '1M Ft'
+            },
+            EUR: {
+                symbol: '€',
+                initialDefault: 5000,
+                initialMax: 250000,
+                initialStep: 500,
+                contribDefault: 250,
+                contribMax: 5000,
+                contribStep: 25,
+                maxLabelInit: '250k €',
+                maxLabelContrib: '5k €'
+            },
+            USD: {
+                symbol: '$',
+                initialDefault: 5000,
+                initialMax: 250000,
+                initialStep: 500,
+                contribDefault: 250,
+                contribMax: 5000,
+                contribStep: 25,
+                maxLabelInit: '$250k',
+                maxLabelContrib: '$5k'
+            }
+        };
+
+        /***********************************************************************
+         * 4. APPLICATION STATE
+         ***********************************************************************/
+        const state = {
+            lang: 'hu',
+            currency: 'HUF',
+            initialDeposit: 1000000,
+            regularContribution: 50000,
+            contributionFrequency: 'monthly',
+            contributionGrowthRate: 5.0,
+            annualInterestRate: 8.0,
+            years: 15,
+            compoundFrequency: 12,
+            inflationEnabled: false,
+            inflationRate: 3.9,
+            selectedCountry: 'WLD',
+            inflationWindow: '10',
+            tableView: 'yearly',
+            worldBankRawSeries: {},
+            worldBankLiveLoaded: false,
+            lastSimulation: null
+        };
+
+        let growthChartInstance = null;
+
+        /***********************************************************************
+         * 5. FORMATTING HELPERS
+         ***********************************************************************/
+        function formatNumberWithSpaces(num) {
+            const rounded = Math.round(Number(num) || 0);
+            return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        function parseFormattedNumber(str) {
+            if (typeof str === 'number') return str;
+            const cleaned = String(str).replace(/[^\d]/g, '');
+            return cleaned ? parseInt(cleaned, 10) : 0;
+        }
+
+        function formatMoney(amount, compact = false) {
+            const val = Math.round(amount);
+
+            if (compact) {
+                const abs = Math.abs(val);
+                const sym = CURRENCY_CONFIG[state.currency].symbol;
+                const billionLabel = state.lang === 'hu' ? 'Mrd' : 'B';
+                if (abs >= 1e9) {
+                    return (val / 1e9).toFixed(1) + ' ' + billionLabel + ' ' + sym;
+                }
+                if (abs >= 1e6) {
+                    return (val / 1e6).toFixed(1) + 'M ' + sym;
+                }
+                if (abs >= 1e3) {
+                    return (val / 1e3).toFixed(0) + 'k ' + sym;
+                }
+            }
+
+            const formattedNumber = formatNumberWithSpaces(val);
+
+            if (state.currency === 'HUF') {
+                return `${formattedNumber} Ft`;
+            } else if (state.currency === 'EUR') {
+                return state.lang === 'hu' ? `${formattedNumber} €` : `€${formattedNumber}`;
+            } else {
+                return state.lang === 'hu' ? `${formattedNumber} $` : `$${formattedNumber}`;
+            }
+        }
+
+        /***********************************************************************
+         * 6. CORE FINANCIAL CALCULATION ENGINE
+         ***********************************************************************/
+        function runFinancialSimulation() {
+            const P0 = Math.max(0, Number(state.initialDeposit) || 0);
+            const baseContribution = Math.max(0, Number(state.regularContribution) || 0);
+            const contribFreq = state.contributionFrequency;
+            const stepUpRate = (Number(state.contributionGrowthRate) || 0) / 100;
+            const nominalAnnualRate = (Number(state.annualInterestRate) || 0) / 100;
+            const totalYears = Math.min(50, Math.max(1, parseInt(state.years, 10) || 1));
+            const compFreq = parseInt(state.compoundFrequency, 10) || 12;
+            const annualInflationRate = (Number(state.inflationRate) || 0) / 100;
+
+            const totalMonths = totalYears * 12;
+
+            const monthlyEffectiveRate = nominalAnnualRate > 0
+                ? Math.pow(1 + nominalAnnualRate / compFreq, compFreq / 12) - 1
+                : 0;
+
+            const monthlyInflationRate = annualInflationRate > 0
+                ? Math.pow(1 + annualInflationRate, 1 / 12) - 1
+                : 0;
+
+            let currentBalance = P0;
+            let totalNominalPrincipal = P0;
+            let totalRealPrincipal = P0;
+            let totalInterest = 0;
+
+            const monthlySchedule = [];
+            const yearlySchedule = [];
+
+            yearlySchedule.push({
+                year: 0,
+                periodicContribution: baseContribution,
+                annualContribution: 0,
+                totalPrincipal: P0,
+                totalRealPrincipal: P0,
+                periodInterest: 0,
+                totalInterest: 0,
+                nominalBalance: P0,
+                realBalance: P0
+            });
+
+            let yearlyContribSum = 0;
+            let yearlyInterestSum = 0;
+
+            for (let m = 1; m <= totalMonths; m++) {
+                const yearIndex = Math.floor((m - 1) / 12);
+                const monthInYear = ((m - 1) % 12) + 1;
+
+                const currentPeriodicContribution = baseContribution * Math.pow(1 + stepUpRate, yearIndex);
+
+                let depositThisMonth = 0;
+                if (contribFreq === 'monthly') {
+                    depositThisMonth = currentPeriodicContribution;
+                } else if (contribFreq === 'annually' && monthInYear === 1) {
+                    depositThisMonth = currentPeriodicContribution;
+                }
+
+                const startOfMonthDiscount = Math.pow(1 + monthlyInflationRate, m - 1);
+
+                currentBalance += depositThisMonth;
+                totalNominalPrincipal += depositThisMonth;
+                totalRealPrincipal += depositThisMonth / startOfMonthDiscount;
+                yearlyContribSum += depositThisMonth;
+
+                const interestThisMonth = currentBalance * monthlyEffectiveRate;
+                currentBalance += interestThisMonth;
+                totalInterest += interestThisMonth;
+                yearlyInterestSum += interestThisMonth;
+
+                const endOfMonthDiscount = Math.pow(1 + monthlyInflationRate, m);
+                const realPurchasingPower = currentBalance / endOfMonthDiscount;
+
+                monthlySchedule.push({
+                    month: m,
+                    year: yearIndex + 1,
+                    periodicContribution: depositThisMonth,
+                    totalPrincipal: totalNominalPrincipal,
+                    totalRealPrincipal: totalRealPrincipal,
+                    periodInterest: interestThisMonth,
+                    totalInterest: totalInterest,
+                    nominalBalance: currentBalance,
+                    realBalance: realPurchasingPower
+                });
+
+                if (m % 12 === 0) {
+                    yearlySchedule.push({
+                        year: yearIndex + 1,
+                        periodicContribution: currentPeriodicContribution,
+                        annualContribution: yearlyContribSum,
+                        totalPrincipal: totalNominalPrincipal,
+                        totalRealPrincipal: totalRealPrincipal,
+                        periodInterest: yearlyInterestSum,
+                        totalInterest: totalInterest,
+                        nominalBalance: currentBalance,
+                        realBalance: realPurchasingPower
+                    });
+                    yearlyContribSum = 0;
+                    yearlyInterestSum = 0;
+                }
+            }
+
+            const finalYearSnap = yearlySchedule[yearlySchedule.length - 1];
+            const effectiveAnnualYield = Math.pow(1 + nominalAnnualRate / compFreq, compFreq) - 1;
+            const fisherRealAnnualRate = ((1 + effectiveAnnualYield) / (1 + annualInflationRate) - 1) * 100;
+
+            state.lastSimulation = {
+                initialDeposit: P0,
+                finalNominal: finalYearSnap.nominalBalance,
+                finalReal: finalYearSnap.realBalance,
+                totalPrincipal: finalYearSnap.totalPrincipal,
+                totalRealPrincipal: finalYearSnap.totalRealPrincipal,
+                totalRegularContribNominal: finalYearSnap.totalPrincipal - P0,
+                totalInterest: finalYearSnap.totalInterest,
+                realNetGain: finalYearSnap.realBalance - finalYearSnap.totalRealPrincipal,
+                fisherRealAnnualRate: fisherRealAnnualRate,
+                finalPeriodicContrib: finalYearSnap.periodicContribution,
+                yearlySchedule,
+                monthlySchedule
+            };
+
+            updateDashboardUI();
+        }
+
+        /***********************************************************************
+         * 7. UI UPDATER
+         ***********************************************************************/
+        function updateDashboardUI() {
+            const sim = state.lastSimulation;
+            if (!sim) return;
+            const dict = I18N[state.lang];
+
+            document.getElementById('summary-horizon-badge').textContent =
+                `${state.years} ${dict.afterYearsSuffix}`;
+
+            document.getElementById('kpi-principal-value').textContent = formatMoney(sim.totalPrincipal);
+            document.getElementById('kpi-real-principal-value').textContent = formatMoney(sim.totalRealPrincipal);
+
+            const freqSuffix = state.contributionFrequency === 'monthly' ? dict.perMonthSuffix : dict.perYearSuffix;
+            document.getElementById('kpi-final-contrib').textContent =
+                `${formatMoney(sim.finalPeriodicContrib)} ${freqSuffix}`;
+
+            document.getElementById('kpi-nominal-value').textContent = formatMoney(sim.finalNominal);
+            document.getElementById('kpi-interest-value').textContent = `+${formatMoney(sim.totalInterest)}`;
+
+            const multiplier = sim.totalPrincipal > 0 ? (sim.finalNominal / sim.totalPrincipal).toFixed(2) : '1.00';
+            document.getElementById('kpi-multiplier').textContent = `${multiplier}x`;
+
+            const infControlsBody = document.getElementById('inflation-controls-body');
+            const realResultsContainer = document.getElementById('real-results-container');
+            const thRealBalance = document.getElementById('th-real-balance');
+            const chartSubtitleEl = document.querySelector('[data-i18n="chartSubtitle"]');
+
+            if (state.inflationEnabled) {
+                infControlsBody.classList.remove('hidden');
+                realResultsContainer.classList.remove('hidden');
+                thRealBalance.classList.remove('hidden');
+                if (chartSubtitleEl) chartSubtitleEl.textContent = dict.chartSubtitleWithInf;
+            } else {
+                infControlsBody.classList.add('hidden');
+                realResultsContainer.classList.add('hidden');
+                thRealBalance.classList.add('hidden');
+                if (chartSubtitleEl) chartSubtitleEl.textContent = dict.chartSubtitle;
+            }
+
+            document.getElementById('kpi-real-value').textContent = formatMoney(sim.finalReal);
+
+            const realGainPrefix = sim.realNetGain >= 0 ? '+' : '';
+            const realGainEl = document.getElementById('kpi-real-gain-value');
+            realGainEl.textContent = `${realGainPrefix}${formatMoney(sim.realNetGain)}`;
+            realGainEl.className = `font-mono text-sm font-semibold mt-1 block ${
+                sim.realNetGain >= 0
+                    ? 'text-cyan-700 dark:text-cyan-400'
+                    : 'text-rose-600 dark:text-rose-400'
+            }`;
+
+            const sign = sim.fisherRealAnnualRate >= 0 ? '+' : '';
+            const realRateEl = document.getElementById('kpi-real-rate');
+            realRateEl.textContent = `${sign}${sim.fisherRealAnnualRate.toFixed(2)}% ${dict.perYearSuffix}`;
+            realRateEl.className = `font-mono text-sm font-semibold mt-1 block ${
+                sim.fisherRealAnnualRate >= 0
+                    ? 'text-cyan-700 dark:text-cyan-400'
+                    : 'text-rose-600 dark:text-rose-400'
+            }`;
+
+            const realMultiplier = sim.totalRealPrincipal > 0
+                ? (sim.finalReal / sim.totalRealPrincipal).toFixed(2)
+                : '1.00';
+            const digestEl = document.getElementById('plain-digest-text');
+            if (state.lang === 'hu') {
+                digestEl.textContent = `A várható infláció (${state.inflationRate}%/év) miatt a jövőbeli ${formatMoney(sim.finalNominal, true)} számlaegyenleg mai árakon ${formatMoney(sim.finalReal)}-ot ér. A befizetései valós vásárlóerejét ${realMultiplier}x-esére (${realGainPrefix}${formatMoney(sim.realNetGain, true)} tiszta reálhaszon) növelte.`;
+            } else {
+                digestEl.textContent = `Due to expected inflation (${state.inflationRate}%/yr), your future ${formatMoney(sim.finalNominal, true)} balance will have the purchasing power of ${formatMoney(sim.finalReal)} in today's money—multiplying your real purchasing power by ${realMultiplier}x (${realGainPrefix}${formatMoney(sim.realNetGain, true)} net real profit).`;
+            }
+
+            const denom = sim.finalNominal > 0 ? sim.finalNominal : 1;
+            const initPct = (sim.initialDeposit / denom) * 100;
+            const contribPct = (sim.totalRegularContribNominal / denom) * 100;
+            const interestPct = (sim.totalInterest / denom) * 100;
+            const totalOwnPct = initPct + contribPct;
+
+            document.getElementById('bar-initial').style.width = `${initPct.toFixed(1)}%`;
+            document.getElementById('bar-contributions').style.width = `${contribPct.toFixed(1)}%`;
+            document.getElementById('bar-interest').style.width = `${interestPct.toFixed(1)}%`;
+
+            document.getElementById('legend-initial-val').textContent = `${initPct.toFixed(1)}% (${formatMoney(sim.initialDeposit, true)})`;
+            document.getElementById('legend-contrib-val').textContent = `${contribPct.toFixed(1)}% (${formatMoney(sim.totalRegularContribNominal, true)})`;
+            document.getElementById('legend-interest-val').textContent = `${interestPct.toFixed(1)}% (+${formatMoney(sim.totalInterest, true)})`;
+
+            document.getElementById('composition-summary-text').textContent =
+                `${totalOwnPct.toFixed(1)}% ${dict.ownCapitalLabel} • ${interestPct.toFixed(1)}% ${dict.compoundInterestLabel}`;
+
+            renderOrUpdateChart(sim.yearlySchedule);
+            renderBreakdownTable();
+        }
+
+        /***********************************************************************
+         * 8. CHART.JS RENDERING
+         ***********************************************************************/
+        function renderOrUpdateChart(yearlyData) {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            const dict = I18N[state.lang];
+            const isDark = document.documentElement.classList.contains('dark');
+
+            const labels = yearlyData.map(row => `${dict.yearPrefix} ${row.year}`);
+            const nominalSeries = yearlyData.map(row => Math.round(row.nominalBalance));
+            const realSeries = yearlyData.map(row => Math.round(row.realBalance));
+            const principalSeries = yearlyData.map(row => Math.round(row.totalPrincipal));
+
+            const gridColor = isDark ? 'rgba(161, 161, 170, 0.1)' : 'rgba(161, 161, 170, 0.22)';
+            const textColor = isDark ? '#a1a1aa' : '#52525b';
+
+            if (growthChartInstance) {
+                growthChartInstance.data.labels = labels;
+                growthChartInstance.data.datasets[0].label = dict.chartSeriesNominal;
+                growthChartInstance.data.datasets[0].data = nominalSeries;
+                growthChartInstance.data.datasets[1].label = dict.chartSeriesReal;
+                growthChartInstance.data.datasets[1].data = realSeries;
+                growthChartInstance.data.datasets[1].hidden = !state.inflationEnabled;
+                growthChartInstance.data.datasets[2].label = dict.chartSeriesPrincipal;
+                growthChartInstance.data.datasets[2].data = principalSeries;
+                growthChartInstance.options.scales.x.grid.color = gridColor;
+                growthChartInstance.options.scales.y.grid.color = gridColor;
+                growthChartInstance.options.scales.x.ticks.color = textColor;
+                growthChartInstance.options.scales.y.ticks.color = textColor;
+                growthChartInstance.options.plugins.legend.labels.color = isDark ? '#e4e4e7' : '#18181b';
+                growthChartInstance.update();
+                return;
+            }
+
+            const nominalGrad = ctx.createLinearGradient(0, 0, 0, 300);
+            nominalGrad.addColorStop(0, 'rgba(16, 185, 129, 0.28)');
+            nominalGrad.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+            const realGrad = ctx.createLinearGradient(0, 0, 0, 300);
+            realGrad.addColorStop(0, 'rgba(6, 182, 212, 0.30)');
+            realGrad.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+
+            growthChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: dict.chartSeriesNominal,
+                            data: nominalSeries,
+                            borderColor: '#10b981',
+                            backgroundColor: nominalGrad,
+                            borderWidth: 2.8,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 2.5,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: dict.chartSeriesReal,
+                            data: realSeries,
+                            borderColor: '#06b6d4',
+                            backgroundColor: realGrad,
+                            borderWidth: 2.5,
+                            borderDash: [4, 3],
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 2,
+                            pointHoverRadius: 5,
+                            hidden: !state.inflationEnabled
+                        },
+                        {
+                            label: dict.chartSeriesPrincipal,
+                            data: principalSeries,
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            borderDash: [5, 4],
+                            fill: false,
+                            tension: 0.2,
+                            pointRadius: 1.5,
+                            pointHoverRadius: 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: isDark ? '#e4e4e7' : '#18181b',
+                                usePointStyle: true,
+                                boxWidth: 8,
+                                filter: function(legendItem, chartData) {
+                                    if (legendItem.datasetIndex === 1 && !state.inflationEnabled) {
+                                        return false;
+                                    }
+                                    return true;
+                                },
+                                font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: isDark ? 'rgba(24, 24, 27, 0.96)' : 'rgba(255, 255, 255, 0.96)',
+                            titleColor: isDark ? '#f4f4f5' : '#18181b',
+                            bodyColor: isDark ? '#d4d4d8' : '#3f3f46',
+                            borderColor: isDark ? '#3f3f46' : '#e4e4e7',
+                            borderWidth: 1,
+                            padding: 12,
+                            boxPadding: 6,
+                            callbacks: {
+                                label: function(context) {
+                                    return ` ${context.dataset.label}: ${formatMoney(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: gridColor },
+                            ticks: { color: textColor, maxTicksLimit: 10, font: { size: 11 } }
+                        },
+                        y: {
+                            grid: { color: gridColor },
+                            ticks: {
+                                color: textColor,
+                                font: { family: 'JetBrains Mono', size: 11 },
+                                callback: function(val) {
+                                    return formatMoney(val, true);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        /***********************************************************************
+         * 9. BREAKDOWN TABLE & CSV EXPORT
+         ***********************************************************************/
+        function renderBreakdownTable() {
+            const tbody = document.getElementById('schedule-table-body');
+            const sim = state.lastSimulation;
+            if (!sim) return;
+
+            const dict = I18N[state.lang];
+            const isYearly = state.tableView === 'yearly';
+            const rows = isYearly ? sim.yearlySchedule.slice(1) : sim.monthlySchedule;
+
+            const fragment = document.createDocumentFragment();
+
+            rows.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors';
+
+                const periodLabel = isYearly
+                    ? `${dict.yearPrefix} ${r.year}`
+                    : `${dict.monthPrefix} ${r.month} (${dict.yearPrefix} ${r.year})`;
+
+                const realCellHtml = state.inflationEnabled
+                    ? `<td class="py-3 px-4 text-right font-medium text-cyan-700 dark:text-cyan-400 whitespace-nowrap">${formatMoney(r.realBalance)}</td>`
+                    : '';
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-sans font-semibold text-zinc-900 dark:text-zinc-200 whitespace-nowrap">${periodLabel}</td>
+                    <td class="py-3 px-4 text-right text-zinc-600 dark:text-zinc-400 whitespace-nowrap">${formatMoney(r.periodicContribution)}</td>
+                    <td class="py-3 px-4 text-right text-zinc-700 dark:text-zinc-300 whitespace-nowrap">${formatMoney(r.totalPrincipal)}</td>
+                    <td class="py-3 px-4 text-right text-emerald-700 dark:text-emerald-400 whitespace-nowrap">+${formatMoney(r.periodInterest)}</td>
+                    <td class="py-3 px-4 text-right text-emerald-700 dark:text-emerald-400 font-medium whitespace-nowrap">+${formatMoney(r.totalInterest)}</td>
+                    <td class="py-3 px-4 text-right font-bold text-zinc-900 dark:text-zinc-100 whitespace-nowrap">${formatMoney(r.nominalBalance)}</td>
+                    ${realCellHtml}
+                `;
+                fragment.appendChild(tr);
+            });
+
+            tbody.innerHTML = '';
+            tbody.appendChild(fragment);
+        }
+
+        function exportScheduleToCSV() {
+            const sim = state.lastSimulation;
+            if (!sim) return;
+            const dict = I18N[state.lang];
+            const isYearly = state.tableView === 'yearly';
+            const rows = isYearly ? sim.yearlySchedule.slice(1) : sim.monthlySchedule;
+
+            const headers = [
+                dict.thPeriod,
+                dict.thPeriodicContrib,
+                dict.thTotalPrincipal,
+                dict.thPeriodInterest,
+                dict.thTotalInterest,
+                dict.thNominalBalance
+            ];
+            if (state.inflationEnabled) {
+                headers.push(dict.thRealBalance);
+            }
+
+            const csvLines = [headers.join(';')];
+            rows.forEach(r => {
+                const p = isYearly ? `${dict.yearPrefix} ${r.year}` : `${dict.monthPrefix} ${r.month}`;
+                const line = [
+                    p,
+                    Math.round(r.periodicContribution),
+                    Math.round(r.totalPrincipal),
+                    Math.round(r.periodInterest),
+                    Math.round(r.totalInterest),
+                    Math.round(r.nominalBalance)
+                ];
+                if (state.inflationEnabled) {
+                    line.push(Math.round(r.realBalance));
+                }
+                csvLines.push(line.join(';'));
+            });
+
+            const csvContent = '\uFEFF' + csvLines.join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `kamatos_kamat_${state.currency}_${state.tableView}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        /***********************************************************************
+         * 10. DYNAMIC WORLD BANK INFLATION FETCHER WITH REAL START YEAR
+         ***********************************************************************/
+        function updateWorldBankButtonUI() {
+            const badgeText = document.getElementById('api-status-text');
+            const sourceLink = document.getElementById('worldbank-source-link');
+            const dict = I18N[state.lang];
+
+            const code = state.selectedCountry;
+            const series = state.worldBankRawSeries[code];
+            const presentYear = new Date().getFullYear();
+            const startYear = (series && series.length > 0) ? series[0].year : 1960;
+
+            const presentLabel = state.lang === 'hu' ? 'napjainkig' : 'present';
+
+            if (badgeText) {
+                badgeText.textContent = state.worldBankLiveLoaded
+                    ? `${dict.apiLive} (${startYear}–${presentLabel})`
+                    : `${dict.apiFallback} (${startYear}–${presentLabel})`;
+            }
+
+            if (sourceLink) {
+                const locSlug = WORLDBANK_WEB_LOCATIONS[code] || '1W';
+                sourceLink.href = `https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=${locSlug}`;
+            }
+        }
+
+        async function fetchWorldBankInflation(countryCode) {
+            const presentYear = new Date().getFullYear();
+
+            try {
+                const response = await fetch(
+                    `https://api.worldbank.org/v2/country/${countryCode}/indicator/FP.CPI.TOTL.ZG?date=1960:${presentYear}&format=json&per_page=100`
+                );
+                if (!response.ok) throw new Error('Network response not ok');
+                const json = await response.json();
+
+                if (Array.isArray(json) && Array.isArray(json[1])) {
+                    const validEntries = json[1]
+                        .filter(item => item.value !== null && !isNaN(item.value))
+                        .map(item => ({
+                            year: parseInt(item.date, 10),
+                            val: Number(item.value)
+                        }))
+                        .sort((a, b) => a.year - b.year);
+
+                    if (validEntries.length >= 5) {
+                        state.worldBankRawSeries[countryCode] = validEntries;
+                        state.worldBankLiveLoaded = true;
+                    }
+                }
+            } catch (err) {
+                // Fallback used seamlessly
+            }
+
+            updateWorldBankButtonUI();
+            renderHistoricalInflationContext();
+        }
+
+        function computeWindowAverage(countryCode, windowKey) {
+            const presentYear = new Date().getFullYear();
+            const series = state.worldBankRawSeries[countryCode];
+
+            if (series && series.length > 0) {
+                let filtered = series;
+                if (windowKey === '10') {
+                    const minYear = presentYear - 10;
+                    filtered = series.filter(d => d.year >= minYear && d.year <= presentYear);
+                    if (filtered.length < 5) filtered = series.slice(-10);
+                } else if (windowKey === '20') {
+                    const minYear = presentYear - 20;
+                    filtered = series.filter(d => d.year >= minYear && d.year <= presentYear);
+                    if (filtered.length < 10) filtered = series.slice(-20);
+                } else {
+                    filtered = series; // Max available start year to present
+                }
+
+                if (filtered.length > 0) {
+                    const avg = filtered.reduce((acc, item) => acc + item.val, 0) / filtered.length;
+                    const firstYear = filtered[0].year;
+                    const lastYear = filtered[filtered.length - 1].year;
+                    return {
+                        avg: Number(avg.toFixed(1)),
+                        rangeText: `${firstYear}–${lastYear}`
+                    };
+                }
+            }
+
+            const fallbackVal = FALLBACK_WINDOW_AVERAGES[countryCode]?.[windowKey] ?? 3.9;
+            const startYr = windowKey === '10'
+                ? presentYear - 10
+                : windowKey === '20'
+                ? presentYear - 20
+                : 1960;
+            return {
+                avg: fallbackVal,
+                rangeText: `${startYr}–${presentYear}`
+            };
+        }
+
+        function renderHistoricalInflationContext() {
+            const dict = I18N[state.lang];
+            const code = state.selectedCountry;
+            const win = state.inflationWindow;
+
+            const countryStats = computeWindowAverage(code, win);
+            const globalStats = computeWindowAverage('WLD', win);
+
+            const windowSuffix = win === '10'
+                ? (state.lang === 'hu' ? '10 év' : '10Y')
+                : win === '20'
+                ? (state.lang === 'hu' ? '20 év' : '20Y')
+                : (state.lang === 'hu' ? 'Max' : 'Max');
+
+            const shortName = dict.countryNamesShort[code] || code;
+            document.getElementById('selected-country-label').textContent = `${shortName} (${windowSuffix})`;
+            document.getElementById('global-avg-box-label').textContent = `${dict.globalLabelShort} (${windowSuffix})`;
+
+            document.getElementById('country-hist-avg').textContent = `${countryStats.avg.toFixed(1)}%`;
+            document.getElementById('global-hist-avg').textContent = `${globalStats.avg.toFixed(1)}%`;
+            document.getElementById('hist-year-range-badge').textContent = countryStats.rangeText;
+
+            updateWorldBankButtonUI();
+        }
+
+        /***********************************************************************
+         * 11. GEMINI API INTEGRATION
+         ***********************************************************************/
+        async function callGeminiAdvisor(userPrompt, mode = 'custom') {
+            const chatBox = document.getElementById('ai-chat-response');
+            const dict = I18N[state.lang];
+            const sim = state.lastSimulation;
+
+            chatBox.innerHTML = `
+                <div class="flex items-center gap-3 text-emerald-700 dark:text-emerald-400">
+                    <div class="w-4 h-4 rounded-full border-2 border-emerald-600 border-t-transparent animate-spin"></div>
+                    <span>${dict.aiLoading}</span>
+                </div>
+            `;
+
+            const financialContext = sim ? `
+Current User Financial Parameters:
+- Currency: ${state.currency}
+- Initial Deposit: ${state.initialDeposit} ${state.currency}
+- Regular Contribution: ${state.regularContribution} ${state.currency} (${state.contributionFrequency})
+- Annual Contribution Step-up: ${state.contributionGrowthRate}%
+- Nominal Annual Interest Rate: ${state.annualInterestRate}%
+- Time Horizon: ${state.years} years
+- Compounding Frequency: ${state.compoundFrequency} times/year
+- Expected Annual Inflation: ${state.inflationRate}%
+- Projection Results:
+  * Total Principal Deposited: ${Math.round(sim.totalPrincipal)} ${state.currency}
+  * Nominal Final Balance: ${Math.round(sim.finalNominal)} ${state.currency}
+  * Total Compound Interest Earned: ${Math.round(sim.totalInterest)} ${state.currency}
+  * Real Purchasing Power (Today's Money): ${Math.round(sim.finalReal)} ${state.currency}
+  * Real Annual Return (Fisher): ${sim.fisherRealAnnualRate.toFixed(2)}%
+` : 'No simulation run yet.';
+
+            const systemPrompt = `You are an expert financial engineer and wealth advisor. Respond in ${state.lang === 'hu' ? 'Hungarian' : 'English'}. Keep your advice professional, encouraging, analytical, and concise (use bullet points and clear formatting). Here are the user's current calculator numbers:\n${financialContext}`;
+
+            if (mode === 'review') {
+                userPrompt = state.lang === 'hu'
+                    ? "Kérem, értékelje részletesen a fenti megtakarítási paramétereket és a portfólió növekedési pályáját (nominális vs. reál vásárlóerő). Melyek a kulcsfontosságú erősségek és kockázatok?"
+                    : "Please provide a detailed review of the above savings parameters and portfolio growth trajectory (nominal vs. real purchasing power). What are the key strengths and risks?";
+            } else if (mode === 'goal') {
+                userPrompt = state.lang === 'hu'
+                    ? "Hogyan optimalizálhatnám ezt a portfóliót a korai nyugdíjhoz (FIRE) vagy passzív jövedelem építéséhez mai vásárlóerőben számolva?"
+                    : "How can I optimize this portfolio for early retirement (FIRE) or building passive income in today's purchasing power?";
+            } else if (mode === 'inflation') {
+                userPrompt = state.lang === 'hu'
+                    ? "Hogyan védhetem meg ezt a megtakarítást a deviza- és inflációs kockázatoktól, és hogyan tarthatom fenn a pozitív reálhozamot?"
+                    : "How can I hedge this portfolio against inflation and currency risk to maximize my real purchasing power return?";
+            }
+
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            try {
+                let response = null;
+                let delay = 1000;
+                for (let attempt = 0; attempt < 3; attempt++) {
+                    try {
+                        response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (response.ok) break;
+                    } catch (e) {
+                        if (attempt === 2) throw e;
+                    }
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+
+                if (!response || !response.ok) throw new Error('Gemini API request failed');
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const text = candidate.content.parts[0].text;
+                    chatBox.innerHTML = `<div class="text-xs sm:text-sm whitespace-pre-line leading-relaxed">${text}</div>`;
+                } else {
+                    chatBox.innerHTML = `<p class="text-rose-500">${dict.aiNoResponse}</p>`;
+                }
+            } catch (err) {
+                chatBox.innerHTML = `<p class="text-rose-500">${dict.aiErrorPrefix} ${err.message}</p>`;
+            }
+        }
+
+        /***********************************************************************
+         * 12. LANGUAGE & CURRENCY SWITCHERS
+         ***********************************************************************/
+        function applyTranslations() {
+            const dict = I18N[state.lang];
+            document.documentElement.lang = state.lang;
+            document.title = dict.pageTitle;
+
+            document.getElementById('app-title').textContent = dict.appTitle;
+            document.getElementById('author-badge').textContent = dict.authorBadge;
+            document.getElementById('app-subtitle').textContent = dict.appSubtitle;
+            document.getElementById('footer-note').textContent = dict.footerNote;
+            document.getElementById('hist-data-footnote').textContent = dict.histDataFootnote;
+            document.getElementById('ai-user-input').placeholder = dict.aiInputPlaceholder;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) {
+                    el.textContent = dict[key];
+                }
+            });
+
+            const countrySelect = document.getElementById('country-select');
+            Array.from(countrySelect.options).forEach(opt => {
+                if (dict.countries[opt.value]) {
+                    opt.textContent = dict.countries[opt.value];
+                }
+            });
+
+            const btnHu = document.getElementById('lang-hu');
+            const btnEn = document.getElementById('lang-en');
+            if (state.lang === 'hu') {
+                btnHu.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm';
+                btnEn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white';
+            } else {
+                btnEn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm';
+                btnHu.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white';
+            }
+
+            updateWorldBankButtonUI();
+            renderHistoricalInflationContext();
+            updateDashboardUI();
+        }
+
+        function switchCurrency(newCurrency) {
+            if (!CURRENCY_CONFIG[newCurrency]) return;
+            state.currency = newCurrency;
+            const cfg = CURRENCY_CONFIG[newCurrency];
+
+            document.querySelectorAll('.currency-btn').forEach(btn => {
+                const isSelected = btn.getAttribute('data-currency') === newCurrency;
+                btn.className = isSelected
+                    ? 'currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm'
+                    : 'currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white';
+            });
+
+            document.querySelectorAll('.currency-symbol').forEach(el => {
+                el.textContent = cfg.symbol;
+            });
+
+            const initInput = document.getElementById('initial-deposit');
+            const initSlider = document.getElementById('initial-deposit-slider');
+            initSlider.max = cfg.initialMax;
+            initSlider.step = cfg.initialStep;
+            state.initialDeposit = cfg.initialDefault;
+            initInput.value = formatNumberWithSpaces(cfg.initialDefault);
+            initSlider.value = cfg.initialDefault;
+            document.getElementById('initial-slider-max').textContent = cfg.maxLabelInit;
+
+            const contribInput = document.getElementById('regular-contribution');
+            const contribSlider = document.getElementById('regular-contribution-slider');
+            contribSlider.max = cfg.contribMax;
+            contribSlider.step = cfg.contribStep;
+            state.regularContribution = cfg.contribDefault;
+            contribInput.value = formatNumberWithSpaces(cfg.contribDefault);
+            contribSlider.value = cfg.contribDefault;
+            document.getElementById('contrib-slider-max').textContent = cfg.maxLabelContrib;
+
+            runFinancialSimulation();
+        }
+
+        /***********************************************************************
+         * 13. EVENT LISTENERS & INITIALIZATION
+         ***********************************************************************/
+        function bindFormattedCurrencyInputAndSlider(inputId, sliderId, stateKey) {
+            const textInput = document.getElementById(inputId);
+            const rngInput = document.getElementById(sliderId);
+
+            textInput.addEventListener('input', () => {
+                const selectionStart = textInput.selectionStart || 0;
+                const digitsBeforeCursor = textInput.value
+                    .slice(0, selectionStart)
+                    .replace(/[^\d]/g, '').length;
+
+                const numericVal = parseFormattedNumber(textInput.value);
+                state[stateKey] = numericVal;
+
+                const formatted = numericVal === 0 && textInput.value.trim() === ''
+                    ? ''
+                    : formatNumberWithSpaces(numericVal);
+
+                textInput.value = formatted;
+                rngInput.value = numericVal;
+
+                let newCursorPos = 0;
+                let digitsSeen = 0;
+                for (let i = 0; i < formatted.length; i++) {
+                    if (digitsSeen >= digitsBeforeCursor) break;
+                    if (/\d/.test(formatted[i])) {
+                        digitsSeen++;
+                    }
+                    newCursorPos = i + 1;
+                }
+                textInput.setSelectionRange(newCursorPos, newCursorPos);
+
+                runFinancialSimulation();
+            });
+
+            textInput.addEventListener('blur', () => {
+                textInput.value = formatNumberWithSpaces(state[stateKey]);
+            });
+
+            rngInput.addEventListener('input', () => {
+                const val = parseFloat(rngInput.value) || 0;
+                state[stateKey] = val;
+                textInput.value = formatNumberWithSpaces(val);
+                runFinancialSimulation();
+            });
+        }
+
+        function bindInputAndSlider(inputId, sliderId, stateKey) {
+            const numInput = document.getElementById(inputId);
+            const rngInput = document.getElementById(sliderId);
+
+            numInput.addEventListener('input', () => {
+                const val = parseFloat(numInput.value) || 0;
+                state[stateKey] = val;
+                rngInput.value = val;
+                runFinancialSimulation();
+            });
+
+            rngInput.addEventListener('input', () => {
+                const val = parseFloat(rngInput.value) || 0;
+                state[stateKey] = val;
+                numInput.value = val;
+                runFinancialSimulation();
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+
+            bindFormattedCurrencyInputAndSlider('initial-deposit', 'initial-deposit-slider', 'initialDeposit');
+            bindFormattedCurrencyInputAndSlider('regular-contribution', 'regular-contribution-slider', 'regularContribution');
+
+            bindInputAndSlider('contribution-growth', 'contribution-growth-slider', 'contributionGrowthRate');
+            bindInputAndSlider('interest-rate', 'interest-rate-slider', 'annualInterestRate');
+            bindInputAndSlider('years', 'years-slider', 'years');
+            bindInputAndSlider('inflation-rate', 'inflation-rate-slider', 'inflationRate');
+
+            // Inflation Module Toggle Switch
+            const inflationToggle = document.getElementById('inflation-toggle');
+            if (inflationToggle) {
+                state.inflationEnabled = inflationToggle.checked;
+                inflationToggle.addEventListener('change', (e) => {
+                    state.inflationEnabled = e.target.checked;
+                    if (state.inflationEnabled) {
+                        state.selectedCountry = 'WLD';
+                        const countrySelect = document.getElementById('country-select');
+                        if (countrySelect) countrySelect.value = 'WLD';
+                        const { avg } = computeWindowAverage('WLD', state.inflationWindow);
+                        state.inflationRate = avg;
+                        document.getElementById('inflation-rate').value = avg;
+                        document.getElementById('inflation-rate-slider').value = avg;
+                        renderHistoricalInflationContext();
+                    }
+                    runFinancialSimulation();
+                });
+            }
+
+            // Contribution Frequency Toggle
+            document.querySelectorAll('.contrib-freq-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    state.contributionFrequency = btn.getAttribute('data-contrib-freq');
+                    document.querySelectorAll('.contrib-freq-btn').forEach(b => {
+                        const active = b.getAttribute('data-contrib-freq') === state.contributionFrequency;
+                        b.className = active
+                            ? 'contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm'
+                            : 'contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg text-zinc-600 dark:text-zinc-400';
+                    });
+                    runFinancialSimulation();
+                });
+            });
+
+            document.getElementById('compound-frequency').addEventListener('change', (e) => {
+                state.compoundFrequency = parseInt(e.target.value, 10);
+                runFinancialSimulation();
+            });
+
+            // Country Selector
+            document.getElementById('country-select').addEventListener('change', (e) => {
+                state.selectedCountry = e.target.value;
+                renderHistoricalInflationContext();
+                fetchWorldBankInflation(state.selectedCountry);
+            });
+
+            // Historical Inflation Window Selector (10Y, 20Y, Max)
+            document.querySelectorAll('.inf-window-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    state.inflationWindow = btn.getAttribute('data-inf-window');
+                    document.querySelectorAll('.inf-window-btn').forEach(b => {
+                        const active = b.getAttribute('data-inf-window') === state.inflationWindow;
+                        b.className = active
+                            ? 'inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm transition-all'
+                            : 'inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all';
+                    });
+                    renderHistoricalInflationContext();
+                });
+            });
+
+            // Apply Historical Inflation Buttons
+            document.getElementById('apply-country-inf').addEventListener('click', () => {
+                const { avg } = computeWindowAverage(state.selectedCountry, state.inflationWindow);
+                state.inflationRate = avg;
+                document.getElementById('inflation-rate').value = avg;
+                document.getElementById('inflation-rate-slider').value = avg;
+                runFinancialSimulation();
+            });
+
+            document.getElementById('apply-global-inf').addEventListener('click', () => {
+                const { avg } = computeWindowAverage('WLD', state.inflationWindow);
+                state.inflationRate = avg;
+                document.getElementById('inflation-rate').value = avg;
+                document.getElementById('inflation-rate-slider').value = avg;
+                runFinancialSimulation();
+            });
+
+            // Table View Switcher
+            const btnYearly = document.getElementById('table-view-yearly');
+            const btnMonthly = document.getElementById('table-view-monthly');
+            btnYearly.addEventListener('click', () => {
+                state.tableView = 'yearly';
+                btnYearly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm transition-all';
+                btnMonthly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all';
+                renderBreakdownTable();
+            });
+            btnMonthly.addEventListener('click', () => {
+                state.tableView = 'monthly';
+                btnMonthly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg bg-white dark:bg-zinc-800 text-emerald-700 dark:text-emerald-400 shadow-sm transition-all';
+                btnYearly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all';
+                renderBreakdownTable();
+            });
+
+            document.getElementById('export-csv-btn').addEventListener('click', exportScheduleToCSV);
+
+            // Currency Buttons
+            document.querySelectorAll('.currency-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchCurrency(btn.getAttribute('data-currency'));
+                });
+            });
+
+            // Language Switcher
+            document.getElementById('lang-hu').addEventListener('click', () => {
+                state.lang = 'hu';
+                applyTranslations();
+            });
+            document.getElementById('lang-en').addEventListener('click', () => {
+                state.lang = 'en';
+                applyTranslations();
+            });
+
+            // Dark/Light Mode Toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                if (state.lastSimulation) {
+                    renderOrUpdateChart(state.lastSimulation.yearlySchedule);
+                }
+            });
+
+            // Gemini AI Event Listeners
+            document.querySelectorAll('.ai-prompt-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const promptType = btn.getAttribute('data-prompt-type');
+                    callGeminiAdvisor('', promptType);
+                });
+            });
+
+            document.getElementById('ai-send-btn').addEventListener('click', () => {
+                const input = document.getElementById('ai-user-input');
+                const val = input.value.trim();
+                if (val) {
+                    callGeminiAdvisor(val, 'custom');
+                    input.value = '';
+                }
+            });
+
+            document.getElementById('ai-user-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const val = e.target.value.trim();
+                    if (val) {
+                        callGeminiAdvisor(val, 'custom');
+                        e.target.value = '';
+                    }
+                }
+            });
+
+            // Reset Button
+            document.getElementById('reset-btn').addEventListener('click', () => {
+                const cfg = CURRENCY_CONFIG[state.currency];
+                state.initialDeposit = cfg.initialDefault;
+                state.regularContribution = cfg.contribDefault;
+                state.contributionGrowthRate = 5.0;
+                state.annualInterestRate = 8.0;
+                state.years = 15;
+                state.compoundFrequency = 12;
+                state.selectedCountry = 'WLD';
+                const { avg } = computeWindowAverage('WLD', state.inflationWindow);
+                state.inflationRate = avg;
+
+                document.getElementById('initial-deposit').value = formatNumberWithSpaces(state.initialDeposit);
+                document.getElementById('initial-deposit-slider').value = state.initialDeposit;
+                document.getElementById('regular-contribution').value = formatNumberWithSpaces(state.regularContribution);
+                document.getElementById('regular-contribution-slider').value = state.regularContribution;
+                document.getElementById('contribution-growth').value = state.contributionGrowthRate;
+                document.getElementById('contribution-growth-slider').value = state.contributionGrowthRate;
+                document.getElementById('interest-rate').value = state.annualInterestRate;
+                document.getElementById('interest-rate-slider').value = state.annualInterestRate;
+                document.getElementById('years').value = state.years;
+                document.getElementById('years-slider').value = state.years;
+                document.getElementById('compound-frequency').value = '12';
+                document.getElementById('country-select').value = 'WLD';
+                document.getElementById('inflation-rate').value = state.inflationRate;
+                document.getElementById('inflation-rate-slider').value = state.inflationRate;
+
+                renderHistoricalInflationContext();
+                runFinancialSimulation();
+            });
+
+            renderHistoricalInflationContext();
+            runFinancialSimulation();
+            fetchWorldBankInflation('WLD');
+            fetchWorldBankInflation('HUN');
+        });
+    </script>
+</body>
+</html>
