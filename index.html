@@ -348,16 +348,16 @@
                                         Várható éves infláció
                                     </label>
                                     <span data-i18n="inflationRateHint" class="text-[11px] text-zinc-500 dark:text-zinc-400">
-                                        Alapértelmezetten a globális átlagra állítva
+                                        Alapértelmezetten az eurózóna átlagára állítva
                                     </span>
                                 </div>
                                 <div class="relative flex items-center shrink-0">
-                                    <input type="number" id="inflation-rate" min="0" max="40" step="0.1" value="3.9"
+                                    <input type="number" id="inflation-rate" min="0" max="40" step="0.1" value="2.6"
                                         class="w-24 text-right font-mono text-sm font-bold bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 text-zinc-900 dark:text-zinc-100 rounded-xl py-2 pl-2 pr-7 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                                     <span class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
                                 </div>
                             </div>
-                            <input type="range" id="inflation-rate-slider" min="0" max="20" step="0.1" value="3.9" class="w-full">
+                            <input type="range" id="inflation-rate-slider" min="0" max="20" step="0.1" value="2.6" class="w-full">
                         </div>
 
                         <!-- Historical Multi-Window Reference Helper (10Y, 20Y, Max) -->
@@ -374,9 +374,9 @@
 
                                 <!-- Country Dropdown (Default: Global Average WLD) -->
                                 <select id="country-select" class="w-full text-xs font-semibold bg-white dark:bg-[#14161b] border border-zinc-300 dark:border-zinc-700 rounded-xl py-2.5 px-3 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                                    <option value="WLD" selected>Globális Átlag (WLD)</option>
+                                    <option value="WLD">Globális Átlag (WLD)</option>
                                     <option value="HUN">Magyarország (HUN)</option>
-                                    <option value="EMU">Eurózóna (EMU)</option>
+                                    <option value="EMU" selected>Eurózóna (EMU)</option>
                                     <option value="USA">Egyesült Államok (USA)</option>
                                     <option value="DEU">Németország (DEU)</option>
                                     <option value="AUT">Ausztria (AUT)</option>
@@ -771,7 +771,7 @@
                 inflationToggleSub: "Kapcsolja be, ha a jövőbeli pénz mai vásárlóerejét is látni szeretné",
                 inflationActiveLabel: "Hivatalos adatforrás:",
                 inflationRateLabel: "Várható éves infláció",
-                inflationRateHint: "Alapértelmezetten a globális átlagra állítva",
+                inflationRateHint: "Alapértelmezetten az eurózóna átlagára állítva",
                 histContextLabel: "Történelmi inflációs segédlet",
                 window10Y: "Elmúlt 10 év",
                 window20Y: "Elmúlt 20 év",
@@ -883,7 +883,7 @@
                 inflationToggleSub: "Turn on to calculate what your future balance is worth in today's money",
                 inflationActiveLabel: "Official Data Source:",
                 inflationRateLabel: "Expected Annual Inflation",
-                inflationRateHint: "Defaults to the Global Average when enabled",
+                inflationRateHint: "Defaults to the Eurozone Average when enabled",
                 histContextLabel: "Historical Inflation Reference",
                 window10Y: "Past 10 Years",
                 window20Y: "Past 20 Years",
@@ -1050,8 +1050,8 @@
             years: 15,
             compoundFrequency: 12,
             inflationEnabled: false,
-            inflationRate: 3.9,
-            selectedCountry: 'WLD',
+            inflationRate: 2.6,
+            selectedCountry: 'EMU',
             inflationWindow: '10',
             tableView: 'yearly',
             worldBankRawSeries: {},
@@ -1616,6 +1616,7 @@
         function computeWindowAverage(countryCode, windowKey) {
             const presentYear = new Date().getFullYear();
             const series = state.worldBankRawSeries[countryCode];
+            const presentLabel = state.lang === 'hu' ? 'napjainkig' : 'present';
 
             if (series && series.length > 0) {
                 let filtered = series;
@@ -1634,10 +1635,9 @@
                 if (filtered.length > 0) {
                     const avg = filtered.reduce((acc, item) => acc + item.val, 0) / filtered.length;
                     const firstYear = filtered[0].year;
-                    const lastYear = filtered[filtered.length - 1].year;
                     return {
                         avg: Number(avg.toFixed(1)),
-                        rangeText: `${firstYear}–${lastYear}`
+                        rangeText: `${firstYear}–${presentLabel}`
                     };
                 }
             }
@@ -1647,10 +1647,10 @@
                 ? presentYear - 10
                 : windowKey === '20'
                 ? presentYear - 20
-                : 1960;
+                : (countryCode === 'EMU' ? 1981 : 1960);
             return {
                 avg: fallbackVal,
-                rangeText: `${startYr}–${presentYear}`
+                rangeText: `${startYr}–${presentLabel}`
             };
         }
 
@@ -1938,10 +1938,10 @@ Current User Financial Parameters:
                 inflationToggle.addEventListener('change', (e) => {
                     state.inflationEnabled = e.target.checked;
                     if (state.inflationEnabled) {
-                        state.selectedCountry = 'WLD';
+                        state.selectedCountry = 'EMU';
                         const countrySelect = document.getElementById('country-select');
-                        if (countrySelect) countrySelect.value = 'WLD';
-                        const { avg } = computeWindowAverage('WLD', state.inflationWindow);
+                        if (countrySelect) countrySelect.value = 'EMU';
+                        const { avg } = computeWindowAverage('EMU', state.inflationWindow);
                         state.inflationRate = avg;
                         document.getElementById('inflation-rate').value = avg;
                         document.getElementById('inflation-rate-slider').value = avg;
@@ -2087,8 +2087,8 @@ Current User Financial Parameters:
                 state.annualInterestRate = 8.0;
                 state.years = 15;
                 state.compoundFrequency = 12;
-                state.selectedCountry = 'WLD';
-                const { avg } = computeWindowAverage('WLD', state.inflationWindow);
+                state.selectedCountry = 'EMU';
+                const { avg } = computeWindowAverage('EMU', state.inflationWindow);
                 state.inflationRate = avg;
 
                 document.getElementById('initial-deposit').value = formatNumberWithSpaces(state.initialDeposit);
@@ -2102,7 +2102,7 @@ Current User Financial Parameters:
                 document.getElementById('years').value = state.years;
                 document.getElementById('years-slider').value = state.years;
                 document.getElementById('compound-frequency').value = '12';
-                document.getElementById('country-select').value = 'WLD';
+                document.getElementById('country-select').value = 'EMU';
                 document.getElementById('inflation-rate').value = state.inflationRate;
                 document.getElementById('inflation-rate-slider').value = state.inflationRate;
 
@@ -2112,7 +2112,7 @@ Current User Financial Parameters:
 
             renderHistoricalInflationContext();
             runFinancialSimulation();
-            fetchWorldBankInflation('WLD');
+            fetchWorldBankInflation('EMU');
             fetchWorldBankInflation('HUN');
         });
     </script>
