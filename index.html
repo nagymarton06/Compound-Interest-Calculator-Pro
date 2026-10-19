@@ -683,14 +683,14 @@
                     <div>
                         <div class="flex items-center gap-2">
                             <h3 data-i18n="aiAdvisorTitle" class="font-bold text-base text-zinc-900 dark:text-zinc-100">
-                                Gemini Pénzügyi Elemző & Stratéga
+                                Intelligens Pénzügyi Elemző & Stratéga
                             </h3>
                             <span id="ai-badge-pill" data-i18n="aiBadgeText" class="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
-                                Élő Portfólió Elemzés
+                                Azonnali Személyre Szabott Elemzés
                             </span>
                         </div>
                         <p data-i18n="aiAdvisorSubtitle" class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-                            A modul automatikusan átküldi a fent beállított számokat a Gemini modellnek, amely kiszámolja az erősségeket, kockázatokat és javaslatokat.
+                            A motor automatikusan kiértékeli a beállított megtakarítási számait: kiszámítja a tőkearányt, kamathatást, inflációs kockázatokat és a FIRE lehetőségeket.
                         </p>
                     </div>
                 </div>
@@ -715,14 +715,14 @@
             <!-- Chat Output Box -->
             <div id="ai-chat-response" class="bg-zinc-50 dark:bg-[#0c0d10] rounded-xl p-4 sm:p-5 border border-zinc-200/80 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 text-sm leading-relaxed min-h-[120px] max-h-[360px] overflow-y-auto space-y-3">
                 <p class="text-zinc-500 dark:text-zinc-400" data-i18n="aiInitialPrompt">
-                    Kattintson a fenti gombok valamelyikére, vagy írja be saját kérdését alul! A tanácsadó látja az Ön által beállított kezdő tőkét, havi befizetést, kamatot és inflációt, így konkrétan az Ön számaira válaszol.
+                    Kattintson a fenti gombok valamelyikére, vagy írjon be egy saját kérdést alul! Az elemző azonnal és pontosan a fenti számaira támaszkodva készít összefoglalót.
                 </p>
             </div>
 
             <!-- Custom Question Input Bar -->
             <div class="mt-4 flex gap-2.5">
                 <div class="relative flex-1">
-                    <input type="text" id="ai-user-input" placeholder="Írja be pénzügyi kérdését (pl. Hogyan érhetek el 50 millió Ft-ot?)..."
+                    <input type="text" id="ai-user-input" placeholder="Írja be pénzügyi kérdését (pl. Mennyi passzív jövedelmet ad ez? vagy Elég ez nyugdíjra?)..."
                         class="w-full bg-zinc-50 dark:bg-[#0c0d10] border border-zinc-300 dark:border-zinc-700/90 rounded-xl py-2.5 pl-4 pr-10 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     <i data-lucide="message-square" class="w-4 h-4 text-zinc-400 absolute right-3.5 top-3 pointer-events-none"></i>
                 </div>
@@ -823,18 +823,16 @@
                 compoundInterestLabel: "Kamatos kamat",
                 apiLive: "Világbank Élő Adat",
                 apiFallback: "Világbank CPI Adatbázis",
-                aiAdvisorTitle: "Gemini Pénzügyi Elemző & Stratéga",
-                aiBadgeText: "Élő Portfólió Elemzés",
-                aiAdvisorSubtitle: "A modul automatikusan átküldi a fent beállított számokat a Gemini modellnek, amely kiszámolja az erősségeket, kockázatokat és javaslatokat.",
+                aiAdvisorTitle: "Intelligens Pénzügyi Elemző & Stratéga",
+                aiBadgeText: "Azonnali Személyre Szabott Elemzés",
+                aiAdvisorSubtitle: "A motor automatikusan kiértékeli a beállított megtakarítási számait: kiszámítja a tőkearányt, kamathatást, inflációs kockázatokat és a FIRE lehetőségeket.",
                 aiPromptReview: "Portfólió Értékelése",
                 aiPromptGoal: "Nyugdíj / FIRE Terv",
                 aiPromptInflation: "Inflációs Védelem",
-                aiInitialPrompt: "Kattintson a fenti gombok valamelyikére, vagy írja be saját kérdését alul! A tanácsadó látja az Ön által beállított kezdő tőkét, havi befizetést, kamatot és inflációt, így konkrétan az Ön számaira válaszol.",
-                aiInputPlaceholder: "Írja be pénzügyi kérdését (pl. Hogyan érhetek el 50 millió Ft-ot?)...",
+                aiInitialPrompt: "Kattintson a fenti gombok valamelyikére, vagy írjon be egy saját kérdést alul! Az elemző azonnal és pontosan a fenti számaira támaszkodva készít összefoglalót.",
+                aiInputPlaceholder: "Írja be pénzügyi kérdését (pl. Mennyi passzív jövedelmet ad ez? vagy Elég ez nyugdíjra?)...",
                 aiSendBtn: "Elemzés",
-                aiLoading: "A Gemini elemzi az Ön által megadott paramétereket...",
-                aiNoResponse: "Nem érkezett válasz a Gemini modelltől.",
-                aiErrorPrefix: "Hiba történt az elemzés lekérésekor:",
+                aiLoading: "Az elemzés készül...",
                 footerNote: "Készítette: Nagy Márton • A számítások tájékoztató jellegűek. Történelmi inflációs adatok: Világbank (World Bank Open Data FP.CPI.TOTL.ZG).",
                 globalLabelShort: "Globális átlag",
                 countries: {
@@ -935,18 +933,16 @@
                 compoundInterestLabel: "Compound interest",
                 apiLive: "World Bank Live Data",
                 apiFallback: "World Bank CPI Dataset",
-                aiAdvisorTitle: "Gemini Financial Analyst & Strategist",
-                aiBadgeText: "Live Portfolio Analysis",
-                aiAdvisorSubtitle: "Automatically sends your current calculator parameters to Gemini AI to evaluate risks, real returns, and optimization strategies.",
+                aiAdvisorTitle: "Smart Financial Analyst & Strategist",
+                aiBadgeText: "Instant Tailored Insights",
+                aiAdvisorSubtitle: "The engine automatically analyzes your inputs: calculates compounding leverage, real purchasing power decay, and FIRE withdrawal scenarios.",
                 aiPromptReview: "Portfolio Review",
                 aiPromptGoal: "Retirement / FIRE Plan",
                 aiPromptInflation: "Inflation Hedge",
-                aiInitialPrompt: "Click one of the action buttons above or ask a custom question below! The advisor reads your exact initial deposit, monthly savings, return rate, and inflation settings.",
-                aiInputPlaceholder: "Type your financial question (e.g., How can I reach 50M?)...",
+                aiInitialPrompt: "Click one of the action buttons above or ask a custom question below! The advisor evaluates your exact numbers instantly.",
+                aiInputPlaceholder: "Type your financial question (e.g. How much passive income will this generate?)...",
                 aiSendBtn: "Analyze",
-                aiLoading: "Gemini is analyzing your financial parameters...",
-                aiNoResponse: "No response received from Gemini AI.",
-                aiErrorPrefix: "Error while fetching AI analysis:",
+                aiLoading: "Generating analysis...",
                 footerNote: "Created by Márton Nagy • Projections are for informational purposes. Historical inflation data: World Bank Open Data (FP.CPI.TOTL.ZG).",
                 globalLabelShort: "Global avg",
                 countries: {
@@ -972,73 +968,6 @@
             }
         };
 
-        /***********************************************************************
-         * 2. HISTORICAL INFLATION FALLBACK AVERAGES & WORLD BANK URL CODES
-         ***********************************************************************/
-        const FALLBACK_WINDOW_AVERAGES = {
-            WLD: { '10': 3.9, '20': 3.8, 'max': 4.5 },
-            HUN: { '10': 5.8, '20': 4.9, 'max': 6.2 },
-            EMU: { '10': 2.6, '20': 2.1, 'max': 3.1 },
-            USA: { '10': 2.9, '20': 2.5, 'max': 3.6 },
-            DEU: { '10': 2.6, '20': 2.0, 'max': 2.4 },
-            AUT: { '10': 3.2, '20': 2.5, 'max': 3.0 },
-            POL: { '10': 4.6, '20': 3.5, 'max': 7.1 },
-            GBR: { '10': 3.2, '20': 2.8, 'max': 4.7 }
-        };
-
-        const WORLDBANK_WEB_LOCATIONS = {
-            WLD: '1W',
-            HUN: 'HU',
-            EMU: 'XC',
-            USA: 'US',
-            DEU: 'DE',
-            AUT: 'AT',
-            POL: 'PL',
-            GBR: 'GB'
-        };
-
-        /***********************************************************************
-         * 3. CURRENCY CONFIGURATIONS
-         ***********************************************************************/
-        const CURRENCY_CONFIG = {
-            HUF: {
-                symbol: 'Ft',
-                initialDefault: 1000000,
-                initialMax: 50000000,
-                initialStep: 100000,
-                contribDefault: 50000,
-                contribMax: 1000000,
-                contribStep: 5000,
-                maxLabelInit: '50M Ft',
-                maxLabelContrib: '1M Ft'
-            },
-            EUR: {
-                symbol: '€',
-                initialDefault: 5000,
-                initialMax: 250000,
-                initialStep: 500,
-                contribDefault: 250,
-                contribMax: 5000,
-                contribStep: 25,
-                maxLabelInit: '250k €',
-                maxLabelContrib: '5k €'
-            },
-            USD: {
-                symbol: '$',
-                initialDefault: 5000,
-                initialMax: 250000,
-                initialStep: 500,
-                contribDefault: 250,
-                contribMax: 5000,
-                contribStep: 25,
-                maxLabelInit: '$250k',
-                maxLabelContrib: '$5k'
-            }
-        };
-
-        /***********************************************************************
-         * 4. APPLICATION STATE
-         ***********************************************************************/
         const state = {
             lang: 'hu',
             currency: 'HUF',
@@ -1046,7 +975,7 @@
             regularContribution: 50000,
             contributionFrequency: 'monthly',
             contributionGrowthRate: 5.0,
-            annualInterestRate: 8.0,
+            annualInterestRate: 8.4,
             years: 15,
             compoundFrequency: 12,
             inflationEnabled: false,
@@ -1054,719 +983,481 @@
             selectedCountry: 'EMU',
             inflationWindow: '10',
             tableView: 'yearly',
-            worldBankRawSeries: {},
-            worldBankLiveLoaded: false,
             lastSimulation: null
         };
 
-        let growthChartInstance = null;
+        const CURRENCY_CONFIG = {
+            HUF: { symbol: 'Ft', initialDefault: 1000000, initialMax: 50000000, initialStep: 100000, contribDefault: 50000, contribMax: 1000000, contribStep: 5000, maxLabelInit: '50M Ft', maxLabelContrib: '1M Ft' },
+            EUR: { symbol: '€', initialDefault: 3000, initialMax: 150000, initialStep: 500, contribDefault: 200, contribMax: 5000, contribStep: 50, maxLabelInit: '150k €', maxLabelContrib: '5k €' },
+            USD: { symbol: '$', initialDefault: 3000, initialMax: 150000, initialStep: 500, contribDefault: 200, contribMax: 5000, contribStep: 50, maxLabelInit: '150k $', maxLabelContrib: '5k $' }
+        };
 
-        /***********************************************************************
-         * 5. FORMATTING HELPERS
-         ***********************************************************************/
+        // Formázás
         function formatNumberWithSpaces(num) {
-            const rounded = Math.round(Number(num) || 0);
-            return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            if (isNaN(num)) return '';
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
-
         function parseFormattedNumber(str) {
-            if (typeof str === 'number') return str;
-            const cleaned = String(str).replace(/[^\d]/g, '');
-            return cleaned ? parseInt(cleaned, 10) : 0;
+            return parseFloat(str.replace(/\s/g, '')) || 0;
+        }
+        function formatMoney(amount, showSymbol = true) {
+            const rounded = Math.round(amount);
+            const numStr = formatNumberWithSpaces(rounded);
+            if (!showSymbol) return numStr;
+            const sym = CURRENCY_CONFIG[state.currency].symbol;
+            return state.currency === 'HUF' ? `${numStr} ${sym}` : `${sym}${numStr}`;
+        }
+        function formatPercent(val) {
+            return val.toFixed(2) + '%';
         }
 
-        function formatMoney(amount, compact = false) {
-            const val = Math.round(amount);
-
-            if (compact) {
-                const abs = Math.abs(val);
-                const sym = CURRENCY_CONFIG[state.currency].symbol;
-                const billionLabel = state.lang === 'hu' ? 'Mrd' : 'B';
-                if (abs >= 1e9) {
-                    return (val / 1e9).toFixed(1) + ' ' + billionLabel + ' ' + sym;
-                }
-                if (abs >= 1e6) {
-                    return (val / 1e6).toFixed(1) + 'M ' + sym;
-                }
-                if (abs >= 1e3) {
-                    return (val / 1e3).toFixed(0) + 'k ' + sym;
-                }
-            }
-
-            const formattedNumber = formatNumberWithSpaces(val);
-
-            if (state.currency === 'HUF') {
-                return `${formattedNumber} Ft`;
-            } else if (state.currency === 'EUR') {
-                return state.lang === 'hu' ? `${formattedNumber} €` : `€${formattedNumber}`;
-            } else {
-                return state.lang === 'hu' ? `${formattedNumber} $` : `$${formattedNumber}`;
-            }
-        }
-
-        /***********************************************************************
-         * 6. CORE FINANCIAL CALCULATION ENGINE
-         ***********************************************************************/
-        function runFinancialSimulation() {
-            const P0 = Math.max(0, Number(state.initialDeposit) || 0);
-            const baseContribution = Math.max(0, Number(state.regularContribution) || 0);
-            const contribFreq = state.contributionFrequency;
-            const stepUpRate = (Number(state.contributionGrowthRate) || 0) / 100;
-            const nominalAnnualRate = (Number(state.annualInterestRate) || 0) / 100;
-            const totalYears = Math.min(50, Math.max(1, parseInt(state.years, 10) || 1));
-            const compFreq = parseInt(state.compoundFrequency, 10) || 12;
-            const annualInflationRate = (Number(state.inflationRate) || 0) / 100;
-
-            const totalMonths = totalYears * 12;
-
-            const monthlyEffectiveRate = nominalAnnualRate > 0
-                ? Math.pow(1 + nominalAnnualRate / compFreq, compFreq / 12) - 1
-                : 0;
-
-            const monthlyInflationRate = annualInflationRate > 0
-                ? Math.pow(1 + annualInflationRate, 1 / 12) - 1
-                : 0;
-
-            let currentBalance = P0;
-            let totalNominalPrincipal = P0;
-            let totalRealPrincipal = P0;
-            let totalInterest = 0;
-
-            const monthlySchedule = [];
-            const yearlySchedule = [];
-
-            yearlySchedule.push({
-                year: 0,
-                periodicContribution: baseContribution,
-                annualContribution: 0,
-                totalPrincipal: P0,
-                totalRealPrincipal: P0,
-                periodInterest: 0,
-                totalInterest: 0,
-                nominalBalance: P0,
-                realBalance: P0
-            });
-
-            let yearlyContribSum = 0;
-            let yearlyInterestSum = 0;
-
-            for (let m = 1; m <= totalMonths; m++) {
-                const yearIndex = Math.floor((m - 1) / 12);
-                const monthInYear = ((m - 1) % 12) + 1;
-
-                const currentPeriodicContribution = baseContribution * Math.pow(1 + stepUpRate, yearIndex);
-
-                let depositThisMonth = 0;
-                if (contribFreq === 'monthly') {
-                    depositThisMonth = currentPeriodicContribution;
-                } else if (contribFreq === 'annually' && monthInYear === 1) {
-                    depositThisMonth = currentPeriodicContribution;
-                }
-
-                const startOfMonthDiscount = Math.pow(1 + monthlyInflationRate, m - 1);
-
-                currentBalance += depositThisMonth;
-                totalNominalPrincipal += depositThisMonth;
-                totalRealPrincipal += depositThisMonth / startOfMonthDiscount;
-                yearlyContribSum += depositThisMonth;
-
-                const interestThisMonth = currentBalance * monthlyEffectiveRate;
-                currentBalance += interestThisMonth;
-                totalInterest += interestThisMonth;
-                yearlyInterestSum += interestThisMonth;
-
-                const endOfMonthDiscount = Math.pow(1 + monthlyInflationRate, m);
-                const realPurchasingPower = currentBalance / endOfMonthDiscount;
-
-                monthlySchedule.push({
-                    month: m,
-                    year: yearIndex + 1,
-                    periodicContribution: depositThisMonth,
-                    totalPrincipal: totalNominalPrincipal,
-                    totalRealPrincipal: totalRealPrincipal,
-                    periodInterest: interestThisMonth,
-                    totalInterest: totalInterest,
-                    nominalBalance: currentBalance,
-                    realBalance: realPurchasingPower
-                });
-
-                if (m % 12 === 0) {
-                    yearlySchedule.push({
-                        year: yearIndex + 1,
-                        periodicContribution: currentPeriodicContribution,
-                        annualContribution: yearlyContribSum,
-                        totalPrincipal: totalNominalPrincipal,
-                        totalRealPrincipal: totalRealPrincipal,
-                        periodInterest: yearlyInterestSum,
-                        totalInterest: totalInterest,
-                        nominalBalance: currentBalance,
-                        realBalance: realPurchasingPower
-                    });
-                    yearlyContribSum = 0;
-                    yearlyInterestSum = 0;
-                }
-            }
-
-            const finalYearSnap = yearlySchedule[yearlySchedule.length - 1];
-            const effectiveAnnualYield = Math.pow(1 + nominalAnnualRate / compFreq, compFreq) - 1;
-            const fisherRealAnnualRate = ((1 + effectiveAnnualYield) / (1 + annualInflationRate) - 1) * 100;
-
-            state.lastSimulation = {
-                initialDeposit: P0,
-                finalNominal: finalYearSnap.nominalBalance,
-                finalReal: finalYearSnap.realBalance,
-                totalPrincipal: finalYearSnap.totalPrincipal,
-                totalRealPrincipal: finalYearSnap.totalRealPrincipal,
-                totalRegularContribNominal: finalYearSnap.totalPrincipal - P0,
-                totalInterest: finalYearSnap.totalInterest,
-                realNetGain: finalYearSnap.realBalance - finalYearSnap.totalRealPrincipal,
-                fisherRealAnnualRate: fisherRealAnnualRate,
-                finalPeriodicContrib: finalYearSnap.periodicContribution,
-                yearlySchedule,
-                monthlySchedule
-            };
-
-            updateDashboardUI();
-        }
-
-        /***********************************************************************
-         * 7. UI UPDATER
-         ***********************************************************************/
-        function updateDashboardUI() {
-            const sim = state.lastSimulation;
-            if (!sim) return;
-            const dict = I18N[state.lang];
-
-            document.getElementById('summary-horizon-badge').textContent =
-                `${state.years} ${dict.afterYearsSuffix}`;
-
-            document.getElementById('kpi-principal-value').textContent = formatMoney(sim.totalPrincipal);
-            document.getElementById('kpi-real-principal-value').textContent = formatMoney(sim.totalRealPrincipal);
-
-            const freqSuffix = state.contributionFrequency === 'monthly' ? dict.perMonthSuffix : dict.perYearSuffix;
-            document.getElementById('kpi-final-contrib').textContent =
-                `${formatMoney(sim.finalPeriodicContrib)} ${freqSuffix}`;
-
-            document.getElementById('kpi-nominal-value').textContent = formatMoney(sim.finalNominal);
-            document.getElementById('kpi-interest-value').textContent = `+${formatMoney(sim.totalInterest)}`;
-
-            const multiplier = sim.totalPrincipal > 0 ? (sim.finalNominal / sim.totalPrincipal).toFixed(2) : '1.00';
-            document.getElementById('kpi-multiplier').textContent = `${multiplier}x`;
-
-            const infControlsBody = document.getElementById('inflation-controls-body');
-            const realResultsContainer = document.getElementById('real-results-container');
-            const thRealBalance = document.getElementById('th-real-balance');
-            const chartSubtitleEl = document.querySelector('[data-i18n="chartSubtitle"]');
-
-            if (state.inflationEnabled) {
-                infControlsBody.classList.remove('hidden');
-                realResultsContainer.classList.remove('hidden');
-                thRealBalance.classList.remove('hidden');
-                if (chartSubtitleEl) chartSubtitleEl.textContent = dict.chartSubtitleWithInf;
-            } else {
-                infControlsBody.classList.add('hidden');
-                realResultsContainer.classList.add('hidden');
-                thRealBalance.classList.add('hidden');
-                if (chartSubtitleEl) chartSubtitleEl.textContent = dict.chartSubtitle;
-            }
-
-            document.getElementById('kpi-real-value').textContent = formatMoney(sim.finalReal);
-
-            const realGainPrefix = sim.realNetGain >= 0 ? '+' : '';
-            const realGainEl = document.getElementById('kpi-real-gain-value');
-            realGainEl.textContent = `${realGainPrefix}${formatMoney(sim.realNetGain)}`;
-            realGainEl.className = `font-mono text-sm font-semibold mt-1 block ${
-                sim.realNetGain >= 0
-                    ? 'text-cyan-700 dark:text-cyan-400'
-                    : 'text-rose-600 dark:text-rose-400'
-            }`;
-
-            const sign = sim.fisherRealAnnualRate >= 0 ? '+' : '';
-            const realRateEl = document.getElementById('kpi-real-rate');
-            realRateEl.textContent = `${sign}${sim.fisherRealAnnualRate.toFixed(2)}% ${dict.perYearSuffix}`;
-            realRateEl.className = `font-mono text-sm font-semibold mt-1 block ${
-                sim.fisherRealAnnualRate >= 0
-                    ? 'text-cyan-700 dark:text-cyan-400'
-                    : 'text-rose-600 dark:text-rose-400'
-            }`;
-
-            const realMultiplier = sim.totalRealPrincipal > 0
-                ? (sim.finalReal / sim.totalRealPrincipal).toFixed(2)
-                : '1.00';
-            const digestEl = document.getElementById('plain-digest-text');
-            if (state.lang === 'hu') {
-                digestEl.textContent = `A várható infláció (${state.inflationRate}%/év) miatt a jövőbeli ${formatMoney(sim.finalNominal, true)} számlaegyenleg mai árakon ${formatMoney(sim.finalReal)}-ot ér. A befizetései valós vásárlóerejét ${realMultiplier}x-esére (${realGainPrefix}${formatMoney(sim.realNetGain, true)} tiszta reálhaszon) növelte.`;
-            } else {
-                digestEl.textContent = `Due to expected inflation (${state.inflationRate}%/yr), your future ${formatMoney(sim.finalNominal, true)} balance will have the purchasing power of ${formatMoney(sim.finalReal)} in today's money—multiplying your real purchasing power by ${realMultiplier}x (${realGainPrefix}${formatMoney(sim.realNetGain, true)} net real profit).`;
-            }
-
-            const denom = sim.finalNominal > 0 ? sim.finalNominal : 1;
-            const initPct = (sim.initialDeposit / denom) * 100;
-            const contribPct = (sim.totalRegularContribNominal / denom) * 100;
-            const interestPct = (sim.totalInterest / denom) * 100;
-            const totalOwnPct = initPct + contribPct;
-
-            document.getElementById('bar-initial').style.width = `${initPct.toFixed(1)}%`;
-            document.getElementById('bar-contributions').style.width = `${contribPct.toFixed(1)}%`;
-            document.getElementById('bar-interest').style.width = `${interestPct.toFixed(1)}%`;
-
-            document.getElementById('legend-initial-val').textContent = `${initPct.toFixed(1)}% (${formatMoney(sim.initialDeposit, true)})`;
-            document.getElementById('legend-contrib-val').textContent = `${contribPct.toFixed(1)}% (${formatMoney(sim.totalRegularContribNominal, true)})`;
-            document.getElementById('legend-interest-val').textContent = `${interestPct.toFixed(1)}% (+${formatMoney(sim.totalInterest, true)})`;
-
-            document.getElementById('composition-summary-text').textContent =
-                `${totalOwnPct.toFixed(1)}% ${dict.ownCapitalLabel} • ${interestPct.toFixed(1)}% ${dict.compoundInterestLabel}`;
-
-            renderOrUpdateChart(sim.yearlySchedule);
-            renderBreakdownTable();
-        }
-
-        /***********************************************************************
-         * 8. CHART.JS RENDERING
-         ***********************************************************************/
-        function renderOrUpdateChart(yearlyData) {
-            const ctx = document.getElementById('growthChart').getContext('2d');
-            const dict = I18N[state.lang];
-            const isDark = document.documentElement.classList.contains('dark');
-
-            const labels = yearlyData.map(row => `${dict.yearPrefix} ${row.year}`);
-            const nominalSeries = yearlyData.map(row => Math.round(row.nominalBalance));
-            const realSeries = yearlyData.map(row => Math.round(row.realBalance));
-            const principalSeries = yearlyData.map(row => Math.round(row.totalPrincipal));
-
-            const gridColor = isDark ? 'rgba(161, 161, 170, 0.1)' : 'rgba(161, 161, 170, 0.22)';
-            const textColor = isDark ? '#a1a1aa' : '#52525b';
-
-            if (growthChartInstance) {
-                growthChartInstance.data.labels = labels;
-                growthChartInstance.data.datasets[0].label = dict.chartSeriesNominal;
-                growthChartInstance.data.datasets[0].data = nominalSeries;
-                growthChartInstance.data.datasets[1].label = dict.chartSeriesReal;
-                growthChartInstance.data.datasets[1].data = realSeries;
-                growthChartInstance.data.datasets[1].hidden = !state.inflationEnabled;
-                growthChartInstance.data.datasets[2].label = dict.chartSeriesPrincipal;
-                growthChartInstance.data.datasets[2].data = principalSeries;
-                growthChartInstance.options.scales.x.grid.color = gridColor;
-                growthChartInstance.options.scales.y.grid.color = gridColor;
-                growthChartInstance.options.scales.x.ticks.color = textColor;
-                growthChartInstance.options.scales.y.ticks.color = textColor;
-                growthChartInstance.options.plugins.legend.labels.color = isDark ? '#e4e4e7' : '#18181b';
-                growthChartInstance.update();
-                return;
-            }
-
-            const nominalGrad = ctx.createLinearGradient(0, 0, 0, 300);
-            nominalGrad.addColorStop(0, 'rgba(16, 185, 129, 0.28)');
-            nominalGrad.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
-
-            const realGrad = ctx.createLinearGradient(0, 0, 0, 300);
-            realGrad.addColorStop(0, 'rgba(6, 182, 212, 0.30)');
-            realGrad.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
-
-            growthChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels,
-                    datasets: [
-                        {
-                            label: dict.chartSeriesNominal,
-                            data: nominalSeries,
-                            borderColor: '#10b981',
-                            backgroundColor: nominalGrad,
-                            borderWidth: 2.8,
-                            fill: true,
-                            tension: 0.3,
-                            pointRadius: 2.5,
-                            pointHoverRadius: 6
-                        },
-                        {
-                            label: dict.chartSeriesReal,
-                            data: realSeries,
-                            borderColor: '#06b6d4',
-                            backgroundColor: realGrad,
-                            borderWidth: 2.5,
-                            borderDash: [4, 3],
-                            fill: true,
-                            tension: 0.3,
-                            pointRadius: 2,
-                            pointHoverRadius: 5,
-                            hidden: !state.inflationEnabled
-                        },
-                        {
-                            label: dict.chartSeriesPrincipal,
-                            data: principalSeries,
-                            borderColor: '#f59e0b',
-                            backgroundColor: 'transparent',
-                            borderWidth: 2,
-                            borderDash: [5, 4],
-                            fill: false,
-                            tension: 0.2,
-                            pointRadius: 1.5,
-                            pointHoverRadius: 5
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: isDark ? '#e4e4e7' : '#18181b',
-                                usePointStyle: true,
-                                boxWidth: 8,
-                                filter: function(legendItem, chartData) {
-                                    if (legendItem.datasetIndex === 1 && !state.inflationEnabled) {
-                                        return false;
-                                    }
-                                    return true;
-                                },
-                                font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' }
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: isDark ? 'rgba(24, 24, 27, 0.96)' : 'rgba(255, 255, 255, 0.96)',
-                            titleColor: isDark ? '#f4f4f5' : '#18181b',
-                            bodyColor: isDark ? '#d4d4d8' : '#3f3f46',
-                            borderColor: isDark ? '#3f3f46' : '#e4e4e7',
-                            borderWidth: 1,
-                            padding: 12,
-                            boxPadding: 6,
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.dataset.label}: ${formatMoney(context.parsed.y)}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: { color: gridColor },
-                            ticks: { color: textColor, maxTicksLimit: 10, font: { size: 11 } }
-                        },
-                        y: {
-                            grid: { color: gridColor },
-                            ticks: {
-                                color: textColor,
-                                font: { family: 'JetBrains Mono', size: 11 },
-                                callback: function(val) {
-                                    return formatMoney(val, true);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        /***********************************************************************
-         * 9. BREAKDOWN TABLE & CSV EXPORT
-         ***********************************************************************/
-        function renderBreakdownTable() {
-            const tbody = document.getElementById('schedule-table-body');
-            const sim = state.lastSimulation;
-            if (!sim) return;
-
-            const dict = I18N[state.lang];
-            const isYearly = state.tableView === 'yearly';
-            const rows = isYearly ? sim.yearlySchedule.slice(1) : sim.monthlySchedule;
-
-            const fragment = document.createDocumentFragment();
-
-            rows.forEach(r => {
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors';
-
-                const periodLabel = isYearly
-                    ? `${dict.yearPrefix} ${r.year}`
-                    : `${dict.monthPrefix} ${r.month} (${dict.yearPrefix} ${r.year})`;
-
-                const realCellHtml = state.inflationEnabled
-                    ? `<td class="py-3 px-4 text-right font-medium text-cyan-700 dark:text-cyan-400 whitespace-nowrap">${formatMoney(r.realBalance)}</td>`
-                    : '';
-
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-sans font-semibold text-zinc-900 dark:text-zinc-200 whitespace-nowrap">${periodLabel}</td>
-                    <td class="py-3 px-4 text-right text-zinc-600 dark:text-zinc-400 whitespace-nowrap">${formatMoney(r.periodicContribution)}</td>
-                    <td class="py-3 px-4 text-right text-zinc-700 dark:text-zinc-300 whitespace-nowrap">${formatMoney(r.totalPrincipal)}</td>
-                    <td class="py-3 px-4 text-right text-emerald-700 dark:text-emerald-400 whitespace-nowrap">+${formatMoney(r.periodInterest)}</td>
-                    <td class="py-3 px-4 text-right text-emerald-700 dark:text-emerald-400 font-medium whitespace-nowrap">+${formatMoney(r.totalInterest)}</td>
-                    <td class="py-3 px-4 text-right font-bold text-zinc-900 dark:text-zinc-100 whitespace-nowrap">${formatMoney(r.nominalBalance)}</td>
-                    ${realCellHtml}
-                `;
-                fragment.appendChild(tr);
-            });
-
-            tbody.innerHTML = '';
-            tbody.appendChild(fragment);
-        }
-
-        function exportScheduleToCSV() {
-            const sim = state.lastSimulation;
-            if (!sim) return;
-            const dict = I18N[state.lang];
-            const isYearly = state.tableView === 'yearly';
-            const rows = isYearly ? sim.yearlySchedule.slice(1) : sim.monthlySchedule;
-
-            const headers = [
-                dict.thPeriod,
-                dict.thPeriodicContrib,
-                dict.thTotalPrincipal,
-                dict.thPeriodInterest,
-                dict.thTotalInterest,
-                dict.thNominalBalance
-            ];
-            if (state.inflationEnabled) {
-                headers.push(dict.thRealBalance);
-            }
-
-            const csvLines = [headers.join(';')];
-            rows.forEach(r => {
-                const p = isYearly ? `${dict.yearPrefix} ${r.year}` : `${dict.monthPrefix} ${r.month}`;
-                const line = [
-                    p,
-                    Math.round(r.periodicContribution),
-                    Math.round(r.totalPrincipal),
-                    Math.round(r.periodInterest),
-                    Math.round(r.totalInterest),
-                    Math.round(r.nominalBalance)
-                ];
-                if (state.inflationEnabled) {
-                    line.push(Math.round(r.realBalance));
-                }
-                csvLines.push(line.join(';'));
-            });
-
-            const csvContent = '\uFEFF' + csvLines.join('\n');
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `kamatos_kamat_${state.currency}_${state.tableView}.csv`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        }
-
-        /***********************************************************************
-         * 10. DYNAMIC WORLD BANK INFLATION FETCHER WITH REAL START YEAR
-         ***********************************************************************/
-        function updateWorldBankButtonUI() {
-            const badgeText = document.getElementById('api-status-text');
-            const sourceLink = document.getElementById('worldbank-source-link');
-            const dict = I18N[state.lang];
-
-            const code = state.selectedCountry;
-            const series = state.worldBankRawSeries[code];
-            const presentYear = new Date().getFullYear();
-            const startYear = (series && series.length > 0) ? series[0].year : 1960;
-
-            const presentLabel = state.lang === 'hu' ? 'napjainkig' : 'present';
-
-            if (badgeText) {
-                badgeText.textContent = state.worldBankLiveLoaded
-                    ? `${dict.apiLive} (${startYear}–${presentLabel})`
-                    : `${dict.apiFallback} (${startYear}–${presentLabel})`;
-            }
-
-            if (sourceLink) {
-                const locSlug = WORLDBANK_WEB_LOCATIONS[code] || '1W';
-                sourceLink.href = `https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=${locSlug}`;
-            }
-        }
-
+        // Világbank API és adatok
+        const histData = {};
         async function fetchWorldBankInflation(countryCode) {
-            const presentYear = new Date().getFullYear();
-
+            if (histData[countryCode]) return;
             try {
-                const response = await fetch(
-                    `https://api.worldbank.org/v2/country/${countryCode}/indicator/FP.CPI.TOTL.ZG?date=1960:${presentYear}&format=json&per_page=100`
-                );
-                if (!response.ok) throw new Error('Network response not ok');
-                const json = await response.json();
-
-                if (Array.isArray(json) && Array.isArray(json[1])) {
-                    const validEntries = json[1]
-                        .filter(item => item.value !== null && !isNaN(item.value))
-                        .map(item => ({
-                            year: parseInt(item.date, 10),
-                            val: Number(item.value)
-                        }))
-                        .sort((a, b) => a.year - b.year);
-
-                    if (validEntries.length >= 5) {
-                        state.worldBankRawSeries[countryCode] = validEntries;
-                        state.worldBankLiveLoaded = true;
+                const currentYear = new Date().getFullYear();
+                const startYear = 1960;
+                let cc = countryCode === 'WLD' ? '1W' : countryCode;
+                const url = `https://api.worldbank.org/v2/country/${cc}/indicator/FP.CPI.TOTL.ZG?format=json&date=${startYear}:${currentYear}&per_page=100`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data && data[1]) {
+                    const validData = data[1].filter(d => d.value !== null).map(d => ({ year: parseInt(d.date), value: parseFloat(d.value) })).sort((a,b) => a.year - b.year);
+                    histData[countryCode] = validData;
+                    if (state.selectedCountry === countryCode) {
+                        renderHistoricalInflationContext();
+                        updateWorldBankButtonUI();
                     }
                 }
-            } catch (err) {
-                // Fallback used seamlessly
-            }
-
-            updateWorldBankButtonUI();
-            renderHistoricalInflationContext();
+            } catch (e) { console.error('API Error', e); }
         }
 
-        function computeWindowAverage(countryCode, windowKey) {
-            const presentYear = new Date().getFullYear();
-            const series = state.worldBankRawSeries[countryCode];
-            const presentLabel = state.lang === 'hu' ? 'napjainkig' : 'present';
+        function computeWindowAverage(countryCode, windowType) {
+            const data = histData[countryCode];
+            const fallbackStart = countryCode === 'EMU' ? 1981 : 1960;
+            if (!data || data.length === 0) return { avg: 2.6, start: fallbackStart, end: new Date().getFullYear() };
+            const endYear = data[data.length - 1].year;
+            let startYear = data[0].year;
+            
+            if (windowType === '10') startYear = endYear - 9;
+            if (windowType === '20') startYear = endYear - 19;
+            
+            const filtered = data.filter(d => d.year >= startYear);
+            if (filtered.length === 0) return { avg: 2.6, start: startYear, end: endYear };
+            
+            const sum = filtered.reduce((acc, val) => acc + val.value, 0);
+            return { avg: parseFloat((sum / filtered.length).toFixed(1)), start: filtered[0].year, end: endYear };
+        }
 
-            if (series && series.length > 0) {
-                let filtered = series;
-                if (windowKey === '10') {
-                    const minYear = presentYear - 10;
-                    filtered = series.filter(d => d.year >= minYear && d.year <= presentYear);
-                    if (filtered.length < 5) filtered = series.slice(-10);
-                } else if (windowKey === '20') {
-                    const minYear = presentYear - 20;
-                    filtered = series.filter(d => d.year >= minYear && d.year <= presentYear);
-                    if (filtered.length < 10) filtered = series.slice(-20);
-                } else {
-                    filtered = series; // Max available start year to present
-                }
-
-                if (filtered.length > 0) {
-                    const avg = filtered.reduce((acc, item) => acc + item.val, 0) / filtered.length;
-                    const firstYear = filtered[0].year;
-                    return {
-                        avg: Number(avg.toFixed(1)),
-                        rangeText: `${firstYear}–${presentLabel}`
-                    };
-                }
+        function updateWorldBankButtonUI() {
+            const link = document.getElementById('worldbank-source-link');
+            const statusText = document.getElementById('api-status-text');
+            const dict = I18N[state.lang];
+            
+            if (link && statusText) {
+                statusText.textContent = dict.apiLive;
+                let cc = state.selectedCountry === 'WLD' ? '1W' : state.selectedCountry;
+                link.href = `https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG?locations=${cc}`;
             }
-
-            const fallbackVal = FALLBACK_WINDOW_AVERAGES[countryCode]?.[windowKey] ?? 3.9;
-            const startYr = windowKey === '10'
-                ? presentYear - 10
-                : windowKey === '20'
-                ? presentYear - 20
-                : (countryCode === 'EMU' ? 1981 : 1960);
-            return {
-                avg: fallbackVal,
-                rangeText: `${startYr}–${presentLabel}`
-            };
         }
 
         function renderHistoricalInflationContext() {
             const dict = I18N[state.lang];
-            const code = state.selectedCountry;
-            const win = state.inflationWindow;
+            const cLabel = document.getElementById('selected-country-label');
+            const gLabel = document.getElementById('global-avg-box-label');
+            const winText = state.inflationWindow === '10' ? '10' : (state.inflationWindow === '20' ? '20' : 'Max');
+            
+            if (cLabel) cLabel.textContent = `${dict.countryNamesShort[state.selectedCountry]} (${winText})`;
+            if (gLabel) gLabel.textContent = `${dict.globalLabelShort} (${winText})`;
+            
+            const cStats = computeWindowAverage(state.selectedCountry, state.inflationWindow);
+            const gStats = computeWindowAverage('WLD', state.inflationWindow);
+            
+            const cAvgEl = document.getElementById('country-hist-avg');
+            const gAvgEl = document.getElementById('global-hist-avg');
+            const badge = document.getElementById('hist-year-range-badge');
+            
+            if (cAvgEl) cAvgEl.textContent = cStats.avg + '%';
+            if (gAvgEl) gAvgEl.textContent = gStats.avg + '%';
+            if (badge) badge.textContent = `${cStats.start}–${dict.afterYearsSuffix === 'years' ? 'present' : 'napjainkig'}`;
+        }
 
-            const countryStats = computeWindowAverage(code, win);
-            const globalStats = computeWindowAverage('WLD', win);
+        // Fő Számítási Motor
+        function runFinancialSimulation() {
+            let principal = state.initialDeposit;
+            let currentNominal = principal;
+            let totalPrincipal = principal;
+            
+            const periods = state.years * 12;
+            const r = (state.annualInterestRate / 100) / 12;
+            let monthlyContrib = state.contributionFrequency === 'monthly' ? state.regularContribution : 0;
+            let annualContrib = state.contributionFrequency === 'annually' ? state.regularContribution : 0;
+            const iRate = (state.inflationRate / 100) / 12;
+            
+            const yearlySchedule = [];
+            const monthlySchedule = [];
+            let totalInterest = 0;
+            let yearlyPrincipalSum = 0;
+            let yearlyInterestSum = 0;
+            
+            for (let m = 1; m <= periods; m++) {
+                let pContrib = 0;
+                if (state.contributionFrequency === 'monthly') pContrib = monthlyContrib;
+                else if (state.contributionFrequency === 'annually' && m % 12 === 0) pContrib = annualContrib;
+                
+                totalPrincipal += pContrib;
+                currentNominal += pContrib;
+                yearlyPrincipalSum += pContrib;
+                
+                let interestThisMonth = 0;
+                if (state.compoundFrequency === 12) interestThisMonth = currentNominal * r;
+                else if (state.compoundFrequency === 4 && m % 3 === 0) interestThisMonth = currentNominal * ((state.annualInterestRate / 100) / 4);
+                else if (state.compoundFrequency === 1 && m % 12 === 0) interestThisMonth = currentNominal * (state.annualInterestRate / 100);
+                
+                currentNominal += interestThisMonth;
+                totalInterest += interestThisMonth;
+                yearlyInterestSum += interestThisMonth;
+                
+                let currentReal = currentNominal / Math.pow(1 + iRate, m);
+                
+                monthlySchedule.push({ month: m, contrib: pContrib, totalPrincipal, periodInterest: interestThisMonth, totalInterest, nominal: currentNominal, real: currentReal });
+                
+                if (m % 12 === 0) {
+                    yearlySchedule.push({ year: m / 12, contrib: yearlyPrincipalSum, totalPrincipal, periodInterest: yearlyInterestSum, totalInterest, nominal: currentNominal, real: currentReal });
+                    yearlyPrincipalSum = 0;
+                    yearlyInterestSum = 0;
+                    if (state.contributionGrowthRate > 0) {
+                        const multiplier = 1 + (state.contributionGrowthRate / 100);
+                        if (state.contributionFrequency === 'monthly') monthlyContrib *= multiplier;
+                        if (state.contributionFrequency === 'annually') annualContrib *= multiplier;
+                    }
+                }
+            }
+            
+            let finalReal = currentNominal / Math.pow(1 + iRate, periods);
+            const realNetGain = finalReal - totalPrincipal;
+            const fisherRealAnnualRate = ((1 + (state.annualInterestRate/100)) / (1 + (state.inflationRate/100)) - 1) * 100;
+            
+            state.lastSimulation = {
+                finalNominal: currentNominal,
+                finalReal: finalReal,
+                totalPrincipal: totalPrincipal,
+                totalInterest: totalInterest,
+                realNetGain: realNetGain,
+                fisherRealAnnualRate: fisherRealAnnualRate,
+                yearlySchedule,
+                monthlySchedule,
+                finalMonthlyContrib: state.contributionFrequency === 'monthly' ? monthlyContrib : (annualContrib/12)
+            };
+            
+            updateDashboardUI();
+            renderBreakdownTable();
+            renderOrUpdateChart(yearlySchedule);
+        }
 
-            const windowSuffix = win === '10'
-                ? (state.lang === 'hu' ? '10 év' : '10Y')
-                : win === '20'
-                ? (state.lang === 'hu' ? '20 év' : '20Y')
-                : (state.lang === 'hu' ? 'Max' : 'Max');
+        // Felület (UI) frissítése
+        function updateDashboardUI() {
+            if (!state.lastSimulation) return;
+            const sim = state.lastSimulation;
+            const isHu = state.lang === 'hu';
+            
+            const infContainer = document.getElementById('real-results-container');
+            const infControls = document.getElementById('inflation-controls-body');
+            const thReal = document.getElementById('th-real-balance');
+            
+            if (state.inflationEnabled) {
+                if(infContainer) infContainer.classList.remove('hidden');
+                if(infControls) infControls.classList.remove('hidden');
+                if(thReal) thReal.classList.remove('hidden');
+            } else {
+                if(infContainer) infContainer.classList.add('hidden');
+                if(infControls) infControls.classList.add('hidden');
+                if(thReal) thReal.classList.add('hidden');
+            }
+            
+            document.getElementById('kpi-nominal-value').textContent = formatMoney(sim.finalNominal);
+            document.getElementById('kpi-principal-value').textContent = formatMoney(sim.totalPrincipal);
+            document.getElementById('kpi-interest-value').textContent = '+' + formatMoney(sim.totalInterest);
+            document.getElementById('summary-horizon-badge').textContent = `${state.years} ${I18N[state.lang].afterYearsSuffix}`;
+            
+            let mult = sim.totalPrincipal > 0 ? (sim.finalNominal / sim.totalPrincipal).toFixed(2) : 1;
+            document.getElementById('kpi-multiplier').textContent = mult + 'x';
+            document.getElementById('kpi-final-contrib').textContent = formatMoney(sim.finalMonthlyContrib) + (isHu ? ' / hó' : ' / mo');
+            
+            if(document.getElementById('kpi-real-value')) {
+                document.getElementById('kpi-real-value').textContent = formatMoney(sim.finalReal);
+                document.getElementById('kpi-real-principal-value').textContent = formatMoney(sim.totalPrincipal);
+                document.getElementById('kpi-real-gain-value').textContent = (sim.realNetGain >= 0 ? '+' : '') + formatMoney(sim.realNetGain);
+                document.getElementById('kpi-real-rate').textContent = (sim.fisherRealAnnualRate >= 0 ? '+' : '') + formatPercent(sim.fisherRealAnnualRate) + (isHu ? ' / év' : ' / yr');
+            }
+            
+            let pctInit = sim.finalNominal > 0 ? (state.initialDeposit / sim.finalNominal) * 100 : 0;
+            let pctContrib = sim.finalNominal > 0 ? ((sim.totalPrincipal - state.initialDeposit) / sim.finalNominal) * 100 : 0;
+            let pctInt = sim.finalNominal > 0 ? (sim.totalInterest / sim.finalNominal) * 100 : 0;
+            
+            document.getElementById('bar-initial').style.width = pctInit + '%';
+            document.getElementById('bar-contributions').style.width = pctContrib + '%';
+            document.getElementById('bar-interest').style.width = pctInt + '%';
+            
+            document.getElementById('legend-initial-val').textContent = pctInit.toFixed(1) + '%';
+            document.getElementById('legend-contrib-val').textContent = pctContrib.toFixed(1) + '%';
+            document.getElementById('legend-interest-val').textContent = pctInt.toFixed(1) + '%';
+            
+            document.getElementById('composition-summary-text').textContent = isHu 
+                ? `${(pctInit+pctContrib).toFixed(1)}% Saját tőke • ${pctInt.toFixed(1)}% Kamatos kamat`
+                : `${(pctInit+pctContrib).toFixed(1)}% Principal • ${pctInt.toFixed(1)}% Compound Interest`;
+        }
+        
+        let chartInstance = null;
+        function renderOrUpdateChart(schedule) {
+            const ctx = document.getElementById('growthChart');
+            if (!ctx) return;
+            const labels = schedule.map(item => (state.lang === 'hu' ? 'Év ' : 'Year ') + item.year);
+            const dataNominal = schedule.map(item => item.nominal);
+            const dataReal = schedule.map(item => item.real);
+            const dataPrincipal = schedule.map(item => item.totalPrincipal);
+            
+            const isDark = document.documentElement.classList.contains('dark');
+            const gridColor = isDark ? '#27272a' : '#e4e4e7';
+            const textColor = isDark ? '#a1a1aa' : '#52525b';
+            
+            const datasets = [
+                { label: I18N[state.lang].chartSeriesNominal, data: dataNominal, borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.1)', borderWidth: 3, tension: 0.4, fill: true },
+                { label: I18N[state.lang].chartSeriesPrincipal, data: dataPrincipal, borderColor: '#f59e0b', borderWidth: 2, borderDash: [5, 5], tension: 0.4, fill: false }
+            ];
+            
+            if (state.inflationEnabled) {
+                datasets.splice(1, 0, { label: I18N[state.lang].chartSeriesReal, data: dataReal, borderColor: '#0ea5e9', borderWidth: 2, tension: 0.4, fill: false });
+            }
+            
+            if (chartInstance) {
+                chartInstance.data.labels = labels;
+                chartInstance.data.datasets = datasets;
+                chartInstance.options.scales.x.grid.color = gridColor;
+                chartInstance.options.scales.y.grid.color = gridColor;
+                chartInstance.options.scales.x.ticks.color = textColor;
+                chartInstance.options.scales.y.ticks.color = textColor;
+                chartInstance.update();
+            } else {
+                chartInstance = new Chart(ctx, {
+                    type: 'line', data: { labels, datasets },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+                        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ${formatMoney(c.raw)}` } } },
+                        scales: { x: { grid: { color: gridColor }, ticks: { color: textColor } }, y: { grid: { color: gridColor }, ticks: { color: textColor, callback: (val) => val >= 1000000 ? (val/1000000).toFixed(1) + 'M' : (val >= 1000 ? (val/1000).toFixed(0) + 'k' : val) } } }
+                    }
+                });
+            }
+        }
+        
+        function renderBreakdownTable() {
+            const tbody = document.getElementById('schedule-table-body');
+            if (!tbody || !state.lastSimulation) return;
+            const sim = state.lastSimulation;
+            const data = state.tableView === 'yearly' ? sim.yearlySchedule : sim.monthlySchedule;
+            const isHu = state.lang === 'hu';
+            
+            let html = '';
+            data.forEach(row => {
+                const periodLabel = state.tableView === 'yearly' ? (isHu ? `${row.year}. év` : `Year ${row.year}`) : (isHu ? `${row.month}. hó` : `Month ${row.month}`);
+                const realTd = state.inflationEnabled ? `<td class="py-3 px-4 text-right text-cyan-700 dark:text-cyan-400 font-bold">${formatMoney(row.real)}</td>` : '';
+                html += `<tr class="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
+                        <td class="py-3 px-4 font-medium text-zinc-900 dark:text-zinc-100">${periodLabel}</td>
+                        <td class="py-3 px-4 text-right">${formatMoney(row.contrib)}</td>
+                        <td class="py-3 px-4 text-right">${formatMoney(row.totalPrincipal)}</td>
+                        <td class="py-3 px-4 text-right text-emerald-600 dark:text-emerald-500">${formatMoney(row.periodInterest)}</td>
+                        <td class="py-3 px-4 text-right">${formatMoney(row.totalInterest)}</td>
+                        <td class="py-3 px-4 text-right font-bold text-zinc-900 dark:text-white">${formatMoney(row.nominal)}</td>
+                        ${realTd}
+                    </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
 
-            const shortName = dict.countryNamesShort[code] || code;
-            document.getElementById('selected-country-label').textContent = `${shortName} (${windowSuffix})`;
-            document.getElementById('global-avg-box-label').textContent = `${dict.globalLabelShort} (${windowSuffix})`;
-
-            document.getElementById('country-hist-avg').textContent = `${countryStats.avg.toFixed(1)}%`;
-            document.getElementById('global-hist-avg').textContent = `${globalStats.avg.toFixed(1)}%`;
-            document.getElementById('hist-year-range-badge').textContent = countryStats.rangeText;
-
-            updateWorldBankButtonUI();
+        function exportScheduleToCSV() {
+            if (!state.lastSimulation) return;
+            const data = state.tableView === 'yearly' ? state.lastSimulation.yearlySchedule : state.lastSimulation.monthlySchedule;
+            let csv = state.lang === 'hu' ? "Idoszak,Befizetes,Kumulalt_Toke,Idoszaki_Kamat,Osszes_Kamat,Vegosszeg_Nominal,Real_Ertek\n" : "Period,Contribution,Total_Principal,Period_Interest,Total_Interest,Nominal_Balance,Real_Balance\n";
+            data.forEach(r => csv += `${state.tableView === 'yearly' ? r.year : r.month},${r.contrib},${r.totalPrincipal},${r.periodInterest},${r.totalInterest},${r.nominal},${r.real}\n`);
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.setAttribute('download', `kalkulacio_${state.tableView}.csv`);
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
         }
 
         /***********************************************************************
-         * 11. GEMINI API INTEGRATION
+         * 11. IN-BROWSER FINANCIAL ANALYTICS ENGINE (100% OFFLINE / NO API KEY)
          ***********************************************************************/
-        async function callGeminiAdvisor(userPrompt, mode = 'custom') {
+        function generateLocalFinancialAnalysis(userPrompt, mode = 'custom') {
+            const sim = state.lastSimulation;
+            if (!sim) return;
+
+            const isHu = state.lang === 'hu';
+            const mult = sim.totalPrincipal > 0 ? (sim.finalNominal / sim.totalPrincipal).toFixed(2) : '1.00';
+            const interestRatio = sim.finalNominal > 0 ? ((sim.totalInterest / sim.finalNominal) * 100).toFixed(1) : '0';
+            const principalRatio = (100 - parseFloat(interestRatio)).toFixed(1);
+
+            // 4% Safe Withdrawal Rule for FIRE / Retirement calculations
+            const monthlyPassiveIncomeNominal = (sim.finalNominal * 0.04) / 12;
+            const monthlyPassiveIncomeReal = (sim.finalReal * 0.04) / 12;
+
+            const basePmt = formatMoney(state.regularContribution);
+            const pmtPeriod = state.contributionFrequency === 'monthly'
+                ? (isHu ? 'hó' : 'month')
+                : (isHu ? 'év' : 'year');
+
+            if (mode === 'review') {
+                if (isHu) {
+                    return `
+<div class="space-y-3">
+    <div class="font-bold text-base text-emerald-800 dark:text-emerald-300">📊 Portfólió Elemzés és Megtérülési Mérleg</div>
+    <ul class="list-disc pl-5 space-y-1.5">
+        <li><strong>Tőkeszaporulat:</strong> A teljes befektetett tőkéje (${formatMoney(sim.totalPrincipal)}) a futamidő alatt <span class="font-bold text-emerald-700 dark:text-emerald-400">${mult}x-esére</span> nőtt, elérve a(z) <strong>${formatMoney(sim.finalNominal)}</strong> végösszeget.</li>
+        <li><strong>A kamatos kamat ereje:</strong> A végső vagyonának <span class="font-bold text-emerald-700 dark:text-emerald-400">${interestRatio}%-át (+${formatMoney(sim.totalInterest)})</span> a hozamok és a kamatos kamat termelte ki, míg az Ön által befizetett saját tőke ${principalRatio}%-ot tesz ki.</li>
+        <li><strong>Hozamszint értékelése:</strong> A beállított évi <strong>${state.annualInterestRate}%</strong>-os nominális hozam ${state.annualInterestRate >= 7 ? 'magas növekedési profilt tükröz (pl. diverzifikált globális részvénypiacok)' : 'kiegyensúlyozott, mérsékelt kockázatú stratégiának felel meg'}.</li>
+        <li><strong>Befizetés emelés hatása:</strong> Az évi <strong>${state.contributionGrowthRate}%</strong>-os lépcsős befizetés-emelés sikeresen ellensúlyozza a megtakarítási összeg vásárlóerő-kopását az évek során.</li>
+    </ul>
+    <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-800 dark:text-emerald-300 font-medium">
+        💡 <strong>Konklúzió:</strong> A stratégia fegyelmezett és rendkívül hatékony; a hosszú távú tőkeképzés kulcsa az időtáv kimaxolása.
+    </div>
+</div>`;
+                } else {
+                    return `
+<div class="space-y-3">
+    <div class="font-bold text-base text-emerald-800 dark:text-emerald-300">📊 Comprehensive Portfolio & Leverage Review</div>
+    <ul class="list-disc pl-5 space-y-1.5">
+        <li><strong>Capital Multiplier:</strong> Your total principal (${formatMoney(sim.totalPrincipal)}) grows by <span class="font-bold text-emerald-700 dark:text-emerald-400">${mult}x</span> over the horizon, reaching <strong>${formatMoney(sim.finalNominal)}</strong>.</li>
+        <li><strong>Compounding Efficiency:</strong> <span class="font-bold text-emerald-700 dark:text-emerald-400">${interestRatio}% (+${formatMoney(sim.totalInterest)})</span> of your final wealth is purely generated by compound interest, while your actual deposits account for ${principalRatio}%.</li>
+        <li><strong>Return Assessment:</strong> An annual return of <strong>${state.annualInterestRate}%</strong> reflects ${state.annualInterestRate >= 7 ? 'an equity-tilted growth profile (e.g. broad global index funds)' : 'a balanced, moderate-risk allocation'}.</li>
+        <li><strong>Step-Up Strategy:</strong> Your <strong>${state.contributionGrowthRate}%</strong> annual deposit indexing effectively counters salary dilution and purchasing power decay.</li>
+    </ul>
+    <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-800 dark:text-emerald-300 font-medium">
+        💡 <strong>Key Takeaway:</strong> Strong compounding momentum; maintaining consistent contributions remains the most crucial driver.
+    </div>
+</div>`;
+                }
+            } else if (mode === 'goal') {
+                if (isHu) {
+                    return `
+<div class="space-y-3">
+    <div class="font-bold text-base text-emerald-800 dark:text-emerald-300">🎯 Nyugdíj & FIRE Terv (4%-os Kivéti Szabály)</div>
+    <p>A nemzetközi pénzügyi gyakorlatban elfogadott ún. <em>4%-os szabály</em> alapján a felépített tőke évente 4%-ot képes kifizetni anélkül, hogy a tőke elfogyna:</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        <div class="p-3 bg-white dark:bg-[#14161b] rounded-lg border border-zinc-200 dark:border-zinc-800">
+            <span class="text-zinc-500 dark:text-zinc-400 block font-medium">Várható havi járadék (nominálisan):</span>
+            <span class="text-base font-bold text-emerald-700 dark:text-emerald-400 font-mono mt-1 block">${formatMoney(monthlyPassiveIncomeNominal)} / hó</span>
+        </div>
+        <div class="p-3 bg-white dark:bg-[#14161b] rounded-lg border border-zinc-200 dark:border-zinc-800">
+            <span class="text-zinc-500 dark:text-zinc-400 block font-medium">Mai vásárlóértéken számolt járadék:</span>
+            <span class="text-base font-bold text-cyan-700 dark:text-cyan-400 font-mono mt-1 block">${formatMoney(monthlyPassiveIncomeReal)} / hó</span>
+        </div>
+    </div>
+    <ul class="list-disc pl-5 space-y-1 text-xs">
+        <li>A futamidő végén Ön havi <strong>${formatMoney(monthlyPassiveIncomeReal)}</strong> tiszta reálértékű passzív jövedelmet élvezhet a mai árszínvonalon mérve.</li>
+        <li>Ha ennél magasabb havi járadék a célja, az időtáv növelése (pl. +3-5 év) vagy a rendszeres befizetés ${formatMoney(state.regularContribution * 0.2)} összeggel való megemelése drasztikus többletet teremt.</li>
+    </ul>
+</div>`;
+                } else {
+                    return `
+<div class="space-y-3">
+    <div class="font-bold text-base text-emerald-800 dark:text-emerald-300">🎯 Retirement & FIRE Projection (4% Safe Withdrawal Rate)</div>
+    <p>Applying the standard Trinity Study <em>4% safe withdrawal rule</em> for perpetual capital preservation:</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        <div class="p-3 bg-white dark:bg-[#14161b] rounded-lg border border-zinc-200 dark:border-zinc-800">
+            <span class="text-zinc-500 dark:text-zinc-400 block font-medium">Nominal passive income:</span>
+            <span class="text-base font-bold text-emerald-700 dark:text-emerald-400 font-mono mt-1 block">${formatMoney(monthlyPassiveIncomeNominal)} / mo</span>
+        </div>
+        <div class="p-3 bg-white dark:bg-[#14161b] rounded-lg border border-zinc-200 dark:border-zinc-800">
+            <span class="text-zinc-500 dark:text-zinc-400 block font-medium">Purchasing power in today's money:</span>
+            <span class="text-base font-bold text-cyan-700 dark:text-cyan-400 font-mono mt-1 block">${formatMoney(monthlyPassiveIncomeReal)} / mo</span>
+        </div>
+    </div>
+    <ul class="list-disc pl-5 space-y-1 text-xs">
+        <li>You will be able to sustain approximately <strong>${formatMoney(monthlyPassiveIncomeReal)} / month</strong> in inflation-adjusted spending power indefinitely.</li>
+        <li>Extending the timeframe by 3-5 years or increasing your regular contribution by 20% would substantially expand your retirement buffer.</li>
+    </ul>
+</div>`;
+                }
+            } else if (mode === 'inflation') {
+                const isRealPositive = sim.fisherRealAnnualRate > 0;
+                if (isHu) {
+                    return `
+<div class="space-y-3">
+    <div class="font-bold text-base text-amber-700 dark:text-amber-400">🛡️ Inflációvédelmi és Reálérték Elemzés</div>
+    <ul class="list-disc pl-5 space-y-1.5">
+        <li><strong>Feltételezett infláció:</strong> évi <strong>${state.inflationRate}%</strong> (${state.selectedCountry} referenciaalap).</li>
+        <li><strong>Éves tiszta reálhozam:</strong> <span class="font-bold ${isRealPositive ? 'text-cyan-700 dark:text-cyan-400' : 'text-rose-600'}">${sim.fisherRealAnnualRate >= 0 ? '+' : ''}${sim.fisherRealAnnualRate.toFixed(2)}% / év</span>.</li>
+        <li><strong>Vásárlóerő megmaradás:</strong> A(z) ${formatMoney(sim.finalNominal)} jövőbeli számlaegyenleg mai pénzben <strong>${formatMoney(sim.finalReal)}</strong> értékű javakat és szolgáltatásokat fog érni.</li>
+        <li><strong>Reálérték-gyarapodás:</strong> Mivel a hozama meghaladja az inflációt, Ön a saját befizetésein felül <span class="font-bold text-cyan-700 dark:text-cyan-400">+${formatMoney(sim.realNetGain)}</span> tiszta vásárlóerőt nyert!</li>
+    </ul>
+    <div class="p-2.5 rounded-lg bg-zinc-200/50 dark:bg-zinc-800 text-xs text-zinc-700 dark:text-zinc-300">
+        📌 <strong>Védelmi tipp:</strong> Tartsa a befektetéseit reáleszközökben (globális részvényindexek, ingatlanalapok, inflációkövető államkötvények), és kerülje a készpénzes vagy fix alacsony kamatozású betéteket hosszú távon.
+    </div>
+</div>`;
+                } else {
+                    return `
+<div class="space-y-3">
+    <div class="font-bold text-base text-amber-700 dark:text-amber-400">🛡️ Purchasing Power & Inflation Defense Analysis</div>
+    <ul class="list-disc pl-5 space-y-1.5">
+        <li><strong>Baseline Inflation:</strong> <strong>${state.inflationRate}% / year</strong> (${state.selectedCountry} benchmark).</li>
+        <li><strong>Net Fisher Real Return:</strong> <span class="font-bold ${isRealPositive ? 'text-cyan-700 dark:text-cyan-400' : 'text-rose-600'}">${sim.fisherRealAnnualRate >= 0 ? '+' : ''}${sim.fisherRealAnnualRate.toFixed(2)}% / year</span>.</li>
+        <li><strong>Purchasing Power Conservation:</strong> Your nominal balance of ${formatMoney(sim.finalNominal)} equals <strong>${formatMoney(sim.finalReal)}</strong> in today's currency.</li>
+        <li><strong>Net Real Profit:</strong> Because return exceeds inflation, you have accrued <span class="font-bold text-cyan-700 dark:text-cyan-400">+${formatMoney(sim.realNetGain)}</span> in true real purchasing power beyond deposits.</li>
+    </ul>
+    <div class="p-2.5 rounded-lg bg-zinc-200/50 dark:bg-zinc-800 text-xs text-zinc-700 dark:text-zinc-300">
+        📌 <strong>Hedging Tip:</strong> Favor real assets (broad global equity ETFs, inflation-linked bonds) and avoid long-term idle cash allocations.
+    </div>
+</div>`;
+                }
+            } else {
+                // Custom question handling with keyword recognition
+                const lower = userPrompt.toLowerCase();
+                let advice = '';
+
+                if (lower.includes('hányszor') || lower.includes('többször') || lower.includes('szorzó') || lower.includes('multiplier')) {
+                    advice = isHu
+                        ? `A jelenlegi beállítások mellett a tőkéje <strong>${mult}x-esére</strong> fog növekedni (${formatMoney(sim.totalPrincipal)} befizetésből ${formatMoney(sim.finalNominal)} egyenleg).`
+                        : `Under current parameters, your capital multiplies by <strong>${mult}x</strong> (${formatMoney(sim.totalPrincipal)} deposited grows to ${formatMoney(sim.finalNominal)}).`;
+                } else if (lower.includes('kamat') || lower.includes('hozam') || lower.includes('interest') || lower.includes('profit')) {
+                    advice = isHu
+                        ? `A ${state.years} év alatt megszerzett kamat és hozam összege <strong>+${formatMoney(sim.totalInterest)}</strong>, ami a végső vagyon ${interestRatio}%-át adja.`
+                        : `Over ${state.years} years, total compound interest earned is <strong>+${formatMoney(sim.totalInterest)}</strong>, accounting for ${interestRatio}% of final wealth.`;
+                } else if (lower.includes('nyugdíj') || lower.includes('passzív') || lower.includes('retire') || lower.includes('fire')) {
+                    advice = isHu
+                        ? `A 4%-os szabály alapján ez a tőke havi <strong>${formatMoney(monthlyPassiveIncomeReal)}</strong> megélhetést biztosít mai árakon számolva.`
+                        : `Based on the 4% rule, this nest egg provides roughly <strong>${formatMoney(monthlyPassiveIncomeReal)} / month</strong> in today's purchasing power.`;
+                } else {
+                    advice = isHu
+                        ? `Kérdésére válaszolva a kalkulált adatok alapján: Jelenleg <strong>${basePmt} / ${pmtPeriod}</strong> rendszeres megtakarítással és <strong>${state.annualInterestRate}%</strong> hozammal számolunk. ${state.years} év múlva a vagyona eléri a(z) <strong>${formatMoney(sim.finalNominal)}</strong> összeget (mai árakon ${formatMoney(sim.finalReal)}), ami stabil alapot teremt a pénzügyi céljaihoz.`
+                        : `Regarding your query based on current parameters: With <strong>${basePmt} / ${pmtPeriod}</strong> savings and a <strong>${state.annualInterestRate}%</strong> return over ${state.years} years, you will accumulate <strong>${formatMoney(sim.finalNominal)}</strong> (${formatMoney(sim.finalReal)} in today's money).`;
+                }
+
+                return `
+<div class="space-y-2">
+    <div class="font-semibold text-emerald-800 dark:text-emerald-300">💡 Válasz a kérdésére:</div>
+    <p>${advice}</p>
+</div>`;
+            }
+        }
+
+        function callGeminiAdvisor(userPrompt, mode = 'custom') {
             const chatBox = document.getElementById('ai-chat-response');
             const dict = I18N[state.lang];
-            const sim = state.lastSimulation;
 
             chatBox.innerHTML = `
-                <div class="flex items-center gap-3 text-emerald-700 dark:text-emerald-400">
+                <div class="flex items-center gap-2.5 text-emerald-700 dark:text-emerald-400">
                     <div class="w-4 h-4 rounded-full border-2 border-emerald-600 border-t-transparent animate-spin"></div>
                     <span>${dict.aiLoading}</span>
                 </div>
             `;
 
-            const financialContext = sim ? `
-Current User Financial Parameters:
-- Currency: ${state.currency}
-- Initial Deposit: ${state.initialDeposit} ${state.currency}
-- Regular Contribution: ${state.regularContribution} ${state.currency} (${state.contributionFrequency})
-- Annual Contribution Step-up: ${state.contributionGrowthRate}%
-- Nominal Annual Interest Rate: ${state.annualInterestRate}%
-- Time Horizon: ${state.years} years
-- Compounding Frequency: ${state.compoundFrequency} times/year
-- Expected Annual Inflation: ${state.inflationRate}%
-- Projection Results:
-  * Total Principal Deposited: ${Math.round(sim.totalPrincipal)} ${state.currency}
-  * Nominal Final Balance: ${Math.round(sim.finalNominal)} ${state.currency}
-  * Total Compound Interest Earned: ${Math.round(sim.totalInterest)} ${state.currency}
-  * Real Purchasing Power (Today's Money): ${Math.round(sim.finalReal)} ${state.currency}
-  * Real Annual Return (Fisher): ${sim.fisherRealAnnualRate.toFixed(2)}%
-` : 'No simulation run yet.';
-
-            const systemPrompt = `You are an expert financial engineer and wealth advisor. Respond in ${state.lang === 'hu' ? 'Hungarian' : 'English'}. Keep your advice professional, encouraging, analytical, and concise (use bullet points and clear formatting). Here are the user's current calculator numbers:\n${financialContext}`;
-
-            if (mode === 'review') {
-                userPrompt = state.lang === 'hu'
-                    ? "Kérem, értékelje részletesen a fenti megtakarítási paramétereket és a portfólió növekedési pályáját (nominális vs. reál vásárlóerő). Melyek a kulcsfontosságú erősségek és kockázatok?"
-                    : "Please provide a detailed review of the above savings parameters and portfolio growth trajectory (nominal vs. real purchasing power). What are the key strengths and risks?";
-            } else if (mode === 'goal') {
-                userPrompt = state.lang === 'hu'
-                    ? "Hogyan optimalizálhatnám ezt a portfóliót a korai nyugdíjhoz (FIRE) vagy passzív jövedelem építéséhez mai vásárlóerőben számolva?"
-                    : "How can I optimize this portfolio for early retirement (FIRE) or building passive income in today's purchasing power?";
-            } else if (mode === 'inflation') {
-                userPrompt = state.lang === 'hu'
-                    ? "Hogyan védhetem meg ezt a megtakarítást a deviza- és inflációs kockázatoktól, és hogyan tarthatom fenn a pozitív reálhozamot?"
-                    : "How can I hedge this portfolio against inflation and currency risk to maximize my real purchasing power return?";
-            }
-
-            const payload = {
-                contents: [{ parts: [{ text: userPrompt }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] }
-            };
-
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-
-            try {
-                let response = null;
-                let delay = 1000;
-                for (let attempt = 0; attempt < 3; attempt++) {
-                    try {
-                        response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        if (response.ok) break;
-                    } catch (e) {
-                        if (attempt === 2) throw e;
-                    }
-                    await new Promise(res => setTimeout(res, delay));
-                    delay *= 2;
-                }
-
-                if (!response || !response.ok) throw new Error('Gemini API request failed');
-
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    const text = candidate.content.parts[0].text;
-                    chatBox.innerHTML = `<div class="text-xs sm:text-sm whitespace-pre-line leading-relaxed">${text}</div>`;
-                } else {
-                    chatBox.innerHTML = `<p class="text-rose-500">${dict.aiNoResponse}</p>`;
-                }
-            } catch (err) {
-                chatBox.innerHTML = `<p class="text-rose-500">${dict.aiErrorPrefix} ${err.message}</p>`;
-            }
+            // Instant natural response with short realistic debounce
+            setTimeout(() => {
+                const analysisHtml = generateLocalFinancialAnalysis(userPrompt, mode);
+                chatBox.innerHTML = analysisHtml;
+            }, 300);
         }
 
         /***********************************************************************
