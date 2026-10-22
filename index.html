@@ -36,7 +36,6 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Természetes, fokozott iOS Frosted Glass stílus */
         .ios-glass {
             background: rgba(14, 18, 22, 0.45);
             backdrop-filter: blur(32px) saturate(170%);
@@ -66,6 +65,13 @@
             background: rgba(255, 255, 255, 0.07);
             border-color: rgba(16, 185, 129, 0.5);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+
+        .creator-capsule {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: rgba(209, 250, 229, 0.9);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         input[type="range"] {
@@ -103,56 +109,53 @@
 </head>
 <body class="bg-[#09090b] text-slate-300 min-h-screen font-sans antialiased selection:bg-emerald-600 selection:text-white relative overflow-x-hidden flex flex-col justify-between">
 
-    <!-- Konténerbe zárt gördülő háttérfények -->
+    <!-- Háttérfények -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div class="absolute -top-16 -left-16 w-[560px] h-[560px] bg-emerald-600/20 rounded-full blur-[140px]"></div>
-        <div class="absolute top-[700px] -right-24 w-[520px] h-[520px] bg-teal-600/15 rounded-full blur-[150px]"></div>
-        <div class="absolute -bottom-16 -left-16 w-[580px] h-[580px] bg-emerald-800/18 rounded-full blur-[140px]"></div>
+        <div class="absolute -top-16 -left-16 w-72 sm:w-[560px] h-72 sm:h-[560px] bg-emerald-600/20 rounded-full blur-[100px] sm:blur-[140px]"></div>
+        <div class="absolute top-[700px] -right-24 w-72 sm:w-[520px] h-72 sm:h-[520px] bg-teal-600/15 rounded-full blur-[100px] sm:blur-[150px]"></div>
+        <div class="absolute -bottom-16 -left-16 w-72 sm:w-[580px] h-72 sm:h-[580px] bg-emerald-800/18 rounded-full blur-[100px] sm:blur-[140px]"></div>
     </div>
 
-    <!-- Fejléc: Kattintható logóval és lágy üveghatással -->
-    <header class="sticky top-0 z-30 bg-[#09090b]/35 backdrop-blur-2xl border-b border-white/10 shrink-0 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-3.5">
-                <!-- Kattintható templom logó finom hover effekttel és felgörgetéssel -->
-                <a href="#" id="scroll-to-top-btn" class="group flex items-center gap-3.5 cursor-pointer select-none" title="Ugrás a lap tetejére">
-                    <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-inner backdrop-blur-md shrink-0 group-hover:border-emerald-500/50 group-hover:bg-emerald-500/15 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.35)] group-hover:scale-105 transition-all duration-300">
-                        <i data-lucide="landmark" class="w-5 h-5 group-hover:scale-110 transition-transform duration-300"></i>
+    <!-- Fejléc -->
+    <header class="sticky top-0 z-30 bg-[#09090b]/40 backdrop-blur-2xl border-b border-white/10 shrink-0 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+            <div class="flex items-center gap-2.5 sm:gap-3">
+                <a href="#" id="scroll-to-top-btn" class="group flex items-center gap-2.5 sm:gap-3 cursor-pointer select-none" title="Ugrás a lap tetejére">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-inner backdrop-blur-md shrink-0 group-hover:border-emerald-500/50 group-hover:bg-emerald-500/15 transition-all">
+                        <i data-lucide="landmark" class="w-4.5 h-4.5 sm:w-5 sm:h-5"></i>
                     </div>
-                    <div>
-                        <div class="flex flex-wrap items-center gap-2">
-                            <h1 id="app-title" class="text-sm sm:text-base font-bold tracking-tight text-white leading-tight group-hover:text-emerald-200 transition-colors">
-                                Kamatos Kamat & Vásárlóerő Kalkulátor
-                            </h1>
-                            <span id="author-badge" class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/25">
-                                Készítette: Nagy Márton
-                            </span>
-                        </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <h1 id="app-title" class="text-sm sm:text-base font-bold tracking-tight text-white leading-tight whitespace-nowrap">
+                            Kamatos Kamat & Vásárlóerő Kalkulátor
+                        </h1>
+                        <span id="author-badge" class="text-[10px] sm:text-[11px] font-semibold px-2.5 py-0.5 rounded-full creator-capsule inline-flex items-center whitespace-nowrap">
+                            Készítette: Nagy Márton
+                        </span>
                     </div>
                 </a>
             </div>
 
-            <!-- Controls: Home, Currency, Language, Theme -->
-            <div class="flex items-center gap-2">
-                <a href="https://nagymarton06.github.io/Homepage/" id="homeBtn" class="p-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-emerald-400 transition-colors shadow-sm flex items-center justify-center backdrop-blur-md" aria-label="Főoldal" title="Főoldal">
+            <!-- Jobb oldali vezérlők -->
+            <div class="flex items-center gap-2 sm:gap-2.5">
+                <a href="https://nagymarton06.github.io/Homepage/" id="homeBtn" class="p-2 sm:p-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-emerald-400 transition-colors shadow-sm flex items-center justify-center backdrop-blur-md" aria-label="Főoldal" title="Főoldal">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
                 </a>
 
-                <div class="inline-flex rounded-xl p-1 bg-white/5 border border-white/10 backdrop-blur-md">
-                    <button type="button" data-currency="HUF" class="currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shadow-sm">
-                        HUF (Ft)
+                <div class="inline-flex rounded-xl p-0.5 sm:p-1 bg-white/5 border border-white/10 backdrop-blur-md">
+                    <button type="button" data-currency="HUF" class="currency-btn px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shadow-sm">
+                        HUF
                     </button>
-                    <button type="button" data-currency="EUR" class="currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-400 hover:text-white">
-                        EUR (€)
+                    <button type="button" data-currency="EUR" class="currency-btn px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-400 hover:text-white">
+                        EUR
                     </button>
-                    <button type="button" data-currency="USD" class="currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-400 hover:text-white">
-                        USD ($)
+                    <button type="button" data-currency="USD" class="currency-btn px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-400 hover:text-white">
+                        USD
                     </button>
                 </div>
 
-                <div class="inline-flex rounded-xl p-1 bg-white/5 border border-white/10 backdrop-blur-md">
+                <div class="inline-flex rounded-xl p-0.5 sm:p-1 bg-white/5 border border-white/10 backdrop-blur-md">
                     <button type="button" id="lang-hu" class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shadow-sm">
                         HU
                     </button>
@@ -160,28 +163,24 @@
                         EN
                     </button>
                 </div>
-
-                <button type="button" id="theme-toggle" class="p-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-emerald-400 transition-colors shadow-sm backdrop-blur-md" aria-label="Toggle Theme">
-                    <i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>
-                </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-grow">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 flex-grow w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-8 items-start">
 
-            <!-- LEFT COLUMN: Input Parameters & Inflation Module -->
-            <div class="lg:col-span-5 space-y-6">
+            <!-- BAL OSZLOP -->
+            <div class="lg:col-span-5 space-y-5 sm:space-y-6">
 
-                <!-- Card 1: Core Financial Parameters -->
-                <section class="ios-glass rounded-3xl p-5 sm:p-6 space-y-6">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-4">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-7 h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                <!-- Kártya 1: Megtakarítási Paraméterek -->
+                <section class="ios-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-5 sm:space-y-6">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3.5 sm:pb-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400">
                                 <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>
                             </div>
-                            <h2 data-i18n="paramsTitle" class="font-bold text-base text-zinc-100">
+                            <h2 data-i18n="paramsTitle" class="font-bold text-sm sm:text-base text-zinc-100">
                                 Megtakarítási Paraméterek
                             </h2>
                         </div>
@@ -191,115 +190,115 @@
                         </button>
                     </div>
 
-                    <!-- Initial Deposit -->
-                    <div class="space-y-2.5">
+                    <!-- Kezdő tőke -->
+                    <div class="space-y-2">
                         <div class="flex justify-between items-center gap-2">
-                            <label for="initial-deposit" data-i18n="initialDepositLabel" class="text-sm font-semibold text-zinc-200">
+                            <label for="initial-deposit" data-i18n="initialDepositLabel" class="text-xs sm:text-sm font-semibold text-zinc-200">
                                 Kezdő tőke (egyszeri)
                             </label>
                             <div class="relative flex items-center">
                                 <input type="text" inputmode="numeric" id="initial-deposit" value="1 000 000"
-                                    class="w-40 sm:w-44 text-right font-mono text-sm font-bold ios-input rounded-xl py-2 pl-3 pr-9">
-                                <span class="currency-symbol absolute right-3 text-xs font-bold text-zinc-400 pointer-events-none">Ft</span>
+                                    class="w-32 sm:w-44 text-right font-mono text-xs sm:text-sm font-bold ios-input rounded-xl py-1.5 sm:py-2 pl-2.5 pr-8 sm:pr-9">
+                                <span class="currency-symbol absolute right-2.5 sm:right-3 text-[11px] sm:text-xs font-bold text-zinc-400 pointer-events-none">Ft</span>
                             </div>
                         </div>
                         <input type="range" id="initial-deposit-slider" min="0" max="50000000" step="100000" value="1000000" class="w-full">
-                        <div class="flex justify-between text-[11px] text-zinc-400 font-mono">
+                        <div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-mono">
                             <span>0</span>
                             <span id="initial-slider-max">50M Ft</span>
                         </div>
                     </div>
 
-                    <!-- Regular Contributions & Frequency -->
-                    <div class="space-y-2.5 pt-4 border-t border-white/10">
+                    <!-- Rendszeres befizetés -->
+                    <div class="space-y-2.5 pt-3.5 sm:pt-4 border-t border-white/10">
                         <div class="flex flex-wrap justify-between items-center gap-2">
-                            <label for="regular-contribution" data-i18n="regularContributionLabel" class="text-sm font-semibold text-zinc-200">
+                            <label for="regular-contribution" data-i18n="regularContributionLabel" class="text-xs sm:text-sm font-semibold text-zinc-200">
                                 Rendszeres befizetés
                             </label>
                             <div class="inline-flex rounded-xl p-0.5 bg-black/30 border border-white/10">
-                                <button type="button" data-contrib-freq="monthly" class="contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm" data-i18n="freqMonthly">
+                                <button type="button" data-contrib-freq="monthly" class="contrib-freq-btn px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm" data-i18n="freqMonthly">
                                     Havi
                                 </button>
-                                <button type="button" data-contrib-freq="annually" class="contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white" data-i18n="freqAnnually">
+                                <button type="button" data-contrib-freq="annually" class="contrib-freq-btn px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg text-zinc-400 hover:text-white" data-i18n="freqAnnually">
                                     Éves
                                 </button>
                             </div>
                         </div>
 
                         <div class="flex justify-between items-center pt-1 gap-2">
-                            <span data-i18n="contribAmountSub" class="text-xs text-zinc-400">Befizetett összeg alkalmanként</span>
+                            <span data-i18n="contribAmountSub" class="text-[11px] sm:text-xs text-zinc-400">Befizetett összeg</span>
                             <div class="relative flex items-center">
                                 <input type="text" inputmode="numeric" id="regular-contribution" value="50 000"
-                                    class="w-40 sm:w-44 text-right font-mono text-sm font-bold ios-input rounded-xl py-2 pl-3 pr-9">
-                                <span class="currency-symbol absolute right-3 text-xs font-bold text-zinc-400 pointer-events-none">Ft</span>
+                                    class="w-32 sm:w-44 text-right font-mono text-xs sm:text-sm font-bold ios-input rounded-xl py-1.5 sm:py-2 pl-2.5 pr-8 sm:pr-9">
+                                <span class="currency-symbol absolute right-2.5 sm:right-3 text-[11px] sm:text-xs font-bold text-zinc-400 pointer-events-none">Ft</span>
                             </div>
                         </div>
                         <input type="range" id="regular-contribution-slider" min="0" max="1000000" step="5000" value="50000" class="w-full">
-                        <div class="flex justify-between text-[11px] text-zinc-400 font-mono">
+                        <div class="flex justify-between text-[10px] sm:text-[11px] text-zinc-400 font-mono">
                             <span>0</span>
                             <span id="contrib-slider-max">1M Ft</span>
                         </div>
                     </div>
 
-                    <!-- Contribution Growth Rate (Step-up) -->
-                    <div class="space-y-2.5 pt-4 border-t border-white/10">
+                    <!-- Lépcsős emelés -->
+                    <div class="space-y-2.5 pt-3.5 sm:pt-4 border-t border-white/10">
                         <div class="flex justify-between items-center gap-2">
                             <div>
-                                <label for="contribution-growth" data-i18n="contribGrowthLabel" class="text-sm font-semibold text-zinc-200 block">
+                                <label for="contribution-growth" data-i18n="contribGrowthLabel" class="text-xs sm:text-sm font-semibold text-zinc-200 block">
                                     Befizetések éves növelése
                                 </label>
-                                <span data-i18n="contribGrowthHint" class="text-[11px] text-zinc-400">
+                                <span data-i18n="contribGrowthHint" class="text-[10px] sm:text-[11px] text-zinc-400">
                                     Éves % emelés (pl. fizetésemelés vagy inflációkövetés)
                                 </span>
                             </div>
                             <div class="relative flex items-center shrink-0">
                                 <input type="number" id="contribution-growth" min="0" max="50" step="0.5" value="5.0"
-                                    class="w-24 text-right font-mono text-sm font-bold ios-input rounded-xl py-2 pl-2 pr-7">
+                                    class="w-20 sm:w-24 text-right font-mono text-xs sm:text-sm font-bold ios-input rounded-xl py-1.5 sm:py-2 pl-2 pr-6 sm:pr-7">
                                 <span class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
                             </div>
                         </div>
                         <input type="range" id="contribution-growth-slider" min="0" max="25" step="0.5" value="5.0" class="w-full">
                     </div>
 
-                    <!-- Annual Interest Rate -->
-                    <div class="space-y-2.5 pt-4 border-t border-white/10">
+                    <!-- Éves hozam -->
+                    <div class="space-y-2.5 pt-3.5 sm:pt-4 border-t border-white/10">
                         <div class="flex justify-between items-center gap-2">
                             <div>
-                                <label for="interest-rate" data-i18n="interestRateLabel" class="text-sm font-semibold text-zinc-200 block">
+                                <label for="interest-rate" data-i18n="interestRateLabel" class="text-xs sm:text-sm font-semibold text-zinc-200 block">
                                     Éves nominális hozam (kamatláb)
                                 </label>
                             </div>
                             <div class="relative flex items-center shrink-0">
                                 <input type="number" id="interest-rate" min="0" max="50" step="0.1" value="8.0"
-                                    class="w-24 text-right font-mono text-sm font-bold ios-input rounded-xl py-2 pl-2 pr-7">
+                                    class="w-20 sm:w-24 text-right font-mono text-xs sm:text-sm font-bold ios-input rounded-xl py-1.5 sm:py-2 pl-2 pr-6 sm:pr-7">
                                 <span class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
                             </div>
                         </div>
                         <input type="range" id="interest-rate-slider" min="0" max="25" step="0.1" value="8.0" class="w-full">
                     </div>
 
-                    <!-- Time Horizon & Compounding Frequency -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                        <div class="space-y-2.5">
+                    <!-- Időtáv és Tőkésítés -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 pt-3.5 sm:pt-4 border-t border-white/10">
+                        <div class="space-y-2">
                             <div class="flex justify-between items-center">
-                                <label for="years" data-i18n="yearsLabel" class="text-sm font-semibold text-zinc-200">
+                                <label for="years" data-i18n="yearsLabel" class="text-xs sm:text-sm font-semibold text-zinc-200">
                                     Időtáv
                                 </label>
                                 <div class="relative flex items-center">
                                     <input type="number" id="years" min="1" max="50" step="1" value="15"
-                                        class="w-20 text-right font-mono text-sm font-bold ios-input rounded-xl py-1.5 pl-2 pr-8">
-                                    <span data-i18n="yearsUnit" class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">év</span>
+                                        class="w-16 sm:w-20 text-right font-mono text-xs sm:text-sm font-bold ios-input rounded-xl py-1.5 pl-2 pr-7 sm:pr-8">
+                                    <span data-i18n="yearsUnit" class="absolute right-2 sm:right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">év</span>
                                 </div>
                             </div>
                             <input type="range" id="years-slider" min="1" max="50" step="1" value="15" class="w-full">
                         </div>
 
-                        <div class="space-y-2">
-                            <label for="compound-frequency" data-i18n="compoundFreqLabel" class="text-sm font-semibold text-zinc-200 block">
+                        <div class="space-y-1.5 sm:space-y-2">
+                            <label for="compound-frequency" data-i18n="compoundFreqLabel" class="text-xs sm:text-sm font-semibold text-zinc-200 block">
                                 Tőkésítés gyakorisága
                             </label>
                             <select id="compound-frequency"
-                                class="w-full text-sm font-semibold ios-input rounded-xl py-2 px-3">
+                                class="w-full text-xs sm:text-sm font-semibold ios-input rounded-xl py-2 px-3">
                                 <option value="12" data-i18n="compMonthly" selected class="bg-zinc-900">Havi (12x / év)</option>
                                 <option value="4" data-i18n="compQuarterly" class="bg-zinc-900">Negyedéves (4x / év)</option>
                                 <option value="1" data-i18n="compAnnually" class="bg-zinc-900">Éves (1x / év)</option>
@@ -308,18 +307,18 @@
                     </div>
                 </section>
 
-                <!-- Card 2: Inflation & Purchasing Power Module -->
-                <section class="ios-glass rounded-3xl p-5 sm:p-6 transition-all">
+                <!-- Kártya 2: Infláció & Vásárlóerő -->
+                <section class="ios-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 transition-all">
                     <div class="flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 shrink-0">
-                                <i data-lucide="percent" class="w-4 h-4"></i>
+                        <div class="flex items-center gap-2.5 sm:gap-3">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 shrink-0">
+                                <i data-lucide="percent" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                             </div>
                             <div>
-                                <h2 data-i18n="inflationCardTitle" class="font-bold text-base text-zinc-100 leading-tight">
+                                <h2 data-i18n="inflationCardTitle" class="font-bold text-sm sm:text-base text-zinc-100 leading-tight">
                                     Infláció & Vásárlóerő Modul
                                 </h2>
-                                <p data-i18n="inflationToggleSub" class="text-xs text-zinc-400 mt-0.5">
+                                <p data-i18n="inflationToggleSub" class="text-[11px] sm:text-xs text-zinc-400 mt-0.5">
                                     Kapcsolja be, ha a jövőbeli pénz mai vásárlóerejét is látni szeretné
                                 </p>
                             </div>
@@ -327,13 +326,13 @@
 
                         <label for="inflation-toggle" class="inline-flex items-center cursor-pointer select-none shrink-0">
                             <input type="checkbox" id="inflation-toggle" class="sr-only peer">
-                            <div class="w-11 h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all relative peer-checked:bg-emerald-600 shadow-inner"></div>
+                            <div class="w-10 h-5 sm:w-11 sm:h-6 bg-zinc-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-5 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-4 sm:after:h-5 after:w-4 sm:after:w-5 after:transition-all relative peer-checked:bg-emerald-600 shadow-inner"></div>
                         </label>
                     </div>
 
-                    <div id="inflation-controls-body" class="hidden pt-5 mt-5 border-t border-white/10 space-y-5">
-                        <div class="flex flex-wrap items-center justify-between gap-2 bg-white/[0.02] p-3 rounded-xl border border-white/10">
-                            <span data-i18n="inflationActiveLabel" class="text-xs font-semibold text-zinc-400">
+                    <div id="inflation-controls-body" class="hidden pt-4 sm:pt-5 mt-4 sm:mt-5 border-t border-white/10 space-y-4 sm:space-y-5">
+                        <div class="flex flex-wrap items-center justify-between gap-2 bg-white/[0.02] p-2.5 sm:p-3 rounded-xl border border-white/10">
+                            <span data-i18n="inflationActiveLabel" class="text-[11px] sm:text-xs font-semibold text-zinc-400">
                                 Hivatalos adatforrás:
                             </span>
                             <a id="worldbank-source-link"
@@ -341,46 +340,46 @@
                                target="_blank"
                                rel="noopener noreferrer"
                                title="World Bank Open Data — FP.CPI.TOTL.ZG"
-                               class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-white/5 hover:bg-emerald-500/15 text-emerald-400 border border-white/10 hover:border-emerald-500/40 shadow-sm transition-all group">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                               class="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-emerald-500/15 text-emerald-400 border border-white/10 transition-all">
+                                <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                                 <span id="api-status-text">Világbank Élő Adat</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-75 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                                <i data-lucide="external-link" class="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-75"></i>
                             </a>
                         </div>
 
-                        <!-- Expected Annual Inflation Input -->
-                        <div class="space-y-2.5">
+                        <!-- Várható infláció -->
+                        <div class="space-y-2">
                             <div class="flex justify-between items-center gap-2">
                                 <div>
-                                    <label for="inflation-rate" data-i18n="inflationRateLabel" class="text-sm font-semibold text-zinc-200 block">
+                                    <label for="inflation-rate" data-i18n="inflationRateLabel" class="text-xs sm:text-sm font-semibold text-zinc-200 block">
                                         Várható éves infláció
                                     </label>
-                                    <span data-i18n="inflationRateHint" class="text-[11px] text-zinc-400">
+                                    <span data-i18n="inflationRateHint" class="text-[10px] sm:text-[11px] text-zinc-400">
                                         Alapértelmezetten az eurózóna átlagára állítva
                                     </span>
                                 </div>
                                 <div class="relative flex items-center shrink-0">
                                     <input type="number" id="inflation-rate" min="0" max="40" step="0.1" value="2.6"
-                                        class="w-24 text-right font-mono text-sm font-bold ios-input rounded-xl py-2 pl-2 pr-7">
+                                        class="w-20 sm:w-24 text-right font-mono text-xs sm:text-sm font-bold ios-input rounded-xl py-1.5 sm:py-2 pl-2 pr-6 sm:pr-7">
                                     <span class="absolute right-2.5 text-xs font-bold text-zinc-400 pointer-events-none">%</span>
                                 </div>
                             </div>
                             <input type="range" id="inflation-rate-slider" min="0" max="20" step="0.1" value="2.6" class="w-full">
                         </div>
 
-                        <!-- Historical Multi-Window Reference Helper -->
-                        <div class="bg-white/[0.02] rounded-2xl p-4 border border-white/10 space-y-3.5">
-                            <div class="flex flex-col gap-2.5">
+                        <!-- Történelmi inflációs segédlet -->
+                        <div class="bg-white/[0.02] rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-white/10 space-y-3">
+                            <div class="flex flex-col gap-2">
                                 <div class="flex items-center justify-between gap-2">
-                                    <label for="country-select" data-i18n="histContextLabel" class="text-xs font-bold text-zinc-300">
+                                    <label for="country-select" data-i18n="histContextLabel" class="text-[11px] sm:text-xs font-bold text-zinc-300">
                                         Történelmi inflációs segédlet
                                     </label>
-                                    <span id="hist-year-range-badge" class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-zinc-400">
+                                    <span id="hist-year-range-badge" class="text-[10px] sm:text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-zinc-400">
                                         2016–2026
                                     </span>
                                 </div>
 
-                                <select id="country-select" class="w-full text-xs font-semibold ios-input rounded-xl py-2.5 px-3">
+                                <select id="country-select" class="w-full text-xs font-semibold ios-input rounded-xl py-2 px-2.5">
                                     <option value="WLD" class="bg-zinc-900">Globális Átlag (WLD)</option>
                                     <option value="HUN" class="bg-zinc-900">Magyarország (HUN)</option>
                                     <option value="EMU" selected class="bg-zinc-900">Eurózóna (EMU)</option>
@@ -392,212 +391,201 @@
                                 </select>
 
                                 <div class="grid grid-cols-3 gap-1 p-1 rounded-xl bg-black/30 border border-white/10">
-                                    <button type="button" data-inf-window="10" class="inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all" data-i18n="window10Y">
+                                    <button type="button" data-inf-window="10" class="inf-window-btn py-1.5 px-1 sm:px-2 text-[10px] sm:text-[11px] font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all" data-i18n="window10Y">
                                         Elmúlt 10 év
                                     </button>
-                                    <button type="button" data-inf-window="20" class="inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg text-zinc-400 hover:text-white transition-all" data-i18n="window20Y">
+                                    <button type="button" data-inf-window="20" class="inf-window-btn py-1.5 px-1 sm:px-2 text-[10px] sm:text-[11px] font-semibold rounded-lg text-zinc-400 hover:text-white transition-all" data-i18n="window20Y">
                                         Elmúlt 20 év
                                     </button>
-                                    <button type="button" data-inf-window="max" class="inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg text-zinc-400 hover:text-white transition-all" data-i18n="windowMax">
-                                        Adatkezdettől (Max)
+                                    <button type="button" data-inf-window="max" class="inf-window-btn py-1.5 px-1 sm:px-2 text-[10px] sm:text-[11px] font-semibold rounded-lg text-zinc-400 hover:text-white transition-all" data-i18n="windowMax">
+                                        Max
                                     </button>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-3 pt-1">
-                                <div class="ios-glass-card p-3.5 rounded-xl">
-                                    <span id="selected-country-label" class="text-[11px] font-medium text-zinc-400 block truncate">
+                            <div class="grid grid-cols-2 gap-2.5 sm:gap-3 pt-1">
+                                <div class="ios-glass-card p-3 rounded-xl">
+                                    <span id="selected-country-label" class="text-[10px] sm:text-[11px] font-medium text-zinc-400 block truncate">
                                         Globális Átlag (10 év)
                                     </span>
-                                    <div class="flex items-baseline justify-between mt-1.5">
-                                        <span id="country-hist-avg" class="text-lg font-bold font-mono text-white">
+                                    <div class="flex items-baseline justify-between mt-1">
+                                        <span id="country-hist-avg" class="text-base sm:text-lg font-bold font-mono text-white">
                                             3.9%
                                         </span>
-                                        <button type="button" id="apply-country-inf" class="text-[11px] font-semibold text-emerald-400 hover:underline flex items-center gap-0.5">
+                                        <button type="button" id="apply-country-inf" class="text-[10px] sm:text-[11px] font-semibold text-emerald-400 hover:underline flex items-center gap-0.5">
                                             <span data-i18n="applyBtn">Alkalmaz</span>
-                                            <i data-lucide="check" class="w-3 h-3"></i>
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="ios-glass-card p-3.5 rounded-xl">
-                                    <span id="global-avg-box-label" class="text-[11px] font-medium text-zinc-400 block truncate">
+                                <div class="ios-glass-card p-3 rounded-xl">
+                                    <span id="global-avg-box-label" class="text-[10px] sm:text-[11px] font-medium text-zinc-400 block truncate">
                                         Globális átlag (10 év)
                                     </span>
-                                    <div class="flex items-baseline justify-between mt-1.5">
-                                        <span id="global-hist-avg" class="text-lg font-bold font-mono text-zinc-200">
+                                    <div class="flex items-baseline justify-between mt-1">
+                                        <span id="global-hist-avg" class="text-base sm:text-lg font-bold font-mono text-zinc-200">
                                             3.9%
                                         </span>
-                                        <button type="button" id="apply-global-inf" class="text-[11px] font-semibold text-emerald-400 hover:underline flex items-center gap-0.5">
+                                        <button type="button" id="apply-global-inf" class="text-[10px] sm:text-[11px] font-semibold text-emerald-400 hover:underline flex items-center gap-0.5">
                                             <span data-i18n="applyBtn">Alkalmaz</span>
-                                            <i data-lucide="check" class="w-3 h-3"></i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex items-center justify-between gap-2 pt-1">
-                                <p id="hist-data-footnote" class="text-[11px] text-zinc-400 leading-snug">
-                                    Adatforrás: Világbank (World Bank CPI). Kattintson a fenti gombra az eredeti adatsor megnyitásához.
-                                </p>
-                            </div>
+                            <p id="hist-data-footnote" class="text-[10px] sm:text-[11px] text-zinc-400 leading-snug pt-1">
+                                Adatforrás: Világbank (World Bank CPI).
+                            </p>
                         </div>
                     </div>
                 </section>
             </div>
 
-            <!-- RIGHT COLUMN: Summary & Chart -->
-            <div class="lg:col-span-7 space-y-6">
+            <!-- JOBB OSZLOP: Összesítő és Grafikon -->
+            <div class="lg:col-span-7 space-y-5 sm:space-y-6">
 
-                <!-- Executive Summary Card -->
-                <div class="ios-glass rounded-3xl p-5 sm:p-7 space-y-6">
-                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-4">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-7 h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                <!-- Fő Eredmény Kártya -->
+                <div class="ios-glass rounded-2xl sm:rounded-3xl p-4 sm:p-7 space-y-5 sm:space-y-6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3.5 sm:pb-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400">
                                 <i data-lucide="trending-up" class="w-4 h-4"></i>
                             </div>
-                            <h2 data-i18n="resultsHeaderTitle" class="font-bold text-base text-zinc-100">
-                                Kalkuláció Eredménye — Átlátható Összesítő
+                            <h2 data-i18n="resultsHeaderTitle" class="font-bold text-sm sm:text-base text-zinc-100">
+                                Kalkuláció Eredménye
                             </h2>
                         </div>
-                        <span id="summary-horizon-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/25">
+                        <span id="summary-horizon-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/25">
                             15 év után
                         </span>
                     </div>
 
-                    <!-- Primary Hero Result: Final Balance -->
-                    <div class="rounded-2xl p-5 sm:p-6 bg-gradient-to-br from-white/[0.04] to-emerald-500/[0.05] border border-white/10 shadow-inner">
-                        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                    <!-- Fő végösszeg -->
+                    <div class="rounded-xl sm:rounded-2xl p-4 sm:p-6 bg-gradient-to-br from-white/[0.04] to-emerald-500/[0.05] border border-white/10 shadow-inner">
+                        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4">
                             <div>
-                                <span data-i18n="card2Title" class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">
+                                <span data-i18n="card2Title" class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400 block">
                                     Várható Végösszeg (Számlaegyenleg)
                                 </span>
-                                <div id="kpi-nominal-value" class="text-3xl sm:text-5xl font-extrabold font-mono mt-2 text-white tracking-tight">
+                                <div id="kpi-nominal-value" class="text-2xl sm:text-4xl md:text-5xl font-extrabold font-mono mt-1.5 sm:mt-2 text-white tracking-tight">
                                     29 945 120 Ft
                                 </div>
-                                <p data-i18n="card2Sub" class="text-xs text-zinc-400 mt-2">
+                                <p data-i18n="card2Sub" class="text-[11px] sm:text-xs text-zinc-400 mt-1 sm:mt-2">
                                     Ennyi pénz lesz számszerűleg a megtakarítási számláján a futamidő végén.
                                 </p>
                             </div>
-                            <div class="sm:text-right bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl shrink-0 self-start sm:self-end">
-                                <span data-i18n="card2MultiplierLabel" class="text-[11px] font-medium text-zinc-400 block">Tőketöbbszöröző</span>
-                                <span id="kpi-multiplier" class="font-mono text-xl font-extrabold text-emerald-400">2.15x</span>
+                            <div class="bg-white/5 border border-white/10 px-3.5 py-2 rounded-xl shrink-0 self-start sm:self-end">
+                                <span data-i18n="card2MultiplierLabel" class="text-[10px] sm:text-[11px] font-medium text-zinc-400 block">Tőketöbbszöröző</span>
+                                <span id="kpi-multiplier" class="font-mono text-lg sm:text-xl font-extrabold text-emerald-400">2.15x</span>
                             </div>
                         </div>
 
-                        <!-- 3-Column Breakdown -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-6 pt-5 border-t border-white/10">
-                            <div class="ios-glass-card p-4 rounded-xl">
-                                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-400">
+                        <!-- 3 oszlopos bontás -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3.5 mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-white/10">
+                            <div class="ios-glass-card p-3 sm:p-4 rounded-xl">
+                                <div class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-zinc-400">
                                     <span class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]"></span>
                                     <span data-i18n="card1Title">Összes saját befizetés</span>
                                 </div>
-                                <div id="kpi-principal-value" class="font-mono text-lg font-bold text-white mt-1.5">
+                                <div id="kpi-principal-value" class="font-mono text-base sm:text-lg font-bold text-white mt-1 sm:mt-1.5">
                                     13 947 338 Ft
                                 </div>
                             </div>
 
-                            <div class="ios-glass-card p-4 rounded-xl">
-                                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-400">
+                            <div class="ios-glass-card p-3 sm:p-4 rounded-xl">
+                                <div class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-zinc-400">
                                     <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"></span>
                                     <span data-i18n="card2InterestLabel">Megszerzett kamat (hozam)</span>
                                 </div>
-                                <div id="kpi-interest-value" class="font-mono text-lg font-bold text-emerald-400 mt-1.5">
+                                <div id="kpi-interest-value" class="font-mono text-base sm:text-lg font-bold text-emerald-400 mt-1 sm:mt-1.5">
                                     +15 997 782 Ft
                                 </div>
                             </div>
 
-                            <div class="ios-glass-card p-4 rounded-xl">
-                                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-zinc-400">
+                            <div class="ios-glass-card p-3 sm:p-4 rounded-xl">
+                                <div class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold text-zinc-400">
                                     <span class="w-2 h-2 rounded-full bg-zinc-400"></span>
                                     <span data-i18n="card1FinalDepositLabel">Utolsó évi rendszeres részlet</span>
                                 </div>
-                                <div id="kpi-final-contrib" class="font-mono text-lg font-bold text-zinc-200 mt-1.5">
+                                <div id="kpi-final-contrib" class="font-mono text-base sm:text-lg font-bold text-zinc-200 mt-1 sm:mt-1.5">
                                     98 997 Ft / hó
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Real Purchasing Power Panel (Javított, precíz diszkontált jelenértékkel) -->
-                    <div id="real-results-container" class="hidden rounded-2xl p-5 bg-white/[0.02] border border-white/10 space-y-4 transition-all">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3.5">
+                    <!-- Reálérték panel -->
+                    <div id="real-results-container" class="hidden rounded-xl sm:rounded-2xl p-4 sm:p-5 bg-white/[0.02] border border-white/10 space-y-3.5 sm:space-y-4 transition-all">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
                             <div>
                                 <div class="flex flex-wrap items-center gap-2">
                                     <span data-i18n="card3Title" class="text-xs font-bold uppercase tracking-wider text-cyan-400">
-                                        Inflációval Korrigált Vásárlóerő (Mai Árakon)
+                                        Inflációval Korrigált Vásárlóerő
                                     </span>
-                                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-300 border border-cyan-400/20" data-i18n="realBadge">
+                                    <span class="text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-cyan-500/15 text-cyan-300 border border-cyan-400/20" data-i18n="realBadge">
                                         Reálérték
                                     </span>
                                 </div>
-                                <p data-i18n="card3Sub" class="text-xs text-zinc-400 mt-0.5">
+                                <p data-i18n="card3Sub" class="text-[11px] sm:text-xs text-zinc-400 mt-0.5">
                                     Mai pénzben kifejezve ennyi árut és szolgáltatást ér majd a fenti végösszeg.
                                 </p>
                             </div>
-                            <div id="kpi-real-value" class="text-2xl sm:text-3xl font-bold font-mono text-cyan-300 shrink-0">
+                            <div id="kpi-real-value" class="text-xl sm:text-3xl font-bold font-mono text-cyan-300 shrink-0">
                                 17 873 950 Ft
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                            <div class="ios-glass-card p-3.5 rounded-xl">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                            <div class="ios-glass-card p-3 rounded-xl">
                                 <span data-i18n="card1RealCostLabel" class="text-zinc-400 block">Befizetései mai értéke:</span>
-                                <span id="kpi-real-principal-value" class="font-mono text-sm font-bold text-zinc-200 mt-1 block">10 818 200 Ft</span>
+                                <span id="kpi-real-principal-value" class="font-mono text-xs sm:text-sm font-bold text-zinc-200 mt-1 block">10 818 200 Ft</span>
                             </div>
-                            <div class="ios-glass-card p-3.5 rounded-xl">
+                            <div class="ios-glass-card p-3 rounded-xl">
                                 <span data-i18n="card3RealGainLabel" class="text-zinc-400 block">Infláció feletti reálnyereség:</span>
-                                <span id="kpi-real-gain-value" class="font-mono text-sm font-bold text-cyan-400 mt-1 block">+7 055 750 Ft</span>
+                                <span id="kpi-real-gain-value" class="font-mono text-xs sm:text-sm font-bold text-cyan-400 mt-1 block">+7 055 750 Ft</span>
                             </div>
-                            <div class="ios-glass-card p-3.5 rounded-xl">
-                                <span data-i18n="card3FisherLabel" class="text-zinc-400 block">Éves reálhozam (infláció felett):</span>
-                                <span id="kpi-real-rate" class="font-mono text-sm font-bold text-cyan-400 mt-1 block">+4.73% / év</span>
+                            <div class="ios-glass-card p-3 rounded-xl">
+                                <span data-i18n="card3FisherLabel" class="text-zinc-400 block">Éves reálhozam:</span>
+                                <span id="kpi-real-rate" class="font-mono text-xs sm:text-sm font-bold text-cyan-400 mt-1 block">+4.73% / év</span>
                             </div>
-                        </div>
-
-                        <div class="text-xs leading-relaxed text-zinc-400 ios-glass-card px-4 py-3 rounded-xl">
-                            <span class="font-bold text-zinc-200" data-i18n="plainDigestTitle">Mit jelent ez a gyakorlatban? </span>
-                            <span id="plain-digest-text">
-                                Az infláció miatt a jövőbeli számlaegyenlege mai árakon ennyinek felel meg.
-                            </span>
                         </div>
                     </div>
 
-                    <!-- Visual Stacked Composition Bar -->
-                    <div class="pt-1 space-y-2.5">
+                    <!-- Összetétel sáv -->
+                    <div class="pt-1 space-y-2">
                         <div class="flex justify-between items-center text-xs">
                             <span data-i18n="compositionBarTitle" class="font-semibold text-zinc-300">
                                 Végösszeg felépítése
                             </span>
-                            <span id="composition-summary-text" class="font-mono text-zinc-400 text-[11px] font-semibold">
+                            <span id="composition-summary-text" class="font-mono text-zinc-400 text-[10px] sm:text-[11px] font-semibold">
                                 46.6% Saját tőke • 53.4% Kamatos kamat
                             </span>
                         </div>
 
-                        <div class="h-3 w-full rounded-full bg-black/40 overflow-hidden flex p-0.5 gap-0.5 border border-white/10">
+                        <div class="h-2.5 sm:h-3 w-full rounded-full bg-black/40 overflow-hidden flex p-0.5 gap-0.5 border border-white/10">
                             <div id="bar-initial" class="h-full bg-zinc-500 rounded-l-full transition-all duration-300" style="width: 10%"></div>
                             <div id="bar-contributions" class="h-full bg-amber-500 transition-all duration-300" style="width: 36%"></div>
                             <div id="bar-interest" class="h-full bg-emerald-500 rounded-r-full transition-all duration-300" style="width: 54%"></div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
-                            <div class="flex items-center justify-between sm:justify-start gap-2 ios-glass-card px-3 py-2 rounded-xl">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs">
+                            <div class="flex items-center justify-between sm:justify-start gap-2 ios-glass-card px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl">
                                 <span class="flex items-center gap-1.5 text-zinc-400">
-                                    <span class="w-2.5 h-2.5 rounded-sm bg-zinc-500 inline-block"></span>
+                                    <span class="w-2 h-2 rounded-sm bg-zinc-500 inline-block"></span>
                                     <span data-i18n="legendInitial">Kezdő tőke:</span>
                                 </span>
                                 <span id="legend-initial-val" class="font-mono font-bold text-zinc-200">3.3%</span>
                             </div>
-                            <div class="flex items-center justify-between sm:justify-start gap-2 ios-glass-card px-3 py-2 rounded-xl">
+                            <div class="flex items-center justify-between sm:justify-start gap-2 ios-glass-card px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl">
                                 <span class="flex items-center gap-1.5 text-zinc-400">
-                                    <span class="w-2.5 h-2.5 rounded-sm bg-amber-500 inline-block"></span>
+                                    <span class="w-2 h-2 rounded-sm bg-amber-500 inline-block"></span>
                                     <span data-i18n="legendContrib">Befizetések:</span>
                                 </span>
                                 <span id="legend-contrib-val" class="font-mono font-bold text-zinc-200">43.3%</span>
                             </div>
-                            <div class="flex items-center justify-between sm:justify-start gap-2 ios-glass-card px-3 py-2 rounded-xl">
+                            <div class="flex items-center justify-between sm:justify-start gap-2 ios-glass-card px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl">
                                 <span class="flex items-center gap-1.5 text-zinc-400">
-                                    <span class="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block"></span>
+                                    <span class="w-2 h-2 rounded-sm bg-emerald-500 inline-block"></span>
                                     <span data-i18n="legendInterest">Hozam (Kamat):</span>
                                 </span>
                                 <span id="legend-interest-val" class="font-mono font-bold text-emerald-400">53.4%</span>
@@ -606,19 +594,19 @@
                     </div>
                 </div>
 
-                <!-- Apple-Style Clean Trajectory Chart Card -->
-                <section class="ios-glass rounded-3xl p-5 sm:p-7">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                <!-- Grafikon kártya -->
+                <section class="ios-glass rounded-2xl sm:rounded-3xl p-4 sm:p-7">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 mb-3.5 sm:mb-4">
                         <div>
-                            <h3 data-i18n="chartTitle" class="font-bold text-base text-zinc-100">
+                            <h3 data-i18n="chartTitle" class="font-bold text-sm sm:text-base text-zinc-100">
                                 Vagyonépítés Alakulása
                             </h3>
-                            <p id="chart-sub-dynamic" data-i18n="chartSubtitle" class="text-xs text-zinc-400 mt-0.5">
+                            <p id="chart-sub-dynamic" data-i18n="chartSubtitle" class="text-[11px] sm:text-xs text-zinc-400 mt-0.5">
                                 Végösszeg (számlaegyenleg) vs. Befizetett saját tőke
                             </p>
                         </div>
                     </div>
-                    <div class="relative h-72 sm:h-80 w-full">
+                    <div class="relative h-64 sm:h-80 w-full">
                         <canvas id="growthChart"></canvas>
                     </div>
                 </section>
@@ -626,130 +614,124 @@
             </div>
         </div>
 
-        <!-- FULL-WIDTH DETAILED BREAKDOWN TABLE -->
-        <section class="mt-8 ios-glass rounded-3xl overflow-hidden">
-            <div class="p-5 sm:p-6 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <!-- Részletes Táblázat -->
+        <section class="mt-6 sm:mt-8 ios-glass rounded-2xl sm:rounded-3xl overflow-hidden">
+            <div class="p-4 sm:p-6 border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                 <div>
-                    <h3 class="font-bold text-base text-zinc-100 flex items-center gap-2.5">
-                        <div class="w-7 h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400">
+                    <h3 class="font-bold text-sm sm:text-base text-zinc-100 flex items-center gap-2">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-emerald-500/15 flex items-center justify-center text-emerald-400">
                             <i data-lucide="table" class="w-4 h-4"></i>
                         </div>
                         <span data-i18n="tableTitle">Részletes Növekedési Táblázat</span>
                     </h3>
-                    <p data-i18n="tableSubtitle" class="text-xs text-zinc-400 mt-1">
+                    <p data-i18n="tableSubtitle" class="text-[11px] sm:text-xs text-zinc-400 mt-1">
                         Kövesse nyomon az emelkedő befizetéseket és a tőkésített kamatokat időszakonként
                     </p>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-3">
-                    <div class="inline-flex rounded-xl p-1 bg-black/30 border border-white/10">
-                        <button type="button" id="table-view-yearly" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all" data-i18n="viewYearly">
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <div class="inline-flex rounded-xl p-0.5 sm:p-1 bg-black/30 border border-white/10">
+                        <button type="button" id="table-view-yearly" class="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all" data-i18n="viewYearly">
                             Éves bontás
                         </button>
-                        <button type="button" id="table-view-monthly" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all" data-i18n="viewMonthly">
+                        <button type="button" id="table-view-monthly" class="px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all" data-i18n="viewMonthly">
                             Havi bontás
                         </button>
                     </div>
 
-                    <button type="button" id="export-csv-btn" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-white/5 text-zinc-200 border border-white/10 hover:bg-white/10 transition-colors">
+                    <button type="button" id="export-csv-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-semibold bg-white/5 text-zinc-200 border border-white/10 hover:bg-white/10 transition-colors">
                         <i data-lucide="download" class="w-3.5 h-3.5"></i>
                         <span data-i18n="exportCsv">CSV Letöltése</span>
                     </button>
                 </div>
             </div>
 
-            <div class="overflow-x-auto max-h-[480px] overflow-y-auto">
+            <div class="overflow-x-auto max-h-[420px] sm:max-h-[480px] overflow-y-auto">
                 <table class="w-full text-left border-collapse">
-                    <thead class="sticky top-0 z-10 bg-[#09090b]/90 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider text-zinc-400 border-b border-white/10">
+                    <thead class="sticky top-0 z-10 bg-[#09090b]/90 backdrop-blur-md text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-zinc-400 border-b border-white/10">
                         <tr>
-                            <th class="py-3.5 px-4" data-i18n="thPeriod">Időszak</th>
-                            <th class="py-3.5 px-4 text-right" data-i18n="thPeriodicContrib">Aktuális Befizetés</th>
-                            <th class="py-3.5 px-4 text-right" data-i18n="thTotalPrincipal">Kumulált Tőke</th>
-                            <th class="py-3.5 px-4 text-right" data-i18n="thPeriodInterest">Időszaki Kamat</th>
-                            <th class="py-3.5 px-4 text-right" data-i18n="thTotalInterest">Összes Kamat</th>
-                            <th class="py-3.5 px-4 text-right text-zinc-100" data-i18n="thNominalBalance">Végösszeg (Egyenleg)</th>
-                            <th id="th-real-balance" class="py-3.5 px-4 text-right text-cyan-400 hidden" data-i18n="thRealBalance">Reálérték (Mai Áron)</th>
+                            <th class="py-3 px-3 sm:px-4" data-i18n="thPeriod">Időszak</th>
+                            <th class="py-3 px-3 sm:px-4 text-right" data-i18n="thPeriodicContrib">Aktuális Befizetés</th>
+                            <th class="py-3 px-3 sm:px-4 text-right" data-i18n="thTotalPrincipal">Kumulált Tőke</th>
+                            <th class="py-3 px-3 sm:px-4 text-right" data-i18n="thPeriodInterest">Időszaki Kamat</th>
+                            <th class="py-3 px-3 sm:px-4 text-right" data-i18n="thTotalInterest">Összes Kamat</th>
+                            <th class="py-3 px-3 sm:px-4 text-right text-zinc-100" data-i18n="thNominalBalance">Végösszeg</th>
+                            <th id="th-real-balance" class="py-3 px-3 sm:px-4 text-right text-cyan-400 hidden" data-i18n="thRealBalance">Reálérték</th>
                         </tr>
                     </thead>
-                    <tbody id="schedule-table-body" class="divide-y divide-white/5 text-xs sm:text-sm font-mono">
-                        <!-- Dynamically populated -->
+                    <tbody id="schedule-table-body" class="divide-y divide-white/5 text-xs font-mono">
+                        <!-- Dinamikus tartalom -->
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- GEMINI AI FINANCIAL ADVISOR & GOAL PLANNER -->
-        <section class="mt-8 ios-glass rounded-3xl p-5 sm:p-7">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-5 mb-5">
-                <div class="flex items-start sm:items-center gap-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-inner shrink-0">
-                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+        <!-- Intelligens Pénzügyi Elemző -->
+        <section class="mt-6 sm:mt-8 ios-glass rounded-2xl sm:rounded-3xl p-4 sm:p-7">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4 border-b border-white/10 pb-4 sm:pb-5 mb-4 sm:mb-5">
+                <div class="flex items-start sm:items-center gap-3">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-inner shrink-0">
+                        <i data-lucide="sparkles" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2">
-                            <h3 data-i18n="aiAdvisorTitle" class="font-bold text-base text-zinc-100">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h3 data-i18n="aiAdvisorTitle" class="font-bold text-sm sm:text-base text-zinc-100">
                                 Intelligens Pénzügyi Elemző & Stratéga
                             </h3>
-                            <span id="ai-badge-pill" data-i18n="aiBadgeText" class="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/25">
+                            <span id="ai-badge-pill" data-i18n="aiBadgeText" class="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/25">
                                 Azonnali Személyre Szabott Elemzés
                             </span>
                         </div>
-                        <p data-i18n="aiAdvisorSubtitle" class="text-xs text-zinc-400 mt-0.5">
-                            A motor automatikusan kiértékeli a beállított megtakarítási számait: kiszámítja a tőkearányt, kamathatást, inflációs kockázatokat és a FIRE lehetőségeket.
+                        <p data-i18n="aiAdvisorSubtitle" class="text-[11px] sm:text-xs text-zinc-400 mt-0.5">
+                            A motor automatikusan kiértékeli a beállított megtakarítási számait: tőkearányt, kamathatást, inflációs kockázatokat és a FIRE lehetőségeket.
                         </p>
                     </div>
                 </div>
 
-                <!-- Quick AI Action Prompts -->
-                <div class="flex flex-wrap items-center gap-2">
-                    <button type="button" data-prompt-type="review" class="ai-prompt-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 transition-all flex items-center gap-1.5">
+                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                    <button type="button" data-prompt-type="review" class="ai-prompt-btn px-3 py-1.5 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 transition-all flex items-center gap-1.5">
                         <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
                         <span data-i18n="aiPromptReview">Portfólió Értékelése</span>
                     </button>
-                    <button type="button" data-prompt-type="goal" class="ai-prompt-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 transition-all flex items-center gap-1.5">
+                    <button type="button" data-prompt-type="goal" class="ai-prompt-btn px-3 py-1.5 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 transition-all flex items-center gap-1.5">
                         <i data-lucide="compass" class="w-3.5 h-3.5 text-emerald-400"></i>
                         <span data-i18n="aiPromptGoal">Nyugdíj / FIRE Terv</span>
                     </button>
-                    <button type="button" data-prompt-type="inflation" class="ai-prompt-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 transition-all flex items-center gap-1.5">
+                    <button type="button" data-prompt-type="inflation" class="ai-prompt-btn px-3 py-1.5 text-xs font-semibold rounded-xl bg-white/5 hover:bg-white/10 text-zinc-200 border border-white/10 transition-all flex items-center gap-1.5">
                         <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-400"></i>
                         <span data-i18n="aiPromptInflation">Inflációs Védelem</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Chat Output Box -->
-            <div id="ai-chat-response" class="ios-glass-card rounded-2xl p-4 sm:p-5 text-zinc-300 text-sm leading-relaxed min-h-[120px] max-h-[360px] overflow-y-auto space-y-3">
+            <div id="ai-chat-response" class="ios-glass-card rounded-2xl p-4 sm:p-5 text-zinc-300 text-xs sm:text-sm leading-relaxed min-h-[100px] max-h-[360px] overflow-y-auto space-y-3">
                 <p class="text-zinc-400" data-i18n="aiInitialPrompt">
                     Kattintson a fenti gombok valamelyikére, vagy írjon be egy saját kérdést alul! Az elemző azonnal és pontosan a fenti számaira támaszkodva készít összefoglalót.
                 </p>
             </div>
 
-            <!-- Custom Question Input Bar -->
-            <div class="mt-4 flex gap-2.5">
+            <div class="mt-3.5 sm:mt-4 flex gap-2">
                 <div class="relative flex-1">
-                    <input type="text" id="ai-user-input" placeholder="Írja be pénzügyi kérdését (pl. Mennyi passzív jövedelmet ad ez? vagy Elég ez nyugdíjra?)..."
-                        class="w-full ios-input rounded-xl py-2.5 pl-4 pr-10 text-sm placeholder-zinc-500">
-                    <i data-lucide="message-square" class="w-4 h-4 text-zinc-400 absolute right-3.5 top-3 pointer-events-none"></i>
+                    <input type="text" id="ai-user-input" placeholder="Írja be pénzügyi kérdését..."
+                        class="w-full ios-input rounded-xl py-2 sm:py-2.5 pl-3.5 pr-9 text-xs sm:text-sm placeholder-zinc-500">
+                    <i data-lucide="message-square" class="w-4 h-4 text-zinc-400 absolute right-3 top-2.5 pointer-events-none"></i>
                 </div>
-                <button type="button" id="ai-send-btn" class="px-5 py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-500/40 text-emerald-200 font-semibold text-sm shadow-sm transition-all flex items-center gap-2 shrink-0">
+                <button type="button" id="ai-send-btn" class="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-500/40 text-emerald-200 font-semibold text-xs sm:text-sm shadow-sm transition-all flex items-center gap-1.5 shrink-0">
                     <span data-i18n="aiSendBtn">Elemzés</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </button>
             </div>
         </section>
     </main>
 
-    <!-- Footer: Pontosan a kért szövegezéssel -->
-    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-zinc-400 border-t border-white/10 bg-[#09090b]/35 backdrop-blur-xl mt-8 shrink-0">
+    <!-- Lábléc -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-6 text-center text-[11px] sm:text-xs text-zinc-400 border-t border-white/10 bg-[#09090b]/35 backdrop-blur-xl mt-6 sm:mt-8 shrink-0">
         <p id="footer-note">
             A számítások tájékoztató jellegűek • © 2026 Nagy Márton. Minden jog fenntartva.
         </p>
     </footer>
 
     <script>
-        /***********************************************************************
-         * 1. FULL LOCALIZATION DICTIONARY (HU & EN)
-         ***********************************************************************/
         const I18N = {
             hu: {
                 pageTitle: "Kamatos Kamat & Vásárlóerő Kalkulátor — Készítette: Nagy Márton",
@@ -761,7 +743,7 @@
                 regularContributionLabel: "Rendszeres befizetés",
                 freqMonthly: "Havi",
                 freqAnnually: "Éves",
-                contribAmountSub: "Befizetett összeg alkalmanként",
+                contribAmountSub: "Befizetett összeg",
                 contribGrowthLabel: "Befizetések éves növelése",
                 contribGrowthHint: "Éves % emelés (pl. fizetésemelés vagy inflációkövetés)",
                 interestRateLabel: "Éves nominális hozam (kamatláb)",
@@ -779,21 +761,21 @@
                 histContextLabel: "Történelmi inflációs segédlet",
                 window10Y: "Elmúlt 10 év",
                 window20Y: "Elmúlt 20 év",
-                windowMax: "Adatkezdettől (Max)",
+                windowMax: "Max",
                 applyBtn: "Alkalmaz",
-                histDataFootnote: "Adatforrás: Világbank (World Bank CPI). Kattintson a fenti gombra az eredeti adatsor megnyitásához.",
-                resultsHeaderTitle: "Kalkuláció Eredménye — Átlátható Összesítő",
+                histDataFootnote: "Adatforrás: Világbank (World Bank CPI).",
+                resultsHeaderTitle: "Kalkuláció Eredménye",
                 card2Title: "Várható Végösszeg (Számlaegyenleg)",
                 card2Sub: "Ennyi pénz lesz számszerűleg a megtakarítási számláján a futamidő végén.",
                 card1Title: "Összes saját befizetés",
                 card2InterestLabel: "Megszerzett kamat (hozam)",
                 card2MultiplierLabel: "Tőketöbbszöröző",
-                card3Title: "Inflációval Korrigált Vásárlóerő (Mai Árakon)",
+                card3Title: "Inflációval Korrigált Vásárlóerő",
                 realBadge: "Reálérték",
                 card3Sub: "Mai pénzben kifejezve ennyi árut és szolgáltatást ér majd a fenti végösszeg.",
                 card1RealCostLabel: "Befizetései mai értéke:",
                 card3RealGainLabel: "Infláció feletti reálnyereség:",
-                card3FisherLabel: "Éves reálhozam (infláció felett):",
+                card3FisherLabel: "Éves reálhozam:",
                 plainDigestTitle: "Mit jelent ez a gyakorlatban? ",
                 card1FinalDepositLabel: "Utolsó évi rendszeres részlet",
                 compositionBarTitle: "Végösszeg felépítése",
@@ -802,7 +784,7 @@
                 legendInterest: "Hozam (Kamat):",
                 chartTitle: "Vagyonépítés Alakulása",
                 chartSubtitle: "Végösszeg (számlaegyenleg) vs. Befizetett saját tőke",
-                chartSubtitleWithInf: "Nominális egyenleg vs. Valós vásárlóerő (reálérték) vs. Befizetett saját tőke",
+                chartSubtitleWithInf: "Nominális egyenleg vs. Valós vásárlóerő vs. Befizetett saját tőke",
                 chartSeriesNominal: "Végösszeg (Számlaegyenleg)",
                 chartSeriesReal: "Valós Vásárlóerő (Mai árakon)",
                 chartSeriesPrincipal: "Befizetett Saját Tőke",
@@ -816,25 +798,18 @@
                 thTotalPrincipal: "Kumulált Tőke",
                 thPeriodInterest: "Időszaki Kamat",
                 thTotalInterest: "Összes Kamat",
-                thNominalBalance: "Végösszeg (Egyenleg)",
-                thRealBalance: "Reálérték (Mai Áron)",
-                yearPrefix: "Év",
-                monthPrefix: "Hónap",
-                perMonthSuffix: "/ hó",
-                perYearSuffix: "/ év",
+                thNominalBalance: "Végösszeg",
+                thRealBalance: "Reálérték",
                 afterYearsSuffix: "év után",
-                ownCapitalLabel: "Saját tőke",
-                compoundInterestLabel: "Kamatos kamat",
                 apiLive: "Világbank Élő Adat",
-                apiFallback: "Világbank CPI Adatbázis",
                 aiAdvisorTitle: "Intelligens Pénzügyi Elemző & Stratéga",
                 aiBadgeText: "Azonnali Személyre Szabott Elemzés",
-                aiAdvisorSubtitle: "A motor automatikusan kiértékeli a beállított megtakarítási számait: kiszámítja a tőkearányt, kamathatást, inflációs kockázatokat és a FIRE lehetőségeket.",
+                aiAdvisorSubtitle: "A motor automatikusan kiértékeli a beállított megtakarítási számait: tőkearányt, kamathatást, inflációs kockázatokat és a FIRE lehetőségeket.",
                 aiPromptReview: "Portfólió Értékelése",
                 aiPromptGoal: "Nyugdíj / FIRE Terv",
                 aiPromptInflation: "Inflációs Védelem",
                 aiInitialPrompt: "Kattintson a fenti gombok valamelyikére, vagy írjon be egy saját kérdést alul! Az elemző azonnal és pontosan a fenti számaira támaszkodva készít összefoglalót.",
-                aiInputPlaceholder: "Írja be pénzügyi kérdését (pl. Mennyi passzív jövedelmet ad ez? vagy Elég ez nyugdíjra?)...",
+                aiInputPlaceholder: "Írja be pénzügyi kérdését...",
                 aiSendBtn: "Elemzés",
                 aiLoading: "Az elemzés készül...",
                 footerNote: "A számítások tájékoztató jellegűek • © 2026 Nagy Márton. Minden jog fenntartva.",
@@ -870,7 +845,7 @@
                 regularContributionLabel: "Regular Contribution",
                 freqMonthly: "Monthly",
                 freqAnnually: "Annually",
-                contribAmountSub: "Contribution amount per period",
+                contribAmountSub: "Contribution amount",
                 contribGrowthLabel: "Annual Contribution Step-Up",
                 contribGrowthHint: "Annual % increase in savings (e.g., salary raises or inflation indexing)",
                 interestRateLabel: "Annual Nominal Return (Interest Rate)",
@@ -888,21 +863,21 @@
                 histContextLabel: "Historical Inflation Reference",
                 window10Y: "Past 10 Years",
                 window20Y: "Past 20 Years",
-                windowMax: "Since Start (Max)",
+                windowMax: "Max",
                 applyBtn: "Apply",
-                histDataFootnote: "Source: World Bank CPI. Click the button above to open the official World Bank dataset.",
-                resultsHeaderTitle: "Projection Summary — Clear Breakdown",
+                histDataFootnote: "Source: World Bank CPI.",
+                resultsHeaderTitle: "Projection Summary",
                 card2Title: "Expected Final Balance",
                 card2Sub: "The exact numerical balance on your account statement at the end of the term.",
                 card1Title: "Total principal deposited",
                 card2InterestLabel: "Total interest earned",
                 card2MultiplierLabel: "Capital multiplier",
-                card3Title: "Inflation-Adjusted Purchasing Power (Today's Money)",
+                card3Title: "Inflation-Adjusted Purchasing Power",
                 realBadge: "Real Value",
                 card3Sub: "How much goods and services your final balance buys at today's price level.",
                 card1RealCostLabel: "Your deposits in today's money:",
                 card3RealGainLabel: "Net real profit above inflation:",
-                card3FisherLabel: "Real annual return (above inflation):",
+                card3FisherLabel: "Real annual return:",
                 plainDigestTitle: "What does this mean in practice? ",
                 card1FinalDepositLabel: "Final year regular deposit",
                 compositionBarTitle: "Final Balance Composition",
@@ -911,7 +886,7 @@
                 legendInterest: "Compound Interest:",
                 chartTitle: "Wealth Growth Trajectory",
                 chartSubtitle: "Final Account Balance vs. Total Principal Deposited",
-                chartSubtitleWithInf: "Nominal Balance vs. Real Purchasing Power (Today's Value) vs. Total Principal",
+                chartSubtitleWithInf: "Nominal Balance vs. Real Purchasing Power vs. Total Principal",
                 chartSeriesNominal: "Final Balance (Nominal)",
                 chartSeriesReal: "Real Purchasing Power (Today's Prices)",
                 chartSeriesPrincipal: "Total Principal Deposited",
@@ -926,16 +901,9 @@
                 thPeriodInterest: "Period Interest",
                 thTotalInterest: "Total Interest",
                 thNominalBalance: "Final Balance",
-                thRealBalance: "Real Value (Today's Money)",
-                yearPrefix: "Year",
-                monthPrefix: "Month",
-                perMonthSuffix: "/ mo",
-                perYearSuffix: "/ yr",
+                thRealBalance: "Real Value",
                 afterYearsSuffix: "years",
-                ownCapitalLabel: "Principal",
-                compoundInterestLabel: "Compound interest",
                 apiLive: "World Bank Live Data",
-                apiFallback: "World Bank CPI Dataset",
                 aiAdvisorTitle: "Smart Financial Analyst & Strategist",
                 aiBadgeText: "Instant Tailored Insights",
                 aiAdvisorSubtitle: "The engine automatically analyzes your inputs: calculates compounding leverage, real purchasing power decay, and FIRE withdrawal scenarios.",
@@ -943,7 +911,7 @@
                 aiPromptGoal: "Retirement / FIRE Plan",
                 aiPromptInflation: "Inflation Hedge",
                 aiInitialPrompt: "Click one of the action buttons above or ask a custom question below! The advisor evaluates your exact numbers instantly.",
-                aiInputPlaceholder: "Type your financial question (e.g. How much passive income will this generate?)...",
+                aiInputPlaceholder: "Type your financial question...",
                 aiSendBtn: "Analyze",
                 aiLoading: "Generating analysis...",
                 footerNote: "The calculations are for informational purposes only • © 2026 Márton Nagy. All rights reserved.",
@@ -978,7 +946,7 @@
             regularContribution: 50000,
             contributionFrequency: 'monthly',
             contributionGrowthRate: 5.0,
-            annualInterestRate: 8.4,
+            annualInterestRate: 8.0,
             years: 15,
             compoundFrequency: 12,
             inflationEnabled: false,
@@ -1084,12 +1052,11 @@
             if (badge) badge.textContent = `${cStats.start}–${dict.afterYearsSuffix === 'years' ? 'present' : 'napjainkig'}`;
         }
 
-        // PONTOSÍTOTT SZÁMÍTÁSI MOTOR: Valós inflációval diszkontált befizetési értékkel
         function runFinancialSimulation() {
             let principal = state.initialDeposit;
             let currentNominal = principal;
             let totalPrincipal = principal;
-            let totalRealPrincipal = principal; // Kezdőtőke mai értéke = 1 000 000 Ft
+            let totalRealPrincipal = principal;
             
             const periods = state.years * 12;
             const r = (state.annualInterestRate / 100) / 12;
@@ -1112,7 +1079,6 @@
                 currentNominal += pContrib;
                 yearlyPrincipalSum += pContrib;
 
-                // Az m-edik hónapban befizetett összeg diszkontált jelenértéke (mai értéke)
                 const realContrib = pContrib / Math.pow(1 + iRate, m);
                 totalRealPrincipal += realContrib;
                 
@@ -1142,7 +1108,6 @@
             }
             
             let finalReal = currentNominal / Math.pow(1 + iRate, periods);
-            // Pontosított reálnyereség: Végső reálérték - Befizetések valós mai értéke
             const realNetGain = finalReal - totalRealPrincipal;
             const fisherRealAnnualRate = ((1 + (state.annualInterestRate/100)) / (1 + (state.inflationRate/100)) - 1) * 100;
             
@@ -1194,7 +1159,6 @@
             
             if(document.getElementById('kpi-real-value')) {
                 document.getElementById('kpi-real-value').textContent = formatMoney(sim.finalReal);
-                // JAVÍTVA: Itt a valódi diszkontált jelenérték (mai érték) jelenik meg!
                 document.getElementById('kpi-real-principal-value').textContent = formatMoney(sim.totalRealPrincipal);
                 document.getElementById('kpi-real-gain-value').textContent = (sim.realNetGain >= 0 ? '+' : '') + formatMoney(sim.realNetGain);
                 document.getElementById('kpi-real-rate').textContent = (sim.fisherRealAnnualRate >= 0 ? '+' : '') + formatPercent(sim.fisherRealAnnualRate) + (isHu ? ' / év' : ' / yr');
@@ -1344,14 +1308,14 @@
             let html = '';
             data.forEach(row => {
                 const periodLabel = state.tableView === 'yearly' ? (isHu ? `${row.year}. év` : `Year ${row.year}`) : (isHu ? `${row.month}. hó` : `Month ${row.month}`);
-                const realTd = state.inflationEnabled ? `<td class="py-3 px-4 text-right text-cyan-400 font-bold">${formatMoney(row.real)}</td>` : '';
+                const realTd = state.inflationEnabled ? `<td class="py-2.5 sm:py-3 px-3 sm:px-4 text-right text-cyan-400 font-bold">${formatMoney(row.real)}</td>` : '';
                 html += `<tr class="hover:bg-white/[0.04] transition-colors">
-                        <td class="py-3 px-4 font-medium text-zinc-200">${periodLabel}</td>
-                        <td class="py-3 px-4 text-right text-zinc-300">${formatMoney(row.contrib)}</td>
-                        <td class="py-3 px-4 text-right text-zinc-400">${formatMoney(row.totalPrincipal)}</td>
-                        <td class="py-3 px-4 text-right text-emerald-400">${formatMoney(row.periodInterest)}</td>
-                        <td class="py-3 px-4 text-right text-zinc-300">${formatMoney(row.totalInterest)}</td>
-                        <td class="py-3 px-4 text-right font-bold text-white">${formatMoney(row.nominal)}</td>
+                        <td class="py-2.5 sm:py-3 px-3 sm:px-4 font-medium text-zinc-200">${periodLabel}</td>
+                        <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-right text-zinc-300">${formatMoney(row.contrib)}</td>
+                        <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-right text-zinc-400">${formatMoney(row.totalPrincipal)}</td>
+                        <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-right text-emerald-400">${formatMoney(row.periodInterest)}</td>
+                        <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-right text-zinc-300">${formatMoney(row.totalInterest)}</td>
+                        <td class="py-2.5 sm:py-3 px-3 sm:px-4 text-right font-bold text-white">${formatMoney(row.nominal)}</td>
                         ${realTd}
                     </tr>`;
             });
@@ -1585,8 +1549,8 @@
             document.querySelectorAll('.currency-btn').forEach(btn => {
                 const isSelected = btn.getAttribute('data-currency') === newCurrency;
                 btn.className = isSelected
-                    ? 'currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shadow-sm'
-                    : 'currency-btn px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-400 hover:text-white';
+                    ? 'currency-btn px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg transition-all bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shadow-sm'
+                    : 'currency-btn px-2 sm:px-2.5 py-1 text-xs font-semibold rounded-lg transition-all text-slate-400 hover:text-white';
             });
 
             document.querySelectorAll('.currency-symbol').forEach(el => {
@@ -1684,7 +1648,6 @@
                 lucide.createIcons();
             }
 
-            // Lap tetejére görgetés a bal felső templom logóra/címre kattintva
             const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
             if (scrollToTopBtn) {
                 scrollToTopBtn.addEventListener('click', (e) => {
@@ -1701,7 +1664,6 @@
             bindInputAndSlider('years', 'years-slider', 'years');
             bindInputAndSlider('inflation-rate', 'inflation-rate-slider', 'inflationRate');
 
-            // Inflation Module Toggle Switch
             const inflationToggle = document.getElementById('inflation-toggle');
             if (inflationToggle) {
                 state.inflationEnabled = inflationToggle.checked;
@@ -1721,15 +1683,14 @@
                 });
             }
 
-            // Contribution Frequency Toggle
             document.querySelectorAll('.contrib-freq-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     state.contributionFrequency = btn.getAttribute('data-contrib-freq');
                     document.querySelectorAll('.contrib-freq-btn').forEach(b => {
                         const active = b.getAttribute('data-contrib-freq') === state.contributionFrequency;
                         b.className = active
-                            ? 'contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm'
-                            : 'contrib-freq-btn px-3 py-1 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white';
+                            ? 'contrib-freq-btn px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm'
+                            : 'contrib-freq-btn px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-semibold rounded-lg text-zinc-400 hover:text-white';
                     });
                     runFinancialSimulation();
                 });
@@ -1740,28 +1701,25 @@
                 runFinancialSimulation();
             });
 
-            // Country Selector
             document.getElementById('country-select').addEventListener('change', (e) => {
                 state.selectedCountry = e.target.value;
                 renderHistoricalInflationContext();
                 fetchWorldBankInflation(state.selectedCountry);
             });
 
-            // Historical Inflation Window Selector (10Y, 20Y, Max)
             document.querySelectorAll('.inf-window-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     state.inflationWindow = btn.getAttribute('data-inf-window');
                     document.querySelectorAll('.inf-window-btn').forEach(b => {
                         const active = b.getAttribute('data-inf-window') === state.inflationWindow;
                         b.className = active
-                            ? 'inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all'
-                            : 'inf-window-btn py-1.5 px-2 text-[11px] font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
+                            ? 'inf-window-btn py-1.5 px-1 sm:px-2 text-[10px] sm:text-[11px] font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all'
+                            : 'inf-window-btn py-1.5 px-1 sm:px-2 text-[10px] sm:text-[11px] font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
                     });
                     renderHistoricalInflationContext();
                 });
             });
 
-            // Apply Historical Inflation Buttons
             document.getElementById('apply-country-inf').addEventListener('click', () => {
                 const { avg } = computeWindowAverage(state.selectedCountry, state.inflationWindow);
                 state.inflationRate = avg;
@@ -1778,32 +1736,29 @@
                 runFinancialSimulation();
             });
 
-            // Table View Switcher
             const btnYearly = document.getElementById('table-view-yearly');
             const btnMonthly = document.getElementById('table-view-monthly');
             btnYearly.addEventListener('click', () => {
                 state.tableView = 'yearly';
-                btnYearly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all';
-                btnMonthly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
+                btnYearly.className = 'px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all';
+                btnMonthly.className = 'px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
                 renderBreakdownTable();
             });
             btnMonthly.addEventListener('click', () => {
                 state.tableView = 'monthly';
-                btnMonthly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all';
-                btnYearly.className = 'px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
+                btnMonthly.className = 'px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-500/25 border border-emerald-500/30 text-emerald-300 shadow-sm transition-all';
+                btnYearly.className = 'px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-lg text-zinc-400 hover:text-white transition-all';
                 renderBreakdownTable();
             });
 
             document.getElementById('export-csv-btn').addEventListener('click', exportScheduleToCSV);
 
-            // Currency Buttons
             document.querySelectorAll('.currency-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     switchCurrency(btn.getAttribute('data-currency'));
                 });
             });
 
-            // Language Switcher
             document.getElementById('lang-hu').addEventListener('click', () => {
                 state.lang = 'hu';
                 applyTranslations();
@@ -1813,15 +1768,6 @@
                 applyTranslations();
             });
 
-            // Dark/Light Mode Toggle
-            document.getElementById('theme-toggle').addEventListener('click', () => {
-                document.documentElement.classList.toggle('dark');
-                if (state.lastSimulation) {
-                    renderOrUpdateChart(state.lastSimulation.yearlySchedule);
-                }
-            });
-
-            // Gemini AI Event Listeners
             document.querySelectorAll('.ai-prompt-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const promptType = btn.getAttribute('data-prompt-type');
@@ -1848,7 +1794,6 @@
                 }
             });
 
-            // Reset Button
             document.getElementById('reset-btn').addEventListener('click', () => {
                 const cfg = CURRENCY_CONFIG[state.currency];
                 state.initialDeposit = cfg.initialDefault;
